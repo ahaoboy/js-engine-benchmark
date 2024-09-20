@@ -38,18 +38,18 @@ jobs:
           git submodule update --init
           cmake -S . -B build
           sudo make install
-          cp ./build/tjs /usr/local/bin/tjs
+          sudo cp ./build/tjs /usr/local/bin/tjs
           cd ..
 
 
           wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
           sudo chmod 777 ./boa-linux-amd64
-          cp ./boa-linux-amd64 /usr/local/bin/boa
+          sudo cp ./boa-linux-amd64 /usr/local/bin/boa
 
 
           wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
           unzip ./llrt-linux-x64.zip
-          cp ./llrt /usr/local/bin/llrt
+          sudo cp ./llrt /usr/local/bin/llrt
 
 
       - name: update
