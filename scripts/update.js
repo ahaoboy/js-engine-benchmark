@@ -14,6 +14,7 @@ const execList = [
   "xst",
   'deno',
   'node',
+  "bun",
 ]
 
 const subCmd = {
@@ -60,25 +61,6 @@ function json2md(data) {
   }
 
   return [headerRow, separatorRow, ...rows].join('\n');
-}
-
-const execList = [
-  "llrt",
-  "qjs",
-  "qjs-ng",
-  "tjs",
-  'mujs',
-  "boa",
-  "jerry",
-  "hermes",
-  "xst",
-  'deno',
-  'node',
-  "bun",
-]
-
-const subCmd = {
-  "tjs": "run"
 }
 
 async function execCmd(cmd) {
