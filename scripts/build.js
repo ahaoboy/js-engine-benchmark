@@ -2,7 +2,7 @@ const fs = require("fs")
 const path = require('path')
 
 const distPath = path.resolve("./dist")
-const jsPath = path.join(distPath, "bench.js")
+const jsPath = path.join(distPath, "run.js")
 const codeRoot = path.resolve("./v8-v7")
 const runPath = path.join(codeRoot, "run.js")
 

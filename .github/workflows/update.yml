@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: 22
       - uses: denoland/setup-deno@v1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - run: |
           sudo apt update
           sudo apt install wget unzip python3 -y

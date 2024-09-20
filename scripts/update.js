@@ -62,6 +62,24 @@ function json2md(data) {
   return [headerRow, separatorRow, ...rows].join('\n');
 }
 
+const execList = [
+  "llrt",
+  "qjs",
+  "qjs-ng",
+  "tjs",
+  'mujs',
+  "boa",
+  "jerry",
+  "hermes",
+  "xst",
+  'deno',
+  'node',
+  "bun",
+]
+
+const subCmd = {
+  "tjs": "run"
+}
 
 async function execCmd(cmd) {
   return new Promise(r => {
@@ -75,7 +93,7 @@ const data = { 'Executable size': {} }
 
 async function main() {
   for (const i of execList) {
-    const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/bench.js`)
+    const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
     const json = toJSON(out)
     for (const [k, v] of Object.entries(json)) {
       const obj = data[k] || {}
