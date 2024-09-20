@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { execSync } = require('child_process');
+const { exec, execSync } = require('child_process');
 
 
 const mdPath = path.resolve("./readme.md")
@@ -53,34 +53,43 @@ const execList = [
   'node',
 ]
 
-function exec(cmd) {
-  try {
-    return execSync(cmd).toString()
-  } catch (e) {
-    return e.toString()
-  }
+const subCmd = {
+  "tjs": "run"
+}
+
+async function execCmd(cmd) {
+  return new Promise(r => {
+    exec(cmd, (err, stdout, stderr) => {
+      r(stdout)
+    })
+  })
 }
 
 const data = { 'Executable size': {} }
-for (const i of execList) {
-  const out = exec(`${i} ./dist/bench.js`)
-  const json = toJSON(out)
-  for (const [k, v] of Object.entries(json)) {
-    const obj = data[k] || {}
-    obj[i] = v
-    data[k] = obj
+
+async function main() {
+  for (const i of execList) {
+    const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/bench.js`)
+    const json = toJSON(out)
+    for (const [k, v] of Object.entries(json)) {
+      const obj = data[k] || {}
+      obj[i] = v
+      data[k] = obj
+    }
+
+    const execPath = execSync(`which ${i}`).toString().trim()
+    const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
+    data['Executable size'][i] = size
   }
+  console.table(data)
+  const md = json2md(data)
 
-  const execPath = execSync(`which ${i}`).toString().trim()
-  const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
-  data['Executable size'][i] = size
+  const marker = "\n## bench\n"
+  const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
+
+  fs.writeFileSync(mdPath, doc)
+
+  fs.writeFileSync(jsonPath, JSON.stringify(data))
 }
-console.table(data)
-const md = json2md(data)
 
-const marker = "\n## bench\n"
-const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
-
-fs.writeFileSync(mdPath, doc)
-
-fs.writeFileSync(jsonPath, JSON.stringify(data))
+main()
