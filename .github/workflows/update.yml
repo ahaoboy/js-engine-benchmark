@@ -67,6 +67,9 @@ jobs:
           tjs --version
           boa --version
 
+          npm run build
+          npm run update
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
