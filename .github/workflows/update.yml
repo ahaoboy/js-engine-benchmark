@@ -20,9 +20,13 @@ jobs:
       - uses: denoland/setup-deno@v1
       - run: |
           sudo apt update
-          sudo apt install wget unzip -y
+          sudo apt install wget unzip python3 -y
 
-          git clone https://github.com/quickjs-ng/quickjs.git --depth=1
+          wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
+          chmod 777 ./qjs-linux-x86
+          sudo cp ./qjs-linux-x86 /usr/local/bin/qjs-ng
+
+          git clone https://github.com/bellard/quickjs --depth=1
           cd quickjs
           sudo make install
           cd ..
@@ -51,6 +55,18 @@ jobs:
           unzip ./llrt-linux-x64.zip
           sudo cp ./llrt /usr/local/bin/llrt
 
+          git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
+          cd jerryscript
+          python3 tools/build.py
+          sudo cp ./build/bin/jerry /usr/local/bin/jerry
+
+          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
+          sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/local/bin
+
+          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
+          unzip xst-lin64.zip
+          sudo cp ./xst /usr/local/bin/xst
+
 
       - name: update
         run: |
@@ -60,16 +76,29 @@ jobs:
           which llrt
           which tjs
           which qjs
+          which qjs-ng
           which boa
+          which jerry
+          which hermes
+          which xst
 
           node --version
           deno --version
           llrt --version
           tjs --version
           boa --version
+          jerry --version
+          hermes --version
+          xst -v
+
 
           npm run build
           npm run update
+
+          git config --global user.email "504595380@qq.com"
+          git config --global user.name "ahaoboy"
+          git add ./bench.json ./readme.md
+          git commit -m"update"
 
       - name: Push changes
         uses: ad-m/github-push-action@master

@@ -31,7 +31,7 @@ function json2md(data) {
   for (const k of keys) {
     const row = [k]
     for (const i of header) {
-      row.push(data[k][i])
+      row.push(data[k][i] || 0)
     }
     rows.push(`| ${row.join(' | ')} |`)
   }
@@ -42,8 +42,13 @@ function json2md(data) {
 const execList = [
   "llrt",
   "qjs",
+  "qjs-ng",
   "tjs",
   'mujs',
+  "boa",
+  "jerry",
+  "hermes",
+  "xst",
   'deno',
   'node',
 ]
@@ -60,7 +65,7 @@ for (const i of execList) {
     }
 
     const execPath = execSync(`which ${i}`).toString().trim()
-    const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0]
+    const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
     data['Executable size'][i] = size
   } catch (e) {
 
