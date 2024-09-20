@@ -103,8 +103,8 @@ jobs:
           xst -v
 
 
-          npm run build
-          npm run update > table.txt
+          node ./scripts/build.js
+          node ./scripts/update.js > table.txt
 
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy"
