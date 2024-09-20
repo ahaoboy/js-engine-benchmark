@@ -53,23 +53,27 @@ const execList = [
   'node',
 ]
 
+function exec(cmd) {
+  try {
+    return execSync(cmd).toString()
+  } catch (e) {
+    return e.toString()
+  }
+}
+
 const data = { 'Executable size': {} }
 for (const i of execList) {
-  try {
-    const out = execSync(`${i} ./dist/bench.js`).toString()
-    const json = toJSON(out)
-    for (const [k, v] of Object.entries(json)) {
-      const obj = data[k] || {}
-      obj[i] = v
-      data[k] = obj
-    }
-
-    const execPath = execSync(`which ${i}`).toString().trim()
-    const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
-    data['Executable size'][i] = size
-  } catch (e) {
-
+  const out = exec(`${i} ./dist/bench.js`)
+  const json = toJSON(out)
+  for (const [k, v] of Object.entries(json)) {
+    const obj = data[k] || {}
+    obj[i] = v
+    data[k] = obj
   }
+
+  const execPath = execSync(`which ${i}`).toString().trim()
+  const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
+  data['Executable size'][i] = size
 }
 console.table(data)
 const md = json2md(data)

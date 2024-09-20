@@ -31,6 +31,12 @@ jobs:
           sudo make install
           cd ..
 
+          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
+          cd qjs-ng
+          sudo make
+          sudo cp ./build/qjs /usr/local/bin/qjs-ng
+          cd ..
+
           git clone https://github.com/ccxvii/mujs.git --depth=1
           cd mujs
           sudo make install HAVE_READLINE=no
