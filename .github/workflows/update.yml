@@ -1,0 +1,74 @@
+name: update
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: denoland/setup-deno@v1
+      - run: |
+          sudo apt install wget unzip -y
+
+          git clone https://github.com/quickjs-ng/quickjs.git --depth=1
+          cd quickjs
+          make install
+          cd ..
+
+          git clone https://github.com/ccxvii/mujs.git --depth=1
+          cd mujs
+          make install HAVE_READLINE=no
+          cd ..
+
+          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
+          cd txiki.js
+          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool
+          git submodule update --init
+          cmake -S . -B build
+          make install
+          cp ./build/tjs /usr/local/bin/tjs
+          cd ..
+
+
+          wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
+          chmod 777 ./boa-linux-amd64
+          cp ./boa-linux-amd64 /usr/local/bin/boa
+
+
+          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
+          unzip ./llrt-linux-x64.zip
+          cp ./llrt /usr/local/bin/llrt
+
+
+      - name: update
+        run: |
+          which node
+          which deno
+          which mujs
+          which llrt
+          which tjs
+          which qjs
+          which boa
+
+          node --version
+          deno --version
+          llrt --version
+          tjs --version
+          boa --version
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
