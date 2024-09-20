@@ -19,6 +19,7 @@ jobs:
           node-version: 22
       - uses: denoland/setup-deno@v1
       - run: |
+          sudo apt update
           sudo apt install wget unzip -y
 
           git clone https://github.com/quickjs-ng/quickjs.git --depth=1
@@ -33,7 +34,7 @@ jobs:
 
           git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
           cd txiki.js
-          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool
+          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool -y
           git submodule update --init
           cmake -S . -B build
           sudo make install
