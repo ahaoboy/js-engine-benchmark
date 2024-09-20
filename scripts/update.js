@@ -98,7 +98,7 @@ async function main() {
     const obj = {}
     for (const e of engines) {
       const name = nameMap[e] ?? e
-      obj[name] = data[i][name]
+      obj[name] = data[i][e] ?? ""
     }
     data[i] = obj
   }
