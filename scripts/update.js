@@ -21,16 +21,16 @@ function toJSON(data) {
 
 function json2md(data) {
   const keys = Object.keys(data)
-  const header = Object.keys(data[keys[0]])
+  const engines = Object.keys(data[keys[0]])
 
-  const headerRow = `| Engine | ${header.join(' | ')} |`;
+  const headerRow = `| Engine | ${engines.join(' | ')} |`;
 
-  const separatorRow = `| ${new Array(header.length + 1).fill(0).map(() => '---').join(' | ')} |`;
+  const separatorRow = `| ${new Array(engines.length + 1).fill(0).map(() => '---').join(' | ')} |`;
 
   const rows = []
   for (const k of keys) {
     const row = [k]
-    for (const i of header) {
+    for (const i of engines) {
       row.push(data[k][i] || 0)
     }
     rows.push(`| ${row.join(' | ')} |`)
@@ -81,14 +81,32 @@ async function main() {
     const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
     data['Executable size'][i] = size
   }
+
+  const execPath = execSync(`which ${i}`).toString().trim()
+  const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
+  data['Executable size'][i] = size
+
+
+  // sort by score
+  const keys = Object.keys(data)
+  const engines = Object.keys(data[keys[0]]).sort((a, b) => {
+    return data['Score'][b] - data['Score'][a]
+  })
+
+  for(const i in data){
+    const obj = {}
+    for(const e of engines){
+      obj[e] = data[i][e]
+    }
+    data[i] = obj
+  }
+
   console.table(data)
   const md = json2md(data)
-
   const marker = "\n## bench\n"
   const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
 
   fs.writeFileSync(mdPath, doc)
-
   fs.writeFileSync(jsonPath, JSON.stringify(data))
 }
 
