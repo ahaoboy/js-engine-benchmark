@@ -7,7 +7,7 @@ on:
   push:
     branches:
       - "main"
-  schedule:     
+  schedule:
    - cron: '0 0 * * 1'
   pull_request:
 
@@ -101,11 +101,11 @@ jobs:
 
 
           npm run build
-          npm run update
+          npm run update > table.txt
 
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy"
-          git add ./bench.json ./readme.md
+          git add ./bench.json ./readme.md ./table.txt
           git commit -m"update"
 
       - name: Push changes
