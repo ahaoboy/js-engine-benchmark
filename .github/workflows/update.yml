@@ -23,12 +23,12 @@ jobs:
 
           git clone https://github.com/quickjs-ng/quickjs.git --depth=1
           cd quickjs
-          make install
+          sudo make install
           cd ..
 
           git clone https://github.com/ccxvii/mujs.git --depth=1
           cd mujs
-          make install HAVE_READLINE=no
+          sudo make install HAVE_READLINE=no
           cd ..
 
           git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
@@ -36,13 +36,13 @@ jobs:
           sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool
           git submodule update --init
           cmake -S . -B build
-          make install
+          sudo make install
           cp ./build/tjs /usr/local/bin/tjs
           cd ..
 
 
           wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
-          chmod 777 ./boa-linux-amd64
+          sudo chmod 777 ./boa-linux-amd64
           cp ./boa-linux-amd64 /usr/local/bin/boa
 
 
