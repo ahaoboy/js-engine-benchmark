@@ -3,13 +3,21 @@ fork from: https://github.com/mozilla/arewefastyet/tree/master/benchmarks/v8-v7
 ```bash
 npm run build
 
+qjs-ng  ./dist/bench.js
+qjs     ./dist/bench.js
+llrt    ./dist/bench.js
+mujs    ./dist/bench.js
+boa     ./dist/bench.js
+node    ./dist/bench.js
+deno    ./dist/bench.js
+jer     ./dist/bench.js
+hermes  ./dist/bench.js
+xst     ./dist/bench.js
+tjs run ./dist/bench.js
 
-qjs  ./dist/bench.js
-llrt ./dist/bench.js
-mujs ./dist/bench.js
-boa  ./dist/bench.js
-node ./dist/bench.js
-deno ./dist/bench.js
+or
+
+npm run update
 ```
 
 ## Engine & Runtime
@@ -28,15 +36,15 @@ deno ./dist/bench.js
 - [node](https://github.com/nodejs/node): Node.js JavaScript runtime
 
 ## bench
-| Engine | llrt | qjs | qjs-ng | tjs | mujs | boa | jerry | hermes | xst | deno | node |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Executable size | 7.6M | 1.1M | 1.3M | 5.1M | 396K | 27M | 452K | 36M | 2.1M | 137M | 110M |
-| Richards | 644 | 708 | 677 | 713 | 215 | 47.6 | 257 | 1105 | 88.2 | 33254 | 32248 |
-| DeltaBlue | 598 | 682 | 679 | 696 | 321 | 45.8 | 271 | 1028 | 160 | 67678 | 64207 |
-| Crypto | 798 | 743 | 618 | 651 | 181 | 57.3 | 278 | 1362 | 316 | 41389 | 41602 |
-| RayTrace | 1122 | 902 | 910 | 1113 | 493 | 144 | 341 | 1562 | 494 | 59051 | 54981 |
-| EarleyBoyer | 1846 | 1511 | 1488 | 1818 | 529 | 158 | 0 | 3357 | 343 | 67432 | 67064 |
-| RegExp | 197 | 227 | 229 | 251 | 193 | 43.7 | 0 | 559 | 70.3 | 9056 | 8947 |
-| Splay | 1923 | 1830 | 1749 | 2049 | 876 | 175 | 0 | 3683 | 399 | 23551 | 33648 |
-| NavierStokes | 1486 | 1400 | 1041 | 1057 | 462 | 124 | 0 | 1878 | 761 | 38912 | 39099 |
-| Score | 880 | 855 | 795 | 879 | 355 | 84.9 | 0 | 1538 | 252 | 36395 | 37290 |
+| Engine | deno | node | llrt | qjs |
+| --- | --- | --- | --- | --- |
+| Executable size | 103M | 77M | 8.9M | 1.7M |
+| Richards | 64769 | 65633 | 933 | 863 |
+| DeltaBlue | 140613 | 129261 | 878 | 778 |
+| Crypto | 78399 | 75623 | 1162 | 949 |
+| RayTrace | 97975 | 104856 | 1331 | 652 |
+| EarleyBoyer | 114134 | 114108 | 2103 | 1840 |
+| RegExp | 16423 | 15547 | 382 | 391 |
+| Splay | 45236 | 54004 | 2139 | 1939 |
+| NavierStokes | 75608 | 67967 | 2304 | 1497 |
+| Score | 67837 | 67638 | 1223 | 982 |

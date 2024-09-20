@@ -2,6 +2,29 @@ const fs = require('fs')
 const path = require('path')
 const { exec, execSync } = require('child_process');
 
+const execList = [
+  "llrt",
+  "qjs",
+  "qjs-ng",
+  "tjs",
+  'mujs',
+  "boa",
+  "jerry",
+  "hermes",
+  "xst",
+  'deno',
+  'node',
+]
+
+const subCmd = {
+  "tjs": "run"
+}
+
+// for better display
+const nameMap = {
+  'qjs-ng': "qjs(ng)"
+}
+
 
 const mdPath = path.resolve("./readme.md")
 const jsonPath = path.resolve("./bench.json")
@@ -39,23 +62,6 @@ function json2md(data) {
   return [headerRow, separatorRow, ...rows].join('\n');
 }
 
-const execList = [
-  "llrt",
-  "qjs",
-  "qjs-ng",
-  "tjs",
-  'mujs',
-  "boa",
-  "jerry",
-  "hermes",
-  "xst",
-  'deno',
-  'node',
-]
-
-const subCmd = {
-  "tjs": "run"
-}
 
 async function execCmd(cmd) {
   return new Promise(r => {
@@ -82,21 +88,17 @@ async function main() {
     data['Executable size'][i] = size
   }
 
-  const execPath = execSync(`which ${i}`).toString().trim()
-  const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
-  data['Executable size'][i] = size
-
-
   // sort by score
   const keys = Object.keys(data)
   const engines = Object.keys(data[keys[0]]).sort((a, b) => {
     return data['Score'][b] - data['Score'][a]
   })
 
-  for(const i in data){
+  for (const i in data) {
     const obj = {}
-    for(const e of engines){
-      obj[e] = data[i][e]
+    for (const e of engines) {
+      const name = nameMap[e] ?? e
+      obj[name] = data[i][name]
     }
     data[i] = obj
   }
