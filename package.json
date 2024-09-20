@@ -1,5 +1,5 @@
 {
-  "name": "js-bench",
+  "name": "js-engine-benchmark",
   "version": "1.0.0",
   "description": "js-bench",
   "main": "index.js",
