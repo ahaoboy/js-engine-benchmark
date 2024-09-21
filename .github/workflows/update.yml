@@ -25,6 +25,7 @@ jobs:
           bun-version: latest
       - name: install
         run: |
+
           brew install make cmake autoconf automake libtool texinfo
 
           # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
@@ -83,6 +84,7 @@ jobs:
 
       - name: run
         run: |
+
           which node
           which deno
           which mujs
@@ -135,6 +137,7 @@ jobs:
           bun-version: latest
       - name: install
         run: |
+
           sudo apt update
           sudo apt install wget unzip python3 -y
 
@@ -260,12 +263,10 @@ jobs:
             unzip
             curl
             wget
-            fish
 
       - name: install
         shell: msys2 {0}
         run: |
-          fish
 
           # git clone https://github.com/bellard/quickjs --depth=1
           # cd quickjs
@@ -277,15 +278,15 @@ jobs:
           chmod 777 ./qjs.exe
           cp ./qjs.exe /usr/bin/qjs.exe
 
-          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
-          cd qjs-ng
-          make
-          cp ./build/qjs.exe /usr/bin/qjs-ng.exe
-          cd ..
+          # git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
+          # cd qjs-ng
+          # make
+          # cp ./build/qjs.exe /usr/bin/qjs-ng.exe
+          # cd ..
 
-          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
-          # chmod 777 ./qjs-windows-x86_64.exe
-          # cp ./qjs-windows-x86_64.exe /usr/bin/qjs-ng.exe
+          wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
+          chmod 777 ./qjs-windows-x86_64.exe
+          cp ./qjs-windows-x86_64.exe /usr/bin/qjs-ng.exe
 
           git clone https://github.com/ccxvii/mujs.git --depth=1
           cd mujs
