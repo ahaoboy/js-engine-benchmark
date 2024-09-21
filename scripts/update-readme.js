@@ -8,7 +8,10 @@ const mdPath = path.resolve("./readme.md")
 
 function json2md(data) {
   const keys = Object.keys(data)
-  const engines = Object.keys(data[keys[0]])
+
+  const engines = Object.keys(data[keys[0]]).sort((a, b) => {
+    return (+data['Score'][b]) - (+data['Score'][a])
+  })
 
   const headerRow = `| Engine | ${engines.join(' | ')} |`;
 
