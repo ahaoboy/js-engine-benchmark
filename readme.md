@@ -22,29 +22,58 @@ npm run update
 
 ## Engine & Runtime
 
-- [QuickJS-ng](https://github.com/quickjs-ng/quickjs): version 2019-07-09, qjs executable, 64 bits, compiled with -O2.
-- [QuickJS](https://bellard.org/quickjs/): version 2019-07-09, qjs executable, 64 bits, compiled with -O2.
-- [DukTape](https://github.com/svaarala/duktape): version 2.3.0, duk executable, 64 bits, compiled with -O2.
-- [XS](https://github.com/Moddable-OpenSource/moddable): version 8.8.0, xst executable, 64 bits, compiled with -O3. The engine cannot correctly run the RegExp test, so it was disabled.
-- [MuJS](https://github.com/ccxvii/mujs): version 1.0.6, mujs executable, 64 bits, compiled with -O2. JS_STACKSIZE and JS_ENVLIMIT were increased to 32768 to run EarleyBoyer. REG_MAXSUB was increased to 12 to run RegExp.
-- [JerryScript](https://github.com/jerryscript-project/jerryscript): git version 2b8c4286, jerry executable, 64 bits. The engine could not run EarleyBoyer, RegExp and Splay.
-- [Hermes](https://github.com/facebook/hermes): version 0.1.0, 64 bit Linux binary downloaded from here. The benchmark was run with the -O option (=enable expensive optimizations).
-- [V8](https://v8.dev/): version 7.7.289, Linux 64 bit executable downloaded from here.
-- [txiki.js](https://github.com/saghul/txiki.js): A tiny JavaScript runtime
-- [llrt](https://github.com/awslabs/llrt): LLRT (Low Latency Runtime) is a lightweight JavaScript runtime
-- [deno](https://github.com/denoland/deno): A modern runtime for JavaScript and TypeScript.
-- [node](https://github.com/nodejs/node): Node.js JavaScript runtime
-
+- [x] [bun](https://github.com/oven-sh/bun): Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one
+- [x] [node](https://github.com/nodejs/node): Node.js JavaScript runtime
+- [x] [deno](https://github.com/denoland/deno): A modern runtime for JavaScript and TypeScript.
+- [x] [graaljs](https://github.com/oracle/graaljs): A ECMAScript 2023 compliant JavaScript implementation built on GraalVM. With polyglot language interoperability support. Running Node.js applications!
+- [x] [hermes](https://github.com/facebook/hermes): A JavaScript engine optimized for running React Native.
+- [x] [llrt](https://github.com/awslabs/llrt): LLRT (Low Latency Runtime) is a lightweight JavaScript runtime
+- [x] [txiki.js](https://github.com/saghul/txiki.js): A tiny JavaScript runtime
+- [x] [QuickJS](https://bellard.org/quickjs/): version 2019-07-09, qjs executable, 64 bits, compiled with -O2.
+- [x] [QuickJS-ng](https://github.com/quickjs-ng/quickjs): QuickJS, the Next Generation: a mighty JavaScript engine
+- [x] [MuJS](https://github.com/ccxvii/mujs): An embeddable Javascript interpreter in C.
+- [x] [XS](https://github.com/Moddable-OpenSource/moddable): Tools for developers to create truly open IoT products using standard JavaScript on low cost microcontrollers.
+- [x] [Hermes](https://github.com/facebook/hermes): version 0.1.0, 64 bit Linux binary downloaded from here. The benchmark was run with the -O option (=enable expensive optimizations).
+- [ ] [JerryScript](https://github.com/jerryscript-project/jerryscript): Ultra-lightweight JavaScript engine for the Internet of Things.
+- [ ] [DukTape](https://github.com/svaarala/duktape): embeddable Javascript engine with a focus on portability and compact footprint
 ## bench
-| Engine | node | deno | hermes | tjs | llrt | qjs | qjs(ng) | mujs | xst | boa | jerry |
+
+### ubuntu
+| Engine | bun | node | deno | graaljs | hermes | tjs | llrt | qjs | qjs(ng) | mujs | xst | boa |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Executable size | 93M | 110M | 137M | 4.0K | 36M | 5.1M | 7.6M | 1.1M | 1.3M | 396K | 2.1M | 27M |
+| Richards | 38073 | 31613 | 33262 | 35683 | 1113 | 712 | 644 | 691 | 659 | 229 | 88.9 | 47.2 |
+| DeltaBlue | 48610 | 66766 | 71738 | 39334 | 1048 | 695 | 582 | 694 | 653 | 325 | 162 | 45.2 |
+| Crypto | 44903 | 41525 | 41358 | 19638 | 1374 | 643 | 794 | 775 | 625 | 179 | 317 | 56.2 |
+| RayTrace | 81029 | 55203 | 56683 | 4489 | 1568 | 1105 | 1083 | 959 | 893 | 472 | 498 | 144 |
+| EarleyBoyer | 67977 | 66564 | 66530 | 22151 | 3391 | 1783 | 1872 | 1526 | 1462 | 481 | 341 | 152 |
+| RegExp | 17404 | 9119 | 9083 | 872 | 553 | 250 | 197 | 226 | 225 | 186 | 70 | 43.6 |
+| Splay | 35163 | 33020 | 22769 | 2276 | 3610 | 1960 | 1828 | 1757 | 1701 | 1277 | 359 | 163 |
+| NavierStokes | 34360 | 39029 | 38803 | 23797 | 1857 | 1062 | 1470 | 1436 | 1036 | 455 | 771 | 124 |
+| Score | 41969 | 37347 | 36257 | 10328 | 1540 | 869 | 867 | 864 | 782 | 367 | 249 | 83.2 |
+### macos
+| Engine | bun | node | deno | graaljs | hermes | tjs | llrt | qjs | qjs(ng) | mujs | xst | boa |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Executable size | 93M | 110M | 137M | 4.0K | 36M | 5.1M | 7.6M | 1.1M | 1.3M | 396K | 2.1M | 27M |
+| Richards | 38073 | 31613 | 33262 | 35683 | 1113 | 712 | 644 | 691 | 659 | 229 | 88.9 | 47.2 |
+| DeltaBlue | 48610 | 66766 | 71738 | 39334 | 1048 | 695 | 582 | 694 | 653 | 325 | 162 | 45.2 |
+| Crypto | 44903 | 41525 | 41358 | 19638 | 1374 | 643 | 794 | 775 | 625 | 179 | 317 | 56.2 |
+| RayTrace | 81029 | 55203 | 56683 | 4489 | 1568 | 1105 | 1083 | 959 | 893 | 472 | 498 | 144 |
+| EarleyBoyer | 67977 | 66564 | 66530 | 22151 | 3391 | 1783 | 1872 | 1526 | 1462 | 481 | 341 | 152 |
+| RegExp | 17404 | 9119 | 9083 | 872 | 553 | 250 | 197 | 226 | 225 | 186 | 70 | 43.6 |
+| Splay | 35163 | 33020 | 22769 | 2276 | 3610 | 1960 | 1828 | 1757 | 1701 | 1277 | 359 | 163 |
+| NavierStokes | 34360 | 39029 | 38803 | 23797 | 1857 | 1062 | 1470 | 1436 | 1036 | 455 | 771 | 124 |
+| Score | 41969 | 37347 | 36257 | 10328 | 1540 | 869 | 867 | 864 | 782 | 367 | 249 | 83.2 |
+### windows
+| Engine | bun | deno | node | graaljs | hermes | tjs | qjs | qjs(ng) | llrt | mujs | xst |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Executable size | 110M | 137M | 36M | 5.1M | 7.6M | 1.1M | 1.3M | 396K | 2.1M | 27M | 452K |
-| Richards | 31256 | 33212 | 1136 | 709 | 636 | 700 | 666 | 230 | 88.7 | 47.5 | 270 |
-| DeltaBlue | 64472 | 72809 | 1074 | 707 | 589 | 681 | 650 | 322 | 162 | 44.7 | 271 |
-| Crypto | 41583 | 41260 | 1360 | 659 | 805 | 789 | 621 | 179 | 319 | 56.5 | 278 |
-| RayTrace | 57070 | 58549 | 1545 | 1125 | 1125 | 908 | 886 | 483 | 497 | 143 | 342 |
-| EarleyBoyer | 67158 | 65924 | 3357 | 1791 | 1845 | 1488 | 1401 | 507 | 342 | 154 | 0 |
-| RegExp | 9029 | 9038 | 552 | 247 | 196 | 222 | 222 | 191 | 69.7 | 43.9 | 0 |
-| Splay | 32385 | 23103 | 3577 | 1944 | 1768 | 1729 | 1711 | 856 | 395 | 173 | 0 |
-| NavierStokes | 38139 | 38912 | 1890 | 1095 | 1479 | 1365 | 1040 | 455 | 764 | 124 | 0 |
-| Score | 37090 | 36469 | 1543 | 877 | 868 | 848 | 776 | 353 | 252 | 84 | 0 |
+| Executable size | 0 | 105M | 110M | 0 | 7.9M | 3.5M | 920K | 1.0M | 7.7M | 432K | 1.6M |
+| Richards | 46348 | 45261 | 44304 | 29791 | 1373 | 1335 | 1112 | 1174 | 815 | 415 | 108 |
+| DeltaBlue | 63334 | 105253 | 95137 | 39148 | 1258 | 1355 | 1136 | 1222 | 803 | 619 | 191 |
+| Crypto | 66388 | 59376 | 54095 | 24826 | 1473 | 1239 | 1341 | 1215 | 689 | 315 | 367 |
+| RayTrace | 129054 | 81473 | 82657 | 3258 | 2564 | 2219 | 1268 | 1323 | 1233 | 1018 | 618 |
+| EarleyBoyer | 101878 | 97303 | 95321 | 30535 | 5110 | 3410 | 2389 | 2445 | 1982 | 1133 | 413 |
+| RegExp | 27120 | 13429 | 13391 | 1433 | 741 | 319 | 288 | 283 | 153 | 328 | 189 |
+| Splay | 49327 | 41169 | 43834 | 2042 | 4824 | 3729 | 2518 | 2502 | 2214 | 1103 | 419 |
+| NavierStokes | 33768 | 40836 | 40688 | 26362 | 1662 | 2128 | 2573 | 2184 | 1262 | 793 | 854 |
+| Score | 57271 | 51647 | 50590 | 11050 | 1937 | 1600 | 1326 | 1311 | 910 | 636 | 327 |

@@ -9,12 +9,15 @@ const execList = [
   "tjs",
   'mujs',
   "boa",
-  "jerry",
+
   "hermes",
   "xst",
   'deno',
   'node',
   "bun",
+  "graaljs",
+  // "jerry",
+  // "dukTape",
 ]
 
 const subCmd = {
@@ -27,9 +30,6 @@ const nameMap = {
 }
 
 
-const mdPath = path.resolve("./readme.md")
-const jsonPath = path.resolve("./bench.json")
-
 function toJSON(data) {
   const json = {}
   for (const line of data.split("\n")) {
@@ -40,27 +40,6 @@ function toJSON(data) {
   }
 
   return json
-}
-
-
-function json2md(data) {
-  const keys = Object.keys(data)
-  const engines = Object.keys(data[keys[0]])
-
-  const headerRow = `| Engine | ${engines.join(' | ')} |`;
-
-  const separatorRow = `| ${new Array(engines.length + 1).fill(0).map(() => '---').join(' | ')} |`;
-
-  const rows = []
-  for (const k of keys) {
-    const row = [k]
-    for (const i of engines) {
-      row.push(data[k][i] || 0)
-    }
-    rows.push(`| ${row.join(' | ')} |`)
-  }
-
-  return [headerRow, separatorRow, ...rows].join('\n');
 }
 
 async function execCmd(cmd) {
@@ -75,23 +54,30 @@ const data = { 'Executable size': {} }
 
 async function main() {
   for (const i of execList) {
-    const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
-    const json = toJSON(out)
-    for (const [k, v] of Object.entries(json)) {
-      const obj = data[k] || {}
-      obj[i] = v
-      data[k] = obj
-    }
+    try {
+      const execPath = execSync(`which ${i}`).toString().trim()
+      const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
+      const json = toJSON(out)
 
-    const execPath = execSync(`which ${i}`).toString().trim()
-    const size = execSync(`du ${execPath} -sh`).toString().split(" ")[0].split("\t")[0].trim()
-    data['Executable size'][i] = size
+      for (const [k, v] of Object.entries(json)) {
+        const obj = data[k] || {}
+        obj[i] = v
+        data[k] = obj
+      }
+
+      // console.warn("execPath: ", execPath)
+      const size = execSync(`du -h ${execPath}`).toString().split(" ")[0].split("\t")[0].trim()
+      // console.warn("size: ", size)
+      data['Executable size'][i] = size
+    } catch (e) {
+
+    }
   }
 
   // sort by score
   const keys = Object.keys(data)
   const engines = Object.keys(data[keys[0]]).sort((a, b) => {
-    return data['Score'][b] - data['Score'][a]
+    return (+data['Score'][b]) - (+data['Score'][a])
   })
 
   for (const i in data) {
@@ -103,13 +89,7 @@ async function main() {
     data[i] = obj
   }
 
-  console.table(data)
-  const md = json2md(data)
-  const marker = "\n## bench\n"
-  const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
-
-  fs.writeFileSync(mdPath, doc)
-  fs.writeFileSync(jsonPath, JSON.stringify(data))
+  console.log(JSON.stringify(data))
 }
 
 main()

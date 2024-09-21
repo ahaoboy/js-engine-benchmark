@@ -8,12 +8,12 @@ on:
     branches:
       - "main"
   schedule:
-   - cron: '0 0 * * 1'
+    - cron: "0 0 * * 1"
   pull_request:
 
 jobs:
-  update:
-    runs-on: ubuntu-latest
+  bench-macos:
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,14 +23,13 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      - run: |
-          sudo apt update
-          sudo apt install wget unzip python3 -y
+      - name: install
+        run: |
+          brew install make cmake autoconf automake libtool texinfo
 
-          wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
-          chmod 777 ./qjs-linux-x86
-          sudo cp ./qjs-linux-x86 /usr/local/bin/qjs-ng
-
+          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
+          # chmod 777 ./qjs-darwin
+          # sudo cp ./qjs-darwin /usr/local/bin/qjs-ng
           git clone https://github.com/bellard/quickjs --depth=1
           cd quickjs
           sudo make install
@@ -49,7 +48,6 @@ jobs:
 
           git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
           cd txiki.js
-          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool -y
           git submodule update --init
           cmake -S . -B build
           sudo make install
@@ -57,29 +55,33 @@ jobs:
           cd ..
 
 
-          wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
-          sudo chmod 777 ./boa-linux-amd64
-          sudo cp ./boa-linux-amd64 /usr/local/bin/boa
+          # wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
+          # sudo chmod 777 ./boa-linux-amd64
+          # sudo cp ./boa-linux-amd64 /usr/local/bin/boa
 
 
-          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
-          unzip ./llrt-linux-x64.zip
+          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-darwin-x64.zip
+          unzip ./llrt-darwin-x64.zip
           sudo cp ./llrt /usr/local/bin/llrt
 
-          git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
-          cd jerryscript
-          python3 tools/build.py
-          sudo cp ./build/bin/jerry /usr/local/bin/jerry
+          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
+          # cd jerryscript
+          # python3 tools/build.py
+          # sudo cp ./build/bin/jerry /usr/local/bin/jerry
 
-          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
-          sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/local/bin
+          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-darwin.tar.gz
+          sudo tar -zxvf hermes-cli-darwin.tar.gz -C /usr/local/bin
 
-          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
-          unzip xst-lin64.zip
+          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-mac64.zip
+          unzip xst-mac64.zip
           sudo cp ./xst /usr/local/bin/xst
 
 
-      - name: update
+          wget https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-macos-amd64.tar.gz
+          sudo tar -zxvf ./graaljs-24.1.0-macos-amd64.tar.gz
+          sudo ln -s "$PWD/graaljs-24.1.0-macos-amd64/bin/js" /usr/local/bin/graaljs
+
+      - name: run
         run: |
           which node
           which deno
@@ -88,29 +90,26 @@ jobs:
           which tjs
           which qjs
           which qjs-ng
-          which boa
-          which jerry
+          # which boa
+          # which jerry
           which hermes
-          which xst
+          # which xst
+          which graaljs
+          which bun
 
           node --version
           deno --version
           llrt --version
           tjs --version
-          boa --version
-          jerry --version
+          # boa --version
+          # jerry --version
           hermes --version
+          graaljs --version
+          bun --version
           xst -v
 
-
           node ./scripts/build.js
-          node ./scripts/update.js > table.txt
-
-          git config --global user.email "504595380@qq.com"
-          git config --global user.name "ahaoboy"
-          git add ./bench.json ./readme.md ./table.txt
-          git commit -m"update"
-
+          node ./scripts/update.js > macos.json
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
@@ -120,5 +119,286 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: bench
-          path: ./bench.json
+          name: macos
+          path: ./macos.json
+
+  bench-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: denoland/setup-deno@v1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: install
+        run: |
+          sudo apt update
+          sudo apt install wget unzip python3 -y
+
+          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
+          # chmod 777 ./qjs-linux-x86
+          # sudo cp ./qjs-linux-x86 /usr/bin/qjs-ng
+
+          git clone https://github.com/bellard/quickjs --depth=1
+          cd quickjs
+          sudo make install
+          cd ..
+
+          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
+          cd qjs-ng
+          sudo make
+          sudo cp ./build/qjs /usr/bin/qjs-ng
+          cd ..
+
+          git clone https://github.com/ccxvii/mujs.git --depth=1
+          cd mujs
+          sudo make install HAVE_READLINE=no
+          cd ..
+
+          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
+          cd txiki.js
+          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool -y
+          git submodule update --init
+          cmake -S . -B build
+          sudo make install
+          sudo cp ./build/tjs /usr/bin/tjs
+          cd ..
+
+
+          wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
+          sudo chmod 777 ./boa-linux-amd64
+          sudo cp ./boa-linux-amd64 /usr/bin/boa
+
+
+          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
+          unzip ./llrt-linux-x64.zip
+          sudo cp ./llrt /usr/bin/llrt
+
+          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
+          # cd jerryscript
+          # python3 tools/build.py
+          # sudo cp ./build/bin/jerry /usr/bin/jerry
+
+          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
+          sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
+
+          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
+          unzip xst-lin64.zip
+          sudo cp ./xst /usr/bin/xst
+
+          wget "https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-linux-amd64.tar.gz"
+          sudo tar -zxvf ./graaljs-24.1.0-linux-amd64.tar.gz
+          sudo ln -s "$PWD/graaljs-24.1.0-linux-amd64/bin/js" /usr/bin/graaljs
+
+      - name: run
+        run: |
+          which node
+          which deno
+          which mujs
+          which llrt
+          which tjs
+          which qjs
+          which qjs-ng
+          which boa
+          # which jerry
+          which hermes
+          which xst
+          which graaljs
+          which bun
+
+          node --version
+          deno --version
+          llrt --version
+          tjs --version
+          boa --version
+          # jerry --version
+          hermes --version
+          graaljs --version
+          bun --version
+          xst -v
+
+          node ./scripts/build.js
+          node ./scripts/update.js > ubuntu.json
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ubuntu
+          path: ./ubuntu.json
+  bench-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: denoland/setup-deno@v1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          path-type: inherit
+          install: >-
+            mingw-w64-x86_64-make
+            mingw-w64-x86_64-cmake
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-clang
+            mingw-w64-x86_64-perl
+            mingw-w64-x86_64-python3
+            zip
+            unzip
+            curl
+            wget
+            fish
+
+      - name: install
+        shell: msys2 {0}
+        run: |
+          fish
+
+          # git clone https://github.com/bellard/quickjs --depth=1
+          # cd quickjs
+          # make install
+          # cd ..
+
+          wget https://github.com/mengmo/QuickJS-Windows-Build/releases/download/2021-03-27/quickjs-2021-03-27-win64.zip
+          unzip ./quickjs-2021-03-27-win64.zip
+          chmod 777 ./qjs.exe
+          cp ./qjs.exe /usr/bin/qjs.exe
+
+          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
+          cd qjs-ng
+          make
+          cp ./build/qjs.exe /usr/bin/qjs-ng.exe
+          cd ..
+
+          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
+          # chmod 777 ./qjs-windows-x86_64.exe
+          # cp ./qjs-windows-x86_64.exe /usr/bin/qjs-ng.exe
+
+          git clone https://github.com/ccxvii/mujs.git --depth=1
+          cd mujs
+          make install HAVE_READLINE=no
+          cd ..
+
+          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
+          cd txiki.js
+          git submodule update --init
+          pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-curl libcurl openssl-devel libcurl-devel autoconf texinfo mingw-w64-x86_64-libtool --noconfirm
+          make
+          cp ./build/tjs.exe /usr/bin/tjs.exe
+          cd ..
+
+
+          wget https://github.com/boa-dev/boa/releases/latest/download/boa-windows-amd64.exe
+          chmod 777 ./boa-windows-amd64.exe
+          cp ./boa-windows-amd64.exe /usr/bin/boa.exe
+
+
+          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-windows-x64.zip
+          unzip ./llrt-windows-x64.zip
+          chmod 777 ./llrt.exe
+          cp ./llrt.exe /usr/bin/llrt.exe
+
+          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
+          # cd jerryscript
+          # python3 tools/build.py
+          # cp ./build/bin/jerry.exe /usr/bin/jerry.exe
+
+          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-windows.tar.gz
+          tar -zxvf hermes-cli-windows.tar.gz -C /usr/bin
+
+          # wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-win64.zip
+          # unzip xst-win64.zip
+          # chmod 777 ./xst.exe
+          # cp ./xst.exe /usr/bin/xst.exe
+
+          wget https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-windows-amd64.zip
+          unzip ./graaljs-24.1.0-windows-amd64.zip
+          cp -r ./graaljs-24.1.0-windows-amd64/* /usr
+          mv /usr/bin/js.exe /usr/bin/graaljs.exe
+
+      - name: run
+        shell: msys2 {0}
+        run: |
+          which node
+          which deno
+          which mujs
+          which llrt
+          which tjs
+          which qjs
+          which qjs-ng
+          which boa
+          # which jerry
+          which hermes
+          # which xst
+          which graaljs
+          which bun
+
+          node --version
+          deno --version
+          llrt --version
+          tjs --version
+          boa --version
+          # jerry --version
+          hermes --version
+          graaljs --version
+          bun --version
+          # xst -v
+
+          node ./scripts/build.js
+          node ./scripts/update.js > windows.json
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: ./windows.json
+  update:
+    needs: ["bench-ubuntu", "bench-windows", "bench-macos"]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          path: windows
+          pattern: windows
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: ubuntu
+          pattern: ubuntu
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: macos
+          pattern: macos
+          merge-multiple: true
+      - run: |
+          cp ./ubuntu/ubuntu.json ./ubuntu.json
+          cp ./windows/windows.json ./windows.json
+          cp ./macos/macos.json ./macos.json
+          node ./scripts/update-readme.js
+          git config --global user.email "504595380@qq.com"
+          git config --global user.name "ahaoboy"
+          git add ./windows.json ./ubuntu.json ./macos.json ./readme.md
+          git commit -m"update"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
