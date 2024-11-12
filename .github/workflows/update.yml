@@ -25,8 +25,13 @@ jobs:
           bun-version: latest
       - name: install
         run: |
+          brew update
+          brew upgrade
+          echo 'export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+          brew install make cmake autoconf automake libtool texinfo webkitgtk
 
-          brew install make cmake autoconf automake libtool texinfo
+          # add jsc to path
+          sudo ln -s "$(sudo find /System/Library -name jsc)" /usr/local/bin/jsc
 
           # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
           # chmod 777 ./qjs-darwin
@@ -98,6 +103,7 @@ jobs:
           # which xst
           which graaljs
           which bun
+          which jsc
 
           node --version
           deno --version
@@ -139,7 +145,11 @@ jobs:
         run: |
 
           sudo apt update
+
           sudo apt install wget unzip python3 -y
+
+          # install jsc, libjavascriptcoregtk-bin needs 2404
+          sudo apt install libjavascriptcoregtk-4.0-bin -y
 
           # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
           # chmod 777 ./qjs-linux-x86
@@ -211,6 +221,7 @@ jobs:
           which xst
           which graaljs
           which bun
+          which jsc
 
           node --version
           deno --version

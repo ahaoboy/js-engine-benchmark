@@ -16,6 +16,7 @@ const execList = [
   'node',
   "bun",
   "graaljs",
+  'jsc',
   // "jerry",
   // "dukTape",
 ]
@@ -50,7 +51,7 @@ async function execCmd(cmd) {
   })
 }
 
-const data = { 'Executable size': {} }
+const data = {}
 
 async function main() {
   for (const i of execList) {
@@ -76,6 +77,10 @@ async function main() {
 
   // sort by score
   const keys = Object.keys(data)
+  if (!keys.length) {
+    console.log(JSON.stringify(data))
+    return
+  }
   const engines = Object.keys(data[keys[0]]).sort((a, b) => {
     return (+data['Score'][b]) - (+data['Score'][a])
   })
