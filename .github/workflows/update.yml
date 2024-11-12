@@ -27,8 +27,12 @@ jobs:
         run: |
           brew update
           brew upgrade
-          echo 'export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-          brew install make cmake autoconf automake libtool texinfo webkitgtk
+          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
+
+          # echo 'export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+          # brew install webkitgtk
+
+          brew install make cmake autoconf automake libtool texinfo
 
           # add jsc to path
           sudo ln -s "$(sudo find /System/Library -name jsc)" /usr/local/bin/jsc
@@ -103,7 +107,7 @@ jobs:
           # which xst
           which graaljs
           which bun
-          which jsc
+          # which jsc
 
           node --version
           deno --version
