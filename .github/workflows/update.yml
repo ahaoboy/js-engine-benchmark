@@ -135,7 +135,7 @@ jobs:
           path: ./macos.json
 
   bench-ubuntu:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -153,7 +153,11 @@ jobs:
           sudo apt install wget unzip python3 -y
 
           # install jsc, libjavascriptcoregtk-bin needs 2404
-          sudo apt install libjavascriptcoregtk-4.0-bin -y
+          # sudo apt install libjavascriptcoregtk-4.0-bin -y
+          wget https://github.com/ahaoboy/jsc-build/releases/latest/download/jsc-x86_64-unknown-linux-gnu.tar.gz
+          mkdir jsc
+          sudo cp ./jsc/bin/jsc /usr/bin/jsc
+
 
           # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
           # chmod 777 ./qjs-linux-x86
