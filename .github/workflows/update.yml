@@ -156,6 +156,7 @@ jobs:
           # sudo apt install libjavascriptcoregtk-4.0-bin -y
           wget https://github.com/ahaoboy/jsc-build/releases/latest/download/jsc-x86_64-unknown-linux-gnu.tar.gz
           mkdir jsc
+          tar -zxvf ./jsc-x86_64-unknown-linux-gnu.tar.gz -C jsc
           sudo cp ./jsc/bin/jsc /usr/bin/jsc
 
 
