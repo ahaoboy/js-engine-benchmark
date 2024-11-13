@@ -69,6 +69,9 @@ async function main() {
       // console.warn("execPath: ", execPath)
       const size = execSync(`du -h ${execPath}`).toString().split(" ")[0].split("\t")[0].trim()
       // console.warn("size: ", size)
+      if (!('Executable size' in data)) {
+        data['Executable size'] = {}
+      }
       data['Executable size'][i] = size
     } catch (e) {
 
