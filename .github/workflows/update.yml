@@ -147,7 +147,7 @@ jobs:
           bun-version: latest
       - name: install
         run: |
-
+          sudo apt upgrade
           sudo apt update
 
           sudo apt install wget unzip python3 -y
@@ -182,9 +182,10 @@ jobs:
 
           git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
           cd txiki.js
-          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool -y
+          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool libltdl-dev -y
           git submodule update --init
           cmake -S . -B build
+          sudo cmake --build build
           sudo make install
           sudo cp ./build/tjs /usr/bin/tjs
           cd ..
