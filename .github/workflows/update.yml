@@ -147,7 +147,7 @@ jobs:
           bun-version: latest
       - name: install
         run: |
-          sudo apt upgrade
+          sudo apt upgrade -y
           sudo apt update
 
           sudo apt install wget unzip python3 -y
