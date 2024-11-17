@@ -60,6 +60,10 @@ async function main() {
   for (const i of execList) {
     try {
       const execPath = execSync(`which ${i}`).toString().trim()
+
+      const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
+      console.error(test)
+
       const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
       const json = toJSON(out)
 

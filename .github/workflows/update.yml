@@ -239,6 +239,7 @@ jobs:
           which graaljs
           which bun
           which jsc
+          which d8
 
           node --version
           deno --version
