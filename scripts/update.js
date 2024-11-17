@@ -17,6 +17,8 @@ const execList = [
   "bun",
   "graaljs",
   'jsc',
+  'd8',
+  'js',
   // "jerry",
   // "dukTape",
 ]
@@ -27,9 +29,10 @@ const subCmd = {
 
 // for better display
 const nameMap = {
-  'qjs-ng': "qjs(ng)"
+  'qjs-ng': "qjs(ng)",
+  'd8': "v8",
+  'js': "spidermonkey",
 }
-
 
 function toJSON(data) {
   const json = {}

@@ -150,6 +150,13 @@ jobs:
           sudo apt upgrade -y
           sudo apt update
 
+          # install v8
+          wget https://github.com/ahaoboy/v8-build/releases/latest/download/v8-x86_64-unknown-linux-gnu.tar.gz
+          mkdir v8
+          tar -zxvf ./v8-x86_64-unknown-linux-gnu.tar.gz -C v8
+          sudo cp ./v8/d8 /usr/bin/d8
+          sudo cp ./v8/*.so /usr/lib
+
           sudo apt install wget unzip python3 -y
 
           # install jsc, libjavascriptcoregtk-bin needs 2404
