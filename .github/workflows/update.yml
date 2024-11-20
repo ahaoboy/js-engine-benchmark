@@ -247,6 +247,7 @@ jobs:
           which bun
           which jsc
           which d8
+          which js
 
           node --version
           deno --version
@@ -258,6 +259,7 @@ jobs:
           graaljs --version
           bun --version
           xst -v
+          js --version
 
           node ./scripts/build.js
           node ./scripts/update.js > ubuntu.json
