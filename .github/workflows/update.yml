@@ -150,6 +150,13 @@ jobs:
           sudo apt upgrade -y
           sudo apt update
 
+
+          # install spidermonkey
+          wget https://github.com/ahaoboy/spidermonkey-build/releases/latest/download/spidermonkey-x86_64-unknown-linux-gnu.tar.gz
+          mkdir spidermonkey
+          tar -zxvf ./spidermonkey-x86_64-unknown-linux-gnu.tar.gz -C spidermonkey
+          sudo cp ./spidermonkey/js /usr/bin/js
+
           # install v8
           wget https://github.com/ahaoboy/v8-build/releases/latest/download/v8-x86_64-unknown-linux-gnu.tar.gz
           mkdir v8
