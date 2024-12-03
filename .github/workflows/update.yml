@@ -172,6 +172,7 @@ jobs:
           # install quickjs-ng
           ei https://github.com/ahaoboy/quickjs-ng-build
           mv /usr/bin/qjs /usr/bin/qjs-ng
+          mv $(which qjs) /usr/local/qjs-ng
 
           # install quickjs
           ei https://github.com/ahaoboy/quickjs-build
@@ -244,6 +245,7 @@ jobs:
           bun --version
           xst -v
           js --version
+          jerry --version
 
           node ./scripts/build.js
           node ./scripts/update.js > ubuntu.json
