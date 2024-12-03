@@ -147,8 +147,8 @@ jobs:
           bun-version: latest
       - name: install
         run: |
-          sudo apt upgrade -y
-          sudo apt update
+          # sudo apt upgrade -y
+          # sudo apt update
           sudo apt install wget unzip python3 -y
 
           wget https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
