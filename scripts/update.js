@@ -19,7 +19,7 @@ const execList = [
   'jsc',
   'd8',
   'js',
-  // "jerry",
+  "jerry",
   // "dukTape",
 ]
 

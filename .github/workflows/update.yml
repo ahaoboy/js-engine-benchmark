@@ -149,50 +149,35 @@ jobs:
         run: |
           sudo apt upgrade -y
           sudo apt update
-
-
-          # install spidermonkey
-          wget https://github.com/ahaoboy/spidermonkey-build/releases/latest/download/spidermonkey-x86_64-unknown-linux-gnu.tar.gz
-          mkdir spidermonkey
-          tar -zxvf ./spidermonkey-x86_64-unknown-linux-gnu.tar.gz -C spidermonkey
-          sudo cp ./spidermonkey/js /usr/bin/js
-
-          # install v8
-          wget https://github.com/ahaoboy/v8-build/releases/latest/download/v8-x86_64-unknown-linux-gnu.tar.gz
-          mkdir v8
-          tar -zxvf ./v8-x86_64-unknown-linux-gnu.tar.gz -C v8
-          sudo cp ./v8/d8 /usr/bin/d8
-          sudo cp ./v8/*.so /usr/lib
-
           sudo apt install wget unzip python3 -y
 
+          wget https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
+          mkdir ei
+          tar -zxvf ./ei-x86_64-unknown-linux-musl.tar.gz -C ei
+          sudo cp ./ei/ei /usr/bin/ei
+
+          # install spidermonkey
+          ei https://github.com/ahaoboy/spidermonkey-build
+
+          # install v8
+          ei https://github.com/ahaoboy/v8-build
+
+
           # install jsc, libjavascriptcoregtk-bin needs 2404
-          # sudo apt install libjavascriptcoregtk-4.0-bin -y
-          wget https://github.com/ahaoboy/jsc-build/releases/latest/download/jsc-x86_64-unknown-linux-gnu.tar.gz
-          mkdir jsc
-          tar -zxvf ./jsc-x86_64-unknown-linux-gnu.tar.gz -C jsc
-          sudo cp ./jsc/bin/jsc /usr/bin/jsc
+          ei https://github.com/ahaoboy/jsc-build
 
+          # install jerryscript
+          ei https://github.com/ahaoboy/jerryscript-build
 
-          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-linux-x86
-          # chmod 777 ./qjs-linux-x86
-          # sudo cp ./qjs-linux-x86 /usr/bin/qjs-ng
+          # install quickjs-ng
+          ei https://github.com/ahaoboy/quickjs-ng-build
+          mv /usr/bin/qjs /usr/bin/qjs-ng
 
-          git clone https://github.com/bellard/quickjs --depth=1
-          cd quickjs
-          sudo make install
-          cd ..
+          # install quickjs
+          ei https://github.com/ahaoboy/quickjs-build
 
-          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
-          cd qjs-ng
-          sudo make
-          sudo cp ./build/qjs /usr/bin/qjs-ng
-          cd ..
-
-          git clone https://github.com/ccxvii/mujs.git --depth=1
-          cd mujs
-          sudo make install HAVE_READLINE=no
-          cd ..
+          # install mujs
+          ei https://github.com/ahaoboy/mujs-build
 
           git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
           cd txiki.js
@@ -214,10 +199,8 @@ jobs:
           unzip ./llrt-linux-x64.zip
           sudo cp ./llrt /usr/bin/llrt
 
-          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
-          # cd jerryscript
-          # python3 tools/build.py
-          # sudo cp ./build/bin/jerry /usr/bin/jerry
+          # install jerryscript
+          ei https://github.com/ahaoboy/jerryscript-build
 
           wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
           sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
@@ -248,6 +231,7 @@ jobs:
           which jsc
           which d8
           which js
+          which jerry
 
           node --version
           deno --version
