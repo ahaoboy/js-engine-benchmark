@@ -37,7 +37,7 @@ jobs:
           # add jsc to path
           sudo ln -s "$(sudo find /System/Library -name jsc)" /usr/local/bin/jsc
 
-          # wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
+          # wget -q https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
           # chmod 777 ./qjs-darwin
           # sudo cp ./qjs-darwin /usr/local/bin/qjs-ng
           git clone https://github.com/bellard/quickjs --depth=1
@@ -65,12 +65,12 @@ jobs:
           cd ..
 
 
-          # wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
+          # wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
           # sudo chmod 777 ./boa-linux-amd64
           # sudo cp ./boa-linux-amd64 /usr/local/bin/boa
 
 
-          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-darwin-x64.zip
+          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-darwin-x64.zip
           unzip ./llrt-darwin-x64.zip
           sudo cp ./llrt /usr/local/bin/llrt
 
@@ -79,15 +79,15 @@ jobs:
           # python3 tools/build.py
           # sudo cp ./build/bin/jerry /usr/local/bin/jerry
 
-          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-darwin.tar.gz
+          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-darwin.tar.gz
           sudo tar -zxvf hermes-cli-darwin.tar.gz -C /usr/local/bin
 
-          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-mac64.zip
+          wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-mac64.zip
           unzip xst-mac64.zip
           sudo cp ./xst /usr/local/bin/xst
 
 
-          wget https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-macos-amd64.tar.gz
+          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-macos-amd64.tar.gz
           sudo tar -zxvf ./graaljs-24.1.0-macos-amd64.tar.gz
           sudo ln -s "$PWD/graaljs-24.1.0-macos-amd64/bin/js" /usr/local/bin/graaljs
 
@@ -151,7 +151,7 @@ jobs:
           # sudo apt update
           sudo apt install wget unzip python3 -y
 
-          wget https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
+          wget -q https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
           mkdir ei
           tar -zxvf ./ei-x86_64-unknown-linux-musl.tar.gz -C ei
           sudo cp ./ei/ei /usr/bin/ei
@@ -181,25 +181,25 @@ jobs:
           # install tjs
           ei https://github.com/ahaoboy/txiki.js-build
 
-          wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
+          wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
           sudo chmod 777 ./boa-linux-amd64
           sudo cp ./boa-linux-amd64 /usr/bin/boa
 
-          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
+          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
           unzip ./llrt-linux-x64.zip
           sudo cp ./llrt /usr/bin/llrt
 
           # install jerryscript
           ei https://github.com/ahaoboy/jerryscript-build
 
-          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
+          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
           sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
 
-          wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
+          wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
           unzip xst-lin64.zip
           sudo cp ./xst /usr/bin/xst
 
-          wget "https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-linux-amd64.tar.gz"
+          wget -q "https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-linux-amd64.tar.gz"
           sudo tar -zxvf ./graaljs-24.1.0-linux-amd64.tar.gz
           sudo ln -s "$PWD/graaljs-24.1.0-linux-amd64/bin/js" /usr/bin/graaljs
 
@@ -285,7 +285,7 @@ jobs:
           # make install
           # cd ..
 
-          wget https://github.com/mengmo/QuickJS-Windows-Build/releases/download/2021-03-27/quickjs-2021-03-27-win64.zip
+          wget -q https://github.com/mengmo/QuickJS-Windows-Build/releases/download/2021-03-27/quickjs-2021-03-27-win64.zip
           unzip ./quickjs-2021-03-27-win64.zip
           chmod 777 ./qjs.exe
           cp ./qjs.exe /usr/bin/qjs.exe
@@ -296,7 +296,7 @@ jobs:
           # cp ./build/qjs.exe /usr/bin/qjs-ng.exe
           # cd ..
 
-          wget https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
+          wget -q https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
           chmod 777 ./qjs-windows-x86_64.exe
           cp ./qjs-windows-x86_64.exe /usr/bin/qjs-ng.exe
 
@@ -314,12 +314,12 @@ jobs:
           cd ..
 
 
-          wget https://github.com/boa-dev/boa/releases/latest/download/boa-windows-amd64.exe
+          wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-windows-amd64.exe
           chmod 777 ./boa-windows-amd64.exe
           cp ./boa-windows-amd64.exe /usr/bin/boa.exe
 
 
-          wget https://github.com/awslabs/llrt/releases/latest/download/llrt-windows-x64.zip
+          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-windows-x64.zip
           unzip ./llrt-windows-x64.zip
           chmod 777 ./llrt.exe
           cp ./llrt.exe /usr/bin/llrt.exe
@@ -329,15 +329,15 @@ jobs:
           # python3 tools/build.py
           # cp ./build/bin/jerry.exe /usr/bin/jerry.exe
 
-          wget https://github.com/facebook/hermes/releases/latest/download/hermes-cli-windows.tar.gz
+          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-windows.tar.gz
           tar -zxvf hermes-cli-windows.tar.gz -C /usr/bin
 
-          # wget https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-win64.zip
+          # wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-win64.zip
           # unzip xst-win64.zip
           # chmod 777 ./xst.exe
           # cp ./xst.exe /usr/bin/xst.exe
 
-          wget https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-windows-amd64.zip
+          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-windows-amd64.zip
           unzip ./graaljs-24.1.0-windows-amd64.zip
           cp -r ./graaljs-24.1.0-windows-amd64/* /usr
           mv /usr/bin/js.exe /usr/bin/graaljs.exe
