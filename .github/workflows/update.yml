@@ -162,7 +162,6 @@ jobs:
           # install v8
           ei https://github.com/ahaoboy/v8-build
 
-
           # install jsc, libjavascriptcoregtk-bin needs 2404
           ei https://github.com/ahaoboy/jsc-build
 
@@ -179,21 +178,12 @@ jobs:
           # install mujs
           ei https://github.com/ahaoboy/mujs-build
 
-          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
-          cd txiki.js
-          sudo apt install libcurl4-openssl-dev build-essential cmake autoconf texinfo libtool libltdl-dev -y
-          git submodule update --init
-          cmake -S . -B build
-          sudo cmake --build build
-          sudo make install
-          sudo cp ./build/tjs /usr/bin/tjs
-          cd ..
-
+          # install tjs
+          ei https://github.com/ahaoboy/txiki.js-build
 
           wget https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
           sudo chmod 777 ./boa-linux-amd64
           sudo cp ./boa-linux-amd64 /usr/bin/boa
-
 
           wget https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
           unzip ./llrt-linux-x64.zip
@@ -223,7 +213,6 @@ jobs:
           which qjs
           which qjs-ng
           which boa
-          # which jerry
           which hermes
           which xst
           which graaljs
