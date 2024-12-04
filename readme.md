@@ -3,20 +3,6 @@ fork from: https://github.com/mozilla/arewefastyet/tree/master/benchmarks/v8-v7
 ```bash
 npm run build
 
-qjs-ng  ./dist/bench.js
-qjs     ./dist/bench.js
-llrt    ./dist/bench.js
-mujs    ./dist/bench.js
-boa     ./dist/bench.js
-node    ./dist/bench.js
-deno    ./dist/bench.js
-jer     ./dist/bench.js
-hermes  ./dist/bench.js
-xst     ./dist/bench.js
-tjs run ./dist/bench.js
-
-or
-
 npm run update
 ```
 
@@ -41,6 +27,26 @@ npm run update
 - [ ] [DukTape](https://github.com/svaarala/duktape): embeddable Javascript engine with a focus on portability and compact footprint
 - [ ] [ChakraCore](https://github.com/chakra-core/ChakraCore): ChakraCore is an open source Javascript engine with a C API.
 - [ ] [nova](https://github.com/trynova/nova): Nova is a JavaScript and WebAssembly engine written in Rust.
+
+
+## install engine
+
+- deno: https://github.com/denoland/setup-deno
+- node: https://github.com/actions/setup-node
+- bun: https://github.com/oven-sh/setup-bun
+- spidermonkey: https://github.com/ahaoboy/spidermonkey-build
+- v8: https://github.com/ahaoboy/v8-build
+- jsc: https://github.com/ahaoboy/jsc-build
+- jerryscript: https://github.com/ahaoboy/jerryscript-build
+- quickjs-ng: https://github.com/ahaoboy/quickjs-ng-build
+- quickjs: https://github.com/ahaoboy/quickjs-build
+- mujs: https://github.com/ahaoboy/mujs-build
+- txiki.js: https://github.com/ahaoboy/txiki.js-build
+- boa: https://github.com/boa-dev/boa
+- llrt: https://github.com/awslabs/llrt
+- hermes: https://github.com/Moddable-OpenSource/moddable
+- graaljs: https://github.com/oracle/graaljs
+
 
 ## bench
 

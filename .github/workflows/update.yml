@@ -189,9 +189,6 @@ jobs:
           unzip ./llrt-linux-x64.zip
           sudo cp ./llrt /usr/bin/llrt
 
-          # install jerryscript
-          ei https://github.com/ahaoboy/jerryscript-build
-
           wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
           sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
 
