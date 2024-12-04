@@ -36,7 +36,7 @@ npm run update
 - bun: https://github.com/oven-sh/setup-bun
 - spidermonkey: https://github.com/ahaoboy/spidermonkey-build
 - v8: https://github.com/ahaoboy/v8-build
-- jsc: https://github.com/ahaoboy/jsc-build
+- JavaScriptCore: https://github.com/ahaoboy/jsc-build
 - jerryscript: https://github.com/ahaoboy/jerryscript-build
 - quickjs-ng: https://github.com/ahaoboy/quickjs-ng-build
 - quickjs: https://github.com/ahaoboy/quickjs-build
@@ -44,8 +44,9 @@ npm run update
 - txiki.js: https://github.com/ahaoboy/txiki.js-build
 - boa: https://github.com/boa-dev/boa
 - llrt: https://github.com/awslabs/llrt
-- hermes: https://github.com/Moddable-OpenSource/moddable
+- hermes: https://github.com/facebook/hermes
 - graaljs: https://github.com/oracle/graaljs
+- XS: https://github.com/Moddable-OpenSource/moddable
 
 
 ## bench
