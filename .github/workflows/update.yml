@@ -82,7 +82,7 @@ jobs:
           wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-darwin.tar.gz
           sudo tar -zxvf hermes-cli-darwin.tar.gz -C /usr/local/bin
 
-          wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-mac64.zip
+          wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-mac64.zip
           unzip xst-mac64.zip
           sudo cp ./xst /usr/local/bin/xst
 
@@ -192,7 +192,7 @@ jobs:
           wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
           sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
 
-          wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-lin64.zip
+          wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-lin64.zip
           unzip xst-lin64.zip
           sudo cp ./xst /usr/bin/xst
 
@@ -329,7 +329,7 @@ jobs:
           wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-windows.tar.gz
           tar -zxvf hermes-cli-windows.tar.gz -C /usr/bin
 
-          # wget -q https://github.com/Moddable-OpenSource/moddable/releases/latest/download/xst-win64.zip
+          # wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-win64.zip
           # unzip xst-win64.zip
           # chmod 777 ./xst.exe
           # cp ./xst.exe /usr/bin/xst.exe
