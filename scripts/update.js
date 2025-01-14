@@ -56,6 +56,41 @@ async function execCmd(cmd) {
 
 const data = {}
 
+function getFileSize(p) {
+  return +execSync(`du ${p}`).toString().split(" ")[0].split("\t")[0].trim()
+}
+function getDllSize(p) {
+  const list = execSync(`ldd ${p}`).toString().trim().split("\n")
+  let dllSize = 0
+
+  for (const line of list) {
+    const path = line.split(' => ')?.[1]?.split(" (")?.[0]
+    if (!path) {
+      continue
+    }
+    if (path.startsWith("/lib/") || path.startsWith("/lib64/")) {
+      continue
+    }
+    dllSize += getFileSize(path)
+  }
+  return dllSize
+}
+
+function humanSize(n) {
+  if (n < 1024) {
+    return `${n}K`
+  }
+  if (n < 1024 * 1024) {
+    return `${(n / 1024).toFixed(1)}M`
+  }
+  return `${(n / 1024 / 1024).toFixed(1)}G`
+}
+function getExeSize(p) {
+  const exeSize = getFileSize(p)
+  const dllSize = getDllSize(p)
+  return humanSize(exeSize + dllSize)
+}
+
 async function main() {
   for (const i of execList) {
     try {
@@ -74,7 +109,7 @@ async function main() {
       }
 
       // console.warn("execPath: ", execPath)
-      const size = execSync(`du -h ${execPath}`).toString().split(" ")[0].split("\t")[0].trim()
+      const size = getExeSize(execPath)
       // console.warn("size: ", size)
       if (!('Executable size' in data)) {
         data['Executable size'] = {}
