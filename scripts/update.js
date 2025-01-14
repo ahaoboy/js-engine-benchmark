@@ -60,7 +60,14 @@ function getFileSize(p) {
   return +execSync(`du ${p}`).toString().split(" ")[0].split("\t")[0].trim()
 }
 function getDllSize(p) {
-  const list = execSync(`ldd ${p}`).toString().trim().split("\n")
+  let list = []
+  try {
+    list = execSync(`ldd ${p}`).toString().trim().split("\n")
+  } catch (e) {
+    //         not a dynamic executable
+    return 0
+  }
+
   let dllSize = 0
 
   for (const line of list) {
@@ -74,6 +81,7 @@ function getDllSize(p) {
     dllSize += getFileSize(path)
   }
   return dllSize
+
 }
 
 function humanSize(n) {
