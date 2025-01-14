@@ -397,7 +397,11 @@ jobs:
           git add ./windows.json ./ubuntu.json ./macos.json ./readme.md
           git commit -m"update"
           cat readme.md
-
+      - name: Upload readme
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows
+          path: readme.md
       - name: Push changes
         uses: ad-m/github-push-action@master
         if: github.ref == 'refs/heads/main'
