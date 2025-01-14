@@ -400,7 +400,7 @@ jobs:
       - name: Upload readme
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: readme
           path: readme.md
       - name: Push changes
         uses: ad-m/github-push-action@master
