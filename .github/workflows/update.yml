@@ -122,11 +122,6 @@ jobs:
 
           node ./scripts/build.js
           node ./scripts/update.js > macos.json
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
 
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -234,11 +229,6 @@ jobs:
 
           node ./scripts/build.js
           node ./scripts/update.js > ubuntu.json
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
 
       - name: Upload
         uses: actions/upload-artifact@v4
