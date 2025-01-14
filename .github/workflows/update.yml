@@ -396,6 +396,7 @@ jobs:
           git config --global user.name "ahaoboy"
           git add ./windows.json ./ubuntu.json ./macos.json ./readme.md
           git commit -m"update"
+          cat readme.md
 
       - name: Push changes
         uses: ad-m/github-push-action@master
