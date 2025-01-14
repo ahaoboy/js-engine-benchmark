@@ -57,6 +57,10 @@ async function execCmd(cmd) {
 const data = {}
 
 function getFileSize(p) {
+  const ls = execSync(`ls -l ${p}`).toString().trim();
+  if (ls.includes(' -> ')) {
+    p = ls.split(" -> ")[1].trim()
+  }
   return +execSync(`du ${p}`).toString().split(" ")[0].split("\t")[0].trim()
 }
 function getDllSize(p) {
