@@ -89,6 +89,9 @@ function getDllSize(p) {
 }
 
 function humanSize(n) {
+  if (n === 0) {
+    return '0'
+  }
   if (n < 1024) {
     return `${n}K`
   }
@@ -130,7 +133,7 @@ async function main() {
       }
       data['Executable size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
-      data['Total size'][i] = humanSize(fileSize+dllSize)
+      data['Total size'][i] = humanSize(fileSize + dllSize)
     } catch (e) {
 
     }
