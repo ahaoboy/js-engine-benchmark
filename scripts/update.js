@@ -97,11 +97,6 @@ function humanSize(n) {
   }
   return `${(n / 1024 / 1024).toFixed(1)}G`
 }
-function getExeSize(p) {
-  const exeSize = getFileSize(p)
-  const dllSize = getDllSize(p)
-  return humanSize(exeSize + dllSize)
-}
 
 async function main() {
   for (const i of execList) {
@@ -121,12 +116,21 @@ async function main() {
       }
 
       // console.warn("execPath: ", execPath)
-      const size = getExeSize(execPath)
+      const fileSize = getFileSize(execPath)
+      const dllSize = getDllSize(execPath)
       // console.warn("size: ", size)
       if (!('Executable size' in data)) {
         data['Executable size'] = {}
       }
-      data['Executable size'][i] = size
+      if (!('Dll size' in data)) {
+        data['Dll size'] = {}
+      }
+      if (!('Total size' in data)) {
+        data['Total size'] = {}
+      }
+      data['Executable size'][i] = humanSize(fileSize)
+      data['Dll size'][i] = humanSize(dllSize)
+      data['Total size'][i] = humanSize(fileSize+dllSize)
     } catch (e) {
 
     }
