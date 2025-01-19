@@ -79,7 +79,11 @@ function getDllSize(p) {
     if (!path) {
       continue
     }
-    if (path.startsWith("/lib/") || path.startsWith("/lib64/")) {
+    if (
+      path.startsWith("/lib/") ||
+      path.startsWith("/lib64/") ||
+      path.startsWith("/c/WINDOWS/")
+    ) {
       continue
     }
     dllSize += getFileSize(path)
