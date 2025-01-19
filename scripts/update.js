@@ -126,8 +126,8 @@ async function main() {
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
       // console.warn("size: ", size)
-      if (!('Executable size' in data)) {
-        data['Executable size'] = {}
+      if (!('Exe size' in data)) {
+        data['Exe size'] = {}
       }
       if (!('Dll size' in data)) {
         data['Dll size'] = {}
@@ -135,7 +135,7 @@ async function main() {
       if (!('Total size' in data)) {
         data['Total size'] = {}
       }
-      data['Executable size'][i] = humanSize(fileSize)
+      data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
       data['Total size'][i] = humanSize(fileSize + dllSize)
     } catch (e) {
