@@ -23,6 +23,14 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+      - name: install easy-install
+        uses: ahaoboy/easy-setup@v1
+        with:
+          repo: https://github.com/ahaoboy/easy-install
+          version: latest
+          bin: ei
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: install
         run: |
           brew update
@@ -140,16 +148,28 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+      - name: install easy-install
+        uses: ahaoboy/easy-setup@v1
+        with:
+          repo: https://github.com/ahaoboy/easy-install
+          version: latest
+          bin: ei
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: install
         run: |
           # sudo apt upgrade -y
           # sudo apt update
-          sudo apt install wget unzip python3 -y
+          sudo apt install wget unzip python3 curl -y
 
-          wget -q https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
-          mkdir ei
-          tar -zxvf ./ei-x86_64-unknown-linux-musl.tar.gz -C ei
-          sudo cp ./ei/ei /usr/bin/ei
+          # install easy-install
+          # wget -q https://github.com/ahaoboy/easy-install/releases/latest/download/ei-x86_64-unknown-linux-musl.tar.gz
+          # mkdir ei
+          # tar -zxvf ./ei-x86_64-unknown-linux-musl.tar.gz -C ei
+          # sudo cp ./ei/ei /usr/bin/ei
+          # curl -fsSL https://github.com/ahaoboy/easy-install/releases/latest/download/install.sh | bash
+          # which ei
+
 
           # install spidermonkey
           ei https://github.com/ahaoboy/spidermonkey-build
@@ -246,6 +266,14 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+      - name: install easy-install
+        uses: ahaoboy/easy-setup@v1
+        with:
+          repo: https://github.com/ahaoboy/easy-install
+          version: latest
+          bin: ei
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
