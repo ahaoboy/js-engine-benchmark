@@ -9,7 +9,6 @@ const execList = [
   "tjs",
   'mujs',
   "boa",
-
   "hermes",
   "xst",
   'deno',
@@ -52,6 +51,75 @@ async function execCmd(cmd) {
       r(stdout)
     })
   })
+}
+
+async function getVersion(cmd) {
+  if (cmd === 'llrt') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'qjs') {
+    const text = await execCmd(`${cmd} -h`)
+    return text.match(/version (\d{4}-\d{2}-\d{2})/)?.[1].trim()
+  }
+  if (cmd === 'qjs-ng') {
+    const text = await execCmd(`${cmd} -h`)
+    return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim()
+  }
+  if (cmd === 'tjs') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'mujs') {
+    const text = await execCmd(`echo "exit" | ${cmd}`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'boa') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'hermes') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/Hermes release version: (\d+\.\d+\.\d+)/)?.[1].trim()
+  }
+  if (cmd === 'xst') {
+    const text = await execCmd(`${cmd} -v`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+
+  if (cmd === 'deno') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'node') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'bun') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'graaljs') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'jsc') {
+    // FIXME: get jsc version by cli
+    return ''
+  }
+  if (cmd === 'd8') {
+    const text = await execCmd(`echo "exit" | ${cmd}`)
+    return text.match(/version ([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'js') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/JavaScript-C([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'jerry') {
+    const text = await execCmd(`${cmd} --version`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  return ''
 }
 
 const data = {}
@@ -135,9 +203,13 @@ async function main() {
       if (!('Total size' in data)) {
         data['Total size'] = {}
       }
+      if (!('version' in data)) {
+        data['version'] = {}
+      }
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
       data['Total size'][i] = humanSize(fileSize + dllSize)
+      data['version'] = (await getVersion(i)) || ''
     } catch (e) {
 
     }
