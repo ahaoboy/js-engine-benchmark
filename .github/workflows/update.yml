@@ -139,6 +139,8 @@ jobs:
 
   bench-ubuntu:
     runs-on: ubuntu-24.04
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -154,8 +156,6 @@ jobs:
           repo: https://github.com/ahaoboy/easy-install
           version: latest
           bin: ei
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: install
         run: |
           # sudo apt upgrade -y
@@ -184,8 +184,9 @@ jobs:
           ei https://github.com/ahaoboy/jerryscript-build
 
           # install quickjs-ng
-          ei https://github.com/ahaoboy/quickjs-ng-build
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
           mv /usr/local/bin/qjs /usr/local/bin/qjs-ng
+          mv /usr/local/bin/qjsc /usr/local/bin/qjsc-ng
 
           # install quickjs
           ei https://github.com/ahaoboy/quickjs-build
@@ -196,20 +197,14 @@ jobs:
           # install tjs
           ei https://github.com/ahaoboy/txiki.js-build
 
-          wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
-          sudo chmod 777 ./boa-linux-amd64
-          sudo cp ./boa-linux-amd64 /usr/bin/boa
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
 
-          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-linux-x64.zip
-          unzip ./llrt-linux-x64.zip
-          sudo cp ./llrt /usr/bin/llrt
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
 
-          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-linux.tar.gz
-          sudo tar -zxvf hermes-cli-linux.tar.gz -C /usr/bin
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
 
-          wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-lin64.zip
-          unzip xst-lin64.zip
-          sudo cp ./xst /usr/bin/xst
+
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
           wget -q "https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-linux-amd64.tar.gz"
           sudo tar -zxvf ./graaljs-24.1.2-linux-amd64.tar.gz

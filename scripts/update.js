@@ -72,7 +72,7 @@ async function getVersion(cmd) {
   }
   if (cmd === 'mujs') {
     const text = await execCmd(`echo "exit" | ${cmd}`)
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim().slice(0, -1)
   }
   if (cmd === 'boa') {
     const text = await execCmd(`${cmd} --version`)
