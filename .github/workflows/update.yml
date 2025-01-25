@@ -95,9 +95,9 @@ jobs:
           sudo cp ./xst /usr/local/bin/xst
 
 
-          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-macos-amd64.tar.gz
-          sudo tar -zxvf ./graaljs-24.1.0-macos-amd64.tar.gz
-          sudo ln -s "$PWD/graaljs-24.1.0-macos-amd64/bin/js" /usr/local/bin/graaljs
+          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-macos-amd64.tar.gz
+          sudo tar -zxvf ./graaljs-24.1.2-macos-amd64.tar.gz
+          sudo ln -s "$PWD/graaljs-24.1.2-macos-amd64/bin/js" /usr/local/bin/graaljs
 
       - name: run
         run: |
@@ -211,9 +211,9 @@ jobs:
           unzip xst-lin64.zip
           sudo cp ./xst /usr/bin/xst
 
-          wget -q "https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-linux-amd64.tar.gz"
-          sudo tar -zxvf ./graaljs-24.1.0-linux-amd64.tar.gz
-          sudo ln -s "$PWD/graaljs-24.1.0-linux-amd64/bin/js" /usr/bin/graaljs
+          wget -q "https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-linux-amd64.tar.gz"
+          sudo tar -zxvf ./graaljs-24.1.2-linux-amd64.tar.gz
+          sudo ln -s "$PWD/graaljs-24.1.2-linux-amd64/bin/js" /usr/bin/graaljs
 
       - name: run
         run: |
@@ -352,9 +352,9 @@ jobs:
           # chmod 777 ./xst.exe
           # cp ./xst.exe /usr/bin/xst.exe
 
-          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.0/graaljs-24.1.0-windows-amd64.zip
-          unzip ./graaljs-24.1.0-windows-amd64.zip
-          cp -r ./graaljs-24.1.0-windows-amd64/* /usr
+          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-windows-amd64.zip
+          unzip ./graaljs-24.1.2-windows-amd64.zip
+          cp -r ./graaljs-24.1.2-windows-amd64/* /usr
           mv /usr/bin/js.exe /usr/bin/graaljs.exe
 
       - name: run

@@ -209,7 +209,7 @@ async function main() {
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
       data['Total size'][i] = humanSize(fileSize + dllSize)
-      data['version'] = (await getVersion(i)) || ''
+      data['version'][i] = (await getVersion(i)) || ''
     } catch (e) {
 
     }
