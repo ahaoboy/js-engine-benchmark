@@ -181,9 +181,6 @@ async function main() {
       const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
       console.error(test)
 
-      const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
-      const json = toJSON(out)
-
       for (const [k, v] of Object.entries(json)) {
         const obj = data[k] || {}
         obj[i] = v
@@ -210,6 +207,9 @@ async function main() {
       data['Dll size'][i] = humanSize(dllSize)
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['version'][i] = (await getVersion(i)) || ''
+
+      const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
+      const json = toJSON(out)
     } catch (e) {
 
     }
