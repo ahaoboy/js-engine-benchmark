@@ -198,7 +198,7 @@ jobs:
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          cp /usr/local/bin/graaljs/bin/js /usr/local/bin/graaljs/bin/graaljs
+          mv /usr/local/bin/graaljs/bin/js /usr/local/bin/graaljs/bin/graaljs
 
       - name: run
         run: |

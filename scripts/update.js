@@ -181,26 +181,24 @@ async function main() {
       const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
       console.error(test)
 
-      // console.warn("execPath: ", execPath)
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
-      // console.warn("size: ", size)
+      if (!('Version' in data)) {
+        data['Version'] = {}
+      }
+      if (!('Total size' in data)) {
+        data['Total size'] = {}
+      }
       if (!('Exe size' in data)) {
         data['Exe size'] = {}
       }
       if (!('Dll size' in data)) {
         data['Dll size'] = {}
       }
-      if (!('Total size' in data)) {
-        data['Total size'] = {}
-      }
-      if (!('version' in data)) {
-        data['version'] = {}
-      }
+      data['Version'][i] = (await getVersion(i)) || ''
+      data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
-      data['Total size'][i] = humanSize(fileSize + dllSize)
-      data['version'][i] = (await getVersion(i)) || ''
 
       const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
       const json = toJSON(out)
