@@ -181,12 +181,6 @@ async function main() {
       const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
       console.error(test)
 
-      for (const [k, v] of Object.entries(json)) {
-        const obj = data[k] || {}
-        obj[i] = v
-        data[k] = obj
-      }
-
       // console.warn("execPath: ", execPath)
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
@@ -210,6 +204,11 @@ async function main() {
 
       const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
       const json = toJSON(out)
+      for (const [k, v] of Object.entries(json)) {
+        const obj = data[k] || {}
+        obj[i] = v
+        data[k] = obj
+      }
     } catch (e) {
 
     }
