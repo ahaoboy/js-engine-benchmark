@@ -11,14 +11,21 @@ on:
     - cron: "0 0 * * 1"
   pull_request:
 
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -CeEuo pipefail {0}
+
 jobs:
-  bench-macos:
-    runs-on: macos-latest
+  bench-macos-amd64:
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 23
       - uses: denoland/setup-deno@v1
       - uses: oven-sh/setup-bun@v2
         with:
@@ -31,10 +38,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: install
         run: |
-          brew update
-          brew upgrade
-          brew install make cmake autoconf automake libtool texinfo
-
           # qjs-ng
           ei https://github.com/ahaoboy/quickjs-ng-build
           mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
@@ -60,7 +63,96 @@ jobs:
           # hermes
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
 
+          # xst
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
+
+          # graaljs
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
+          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+
+          # add jsc to path
+          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
+          sudo ln -s "$(sudo find /System/Library -name jsc)" ~/.easy-install/jsc
+      - name: run
+        run: |
+
+          which node
+          which deno
+          which mujs
+          which llrt
+          which tjs
+          which qjs
+          which qjs-ng
+          which boa
+          which jerry
+          which hermes
+          which xst
+          which graaljs
+          which bun
+          # which jsc
+
+          node --version
+          deno --version
+          llrt --version
+          tjs --version
+          boa --version
+          jerry --version
+          hermes --version
+          graaljs --version
+          bun --version
+          xst -v
+
+          node ./scripts/build.js
+          node ./scripts/update.js > macos-amd64.json
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-amd64
+          path: ./macos-amd64.json
+  bench-macos-arm64:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 23
+      - uses: denoland/setup-deno@v1
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: install easy-install
+        uses: ahaoboy/easy-setup@v1
+        with:
+          url: https://github.com/ahaoboy/easy-install
+      - name: install
+        run: |
+          # qjs-ng
+          ei https://github.com/ahaoboy/quickjs-ng-build
+          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+
+          # qjs
+          ei https://github.com/ahaoboy/quickjs-build
+
+          # mujs
+          ei https://github.com/ahaoboy/mujs-build
+
+          # tjs
+          ei https://github.com/ahaoboy/txiki.js-build
+
+          # boa
+          # ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
+
+          # llrt
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
+
+          # jerryscript
+          ei https://github.com/ahaoboy/jerryscript-build
+
           # hermes
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
+
+          # xst
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
           # graaljs
@@ -81,9 +173,9 @@ jobs:
           which qjs
           which qjs-ng
           # which boa
-          # which jerry
+          which jerry
           which hermes
-          # which xst
+          which xst
           which graaljs
           which bun
           # which jsc
@@ -93,30 +185,28 @@ jobs:
           llrt --version
           tjs --version
           # boa --version
-          # jerry --version
+          jerry --version
           hermes --version
           graaljs --version
           bun --version
           xst -v
 
           node ./scripts/build.js
-          node ./scripts/update.js > macos.json
+          node ./scripts/update.js > macos-arm64.json
 
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: macos
-          path: ./macos.json
+          name: macos-arm64
+          path: ./macos-arm64.json
 
   bench-ubuntu:
     runs-on: ubuntu-24.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 23
       - uses: denoland/setup-deno@v1
       - uses: oven-sh/setup-bun@v2
         with:
@@ -129,7 +219,7 @@ jobs:
         run: |
           # sudo apt upgrade -y
           # sudo apt update
-          sudo apt install wget unzip python3 curl -y
+          # sudo apt install wget unzip python3 curl -y
 
           # install spidermonkey
           ei https://github.com/ahaoboy/spidermonkey-build
@@ -214,7 +304,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 23
       - uses: denoland/setup-deno@v1
       - uses: oven-sh/setup-bun@v2
         with:
@@ -223,46 +313,8 @@ jobs:
         uses: ahaoboy/easy-setup@v1
         with:
           url: https://github.com/ahaoboy/easy-install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          path-type: inherit
-          install: >-
-            mingw-w64-x86_64-make
-            mingw-w64-x86_64-cmake
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-clang
-            mingw-w64-x86_64-perl
-            mingw-w64-x86_64-python3
-            zip
-            unzip
-            curl
-            wget
-
       - name: install
-        shell: msys2 {0}
         run: |
-
-          # git clone https://github.com/bellard/quickjs --depth=1
-          # cd quickjs
-          # make install
-          # cd ..
-
-          wget -q https://github.com/mengmo/QuickJS-Windows-Build/releases/download/2021-03-27/quickjs-2021-03-27-win64.zip
-          unzip ./quickjs-2021-03-27-win64.zip
-          chmod 777 ./qjs.exe
-          cp ./qjs.exe /usr/bin/qjs.exe
-
-          # git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
-          # cd qjs-ng
-          # make
-          # cp ./build/qjs.exe /usr/bin/qjs-ng.exe
-          # cd ..
-
-
           # qjs-ng
           ei https://github.com/ahaoboy/quickjs-ng-build
           mv ~/.easy-install/qjs.exe ~/.easy-install/qjs-ng.exe
@@ -280,7 +332,7 @@ jobs:
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
 
           # jerryscript
-          ei https://github.com/ahaoboy/jerryscript-build
+          # ei https://github.com/ahaoboy/jerryscript-build
 
           # hermes
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
@@ -294,19 +346,17 @@ jobs:
           mv ~/.easy-install/graaljs/bin/js.exe ~/.easy-install/graaljs/bin/graaljs.exe
 
       - name: run
-        shell: msys2 {0}
         run: |
           which node
           which deno
           which mujs
           which llrt
           which tjs
-          which qjs
+          # which qjs
           which qjs-ng
           which boa
-          # which jerry
           which hermes
-          # which xst
+          which xst
           which graaljs
           which bun
 
@@ -329,13 +379,13 @@ jobs:
           name: windows
           path: ./windows.json
   update:
-    needs: ["bench-ubuntu", "bench-windows", "bench-macos"]
+    needs: ["bench-ubuntu", "bench-windows", "bench-macos-amd64","bench-macos-arm64"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 23
       - uses: actions/download-artifact@v4
         with:
           path: windows
@@ -348,17 +398,23 @@ jobs:
           merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
-          path: macos
-          pattern: macos
+          path: macos-amd64
+          pattern: macos-amd64
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        with:
+          path: macos-arm64
+          pattern: macos-arm64
           merge-multiple: true
       - run: |
           cp ./ubuntu/ubuntu.json ./ubuntu.json
           cp ./windows/windows.json ./windows.json
-          cp ./macos/macos.json ./macos.json
+          cp ./macos-amd64/macos-amd64.json ./macos-amd64.json
+          cp ./macos-arm64/macos-arm64.json ./macos-arm64.json
           node ./scripts/update-readme.js
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy"
-          git add ./windows.json ./ubuntu.json ./macos.json ./readme.md
+          git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./readme.md
           git commit -m"update"
           cat readme.md
       - name: Upload readme

@@ -3,7 +3,8 @@ const fs = require('fs')
 
 const ubuntuJSON = require("../ubuntu.json")
 const windowsJSON = require("../windows.json")
-const macosJSON = require("../macos.json")
+const macosAmd64JSON = require("../macos-amd64.json")
+const macosArm64JSON = require("../macos-arm64.json")
 const mdPath = path.resolve("./readme.md")
 
 function json2md(data) {
@@ -31,9 +32,10 @@ function json2md(data) {
 
 const ubuntuMd = json2md(ubuntuJSON)
 const windowsMd = json2md(windowsJSON)
-const macossMd = json2md(macosJSON)
+const macosAmd64Md = json2md(macosAmd64JSON)
+const macosArm64Md = json2md(macosArm64JSON)
 
-const md = `\n### ubuntu\n${ubuntuMd}\n### macos\n${macossMd}\n### windows\n${windowsMd}\n`
+const md = `\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
 const marker = "\n## bench\n"
 const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
 
