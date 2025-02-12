@@ -26,79 +26,50 @@ jobs:
       - name: install easy-install
         uses: ahaoboy/easy-setup@v1
         with:
-          repo: https://github.com/ahaoboy/easy-install
-          version: latest
-          name: ei
+          url: https://github.com/ahaoboy/easy-install
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: install
         run: |
           brew update
           brew upgrade
-          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
-
-          # echo 'export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-          # brew install webkitgtk
-
           brew install make cmake autoconf automake libtool texinfo
 
+          # qjs-ng
+          ei https://github.com/ahaoboy/quickjs-ng-build
+          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+
+          # qjs
+          ei https://github.com/ahaoboy/quickjs-build
+
+          # mujs
+          ei https://github.com/ahaoboy/mujs-build
+
+          # tjs
+          ei https://github.com/ahaoboy/txiki.js-build
+
+          # boa
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
+
+          # llrt
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
+
+          # jerryscript
+          ei https://github.com/ahaoboy/jerryscript-build
+
+          # hermes
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
+
+          # hermes
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
+
+          # graaljs
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
+          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+
           # add jsc to path
-          sudo ln -s "$(sudo find /System/Library -name jsc)" /usr/local/bin/jsc
-
-          # wget -q https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-darwin
-          # chmod 777 ./qjs-darwin
-          # sudo cp ./qjs-darwin /usr/local/bin/qjs-ng
-          git clone https://github.com/bellard/quickjs --depth=1
-          cd quickjs
-          sudo make install
-          cd ..
-
-          git clone https://github.com/quickjs-ng/quickjs.git qjs-ng --depth=1
-          cd qjs-ng
-          sudo make
-          sudo cp ./build/qjs /usr/local/bin/qjs-ng
-          cd ..
-
-          git clone https://github.com/ccxvii/mujs.git --depth=1
-          cd mujs
-          sudo make install HAVE_READLINE=no
-          cd ..
-
-          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
-          cd txiki.js
-          git submodule update --init
-          cmake -S . -B build
-          sudo make install
-          sudo cp ./build/tjs /usr/local/bin/tjs
-          cd ..
-
-
-          # wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-linux-amd64
-          # sudo chmod 777 ./boa-linux-amd64
-          # sudo cp ./boa-linux-amd64 /usr/local/bin/boa
-
-
-          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-darwin-x64.zip
-          unzip ./llrt-darwin-x64.zip
-          sudo cp ./llrt /usr/local/bin/llrt
-
-          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
-          # cd jerryscript
-          # python3 tools/build.py
-          # sudo cp ./build/bin/jerry /usr/local/bin/jerry
-
-          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-darwin.tar.gz
-          sudo tar -zxvf hermes-cli-darwin.tar.gz -C /usr/local/bin
-
-          wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-mac64.zip
-          unzip xst-mac64.zip
-          sudo cp ./xst /usr/local/bin/xst
-
-
-          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-macos-amd64.tar.gz
-          sudo tar -zxvf ./graaljs-24.1.2-macos-amd64.tar.gz
-          sudo ln -s "$PWD/graaljs-24.1.2-macos-amd64/bin/js" /usr/local/bin/graaljs
-
+          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
+          sudo ln -s "$(sudo find /System/Library -name jsc)" ~/.easy-install/jsc
       - name: run
         run: |
 
@@ -153,9 +124,7 @@ jobs:
       - name: install easy-install
         uses: ahaoboy/easy-setup@v1
         with:
-          repo: https://github.com/ahaoboy/easy-install
-          version: latest
-          name: ei
+          url: https://github.com/ahaoboy/easy-install
       - name: install
         run: |
           # sudo apt upgrade -y
@@ -176,8 +145,8 @@ jobs:
 
           # install quickjs-ng
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
-          mv /usr/local/bin/qjs /usr/local/bin/qjs-ng
-          mv /usr/local/bin/qjsc /usr/local/bin/qjsc-ng
+          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+          mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
 
           # install quickjs
           ei https://github.com/ahaoboy/quickjs-build
@@ -194,11 +163,10 @@ jobs:
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
 
-
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv /usr/local/bin/graaljs/bin/js /usr/local/bin/graaljs/bin/graaljs
+          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
 
       - name: run
         run: |
@@ -254,9 +222,7 @@ jobs:
       - name: install easy-install
         uses: ahaoboy/easy-setup@v1
         with:
-          repo: https://github.com/ahaoboy/easy-install
-          version: latest
-          name: ei
+          url: https://github.com/ahaoboy/easy-install
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: msys2/setup-msys2@v2
@@ -296,51 +262,36 @@ jobs:
           # cp ./build/qjs.exe /usr/bin/qjs-ng.exe
           # cd ..
 
-          wget -q https://github.com/quickjs-ng/quickjs/releases/latest/download/qjs-windows-x86_64.exe
-          chmod 777 ./qjs-windows-x86_64.exe
-          cp ./qjs-windows-x86_64.exe /usr/bin/qjs-ng.exe
 
-          git clone https://github.com/ccxvii/mujs.git --depth=1
-          cd mujs
-          make install HAVE_READLINE=no
-          cd ..
+          # qjs-ng
+          ei https://github.com/ahaoboy/quickjs-ng-build
+          mv ~/.easy-install/qjs.exe ~/.easy-install/qjs-ng.exe
 
-          git clone https://github.com/saghul/txiki.js --depth=1 --shallow-submodules
-          cd txiki.js
-          git submodule update --init
-          pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-make mingw-w64-x86_64-curl libcurl openssl-devel libcurl-devel autoconf texinfo mingw-w64-x86_64-libtool --noconfirm
-          make
-          cp ./build/tjs.exe /usr/bin/tjs.exe
-          cd ..
+          # mujs
+          ei https://github.com/ahaoboy/mujs-build
+
+          # tjs
+          ei https://github.com/ahaoboy/txiki.js-build
+
+          # boa
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
+
+          # llrt
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
+
+          # jerryscript
+          ei https://github.com/ahaoboy/jerryscript-build
+
+          # hermes
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
+
+          # xst
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
 
-          wget -q https://github.com/boa-dev/boa/releases/latest/download/boa-windows-amd64.exe
-          chmod 777 ./boa-windows-amd64.exe
-          cp ./boa-windows-amd64.exe /usr/bin/boa.exe
-
-
-          wget -q https://github.com/awslabs/llrt/releases/latest/download/llrt-windows-x64.zip
-          unzip ./llrt-windows-x64.zip
-          chmod 777 ./llrt.exe
-          cp ./llrt.exe /usr/bin/llrt.exe
-
-          # git clone https://github.com/jerryscript-project/jerryscript.git --depth=1
-          # cd jerryscript
-          # python3 tools/build.py
-          # cp ./build/bin/jerry.exe /usr/bin/jerry.exe
-
-          wget -q https://github.com/facebook/hermes/releases/latest/download/hermes-cli-windows.tar.gz
-          tar -zxvf hermes-cli-windows.tar.gz -C /usr/bin
-
-          # wget -q https://github.com/Moddable-OpenSource/moddable/releases/download/5.3.0/xst-win64.zip
-          # unzip xst-win64.zip
-          # chmod 777 ./xst.exe
-          # cp ./xst.exe /usr/bin/xst.exe
-
-          wget -q https://github.com/oracle/graaljs/releases/download/graal-24.1.2/graaljs-24.1.2-windows-amd64.zip
-          unzip ./graaljs-24.1.2-windows-amd64.zip
-          cp -r ./graaljs-24.1.2-windows-amd64/* /usr
-          mv /usr/bin/js.exe /usr/bin/graaljs.exe
+          # graaljs
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
+          mv ~/.easy-install/graaljs/bin/js.exe ~/.easy-install/graaljs/bin/graaljs.exe
 
       - name: run
         shell: msys2 {0}
