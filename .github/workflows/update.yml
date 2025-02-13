@@ -19,367 +19,61 @@ defaults:
     shell: bash --noprofile --norc -CeEuo pipefail {0}
 
 jobs:
-  bench-macos-amd64:
-    runs-on: macos-13
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 23
-      - uses: denoland/setup-deno@v1
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: install easy-install
-        uses: ahaoboy/easy-setup@v1
-        with:
-          url: https://github.com/ahaoboy/easy-install
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: install
-        run: |
-          # qjs-ng
-          ei https://github.com/ahaoboy/quickjs-ng-build
-          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+  bench:
+      strategy:
+        matrix:
+          include:
+            - target: macos-amd64
+              os: macos-13
+            - target: macos-arm64
+              os: macos-14
+            - target: windows
+              os: windows-latest
+            - target: ubuntu
+              os: ubuntu-24.04
+      runs-on: ${{ matrix.os }}
+      name: bench-${{ matrix.os }}
+      steps:
+        - uses: actions/checkout@v4
+        - name: install easy-install
+          uses: ahaoboy/easy-setup@v1
+          with:
+            url: https://github.com/ahaoboy/easy-install
+        - name: install
+          run: |
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
+            mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+            mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
 
-          # qjs
-          ei https://github.com/ahaoboy/quickjs-build
+            ei https://github.com/denoland/deno
+            ei https://github.com/ahaoboy/spidermonkey-build
+            ei https://github.com/ahaoboy/v8-build
+            ei https://github.com/ahaoboy/jsc-build
+            ei https://github.com/ahaoboy/jerryscript-build
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/node.json
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/bun.json
+            ei https://github.com/ahaoboy/quickjs-build
+            ei https://github.com/ahaoboy/mujs-build
+            ei https://github.com/ahaoboy/txiki.js-build
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
 
-          # mujs
-          ei https://github.com/ahaoboy/mujs-build
+            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
+            mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
 
-          # tjs
-          ei https://github.com/ahaoboy/txiki.js-build
-
-          # boa
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
-
-          # llrt
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
-
-          # jerryscript
-          ei https://github.com/ahaoboy/jerryscript-build
-
-          # hermes
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
-
-          # xst
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
-
-          # graaljs
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
-
-          # add jsc to path
-          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
-          sudo ln -s "$(sudo find /System/Library -name jsc)" ~/.easy-install/jsc
-      - name: run
-        run: |
-
-          which node
-          which deno
-          which mujs
-          which llrt
-          which tjs
-          which qjs
-          which qjs-ng
-          which boa
-          which jerry
-          which hermes
-          which xst
-          which graaljs
-          which bun
-          # which jsc
-
-          node --version
-          deno --version
-          llrt --version
-          tjs --version
-          boa --version
-          jerry --version
-          hermes --version
-          graaljs --version
-          bun --version
-          xst -v
-
-          node ./scripts/build.js
-          node ./scripts/update.js > macos-amd64.json
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-amd64
-          path: ./macos-amd64.json
-  bench-macos-arm64:
-    runs-on: macos-14
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 23
-      - uses: denoland/setup-deno@v1
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: install easy-install
-        uses: ahaoboy/easy-setup@v1
-        with:
-          url: https://github.com/ahaoboy/easy-install
-      - name: install
-        run: |
-          # qjs-ng
-          ei https://github.com/ahaoboy/quickjs-ng-build
-          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
-
-          # qjs
-          ei https://github.com/ahaoboy/quickjs-build
-
-          # mujs
-          ei https://github.com/ahaoboy/mujs-build
-
-          # tjs
-          ei https://github.com/ahaoboy/txiki.js-build
-
-          # boa
-          # ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
-
-          # llrt
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
-
-          # jerryscript
-          ei https://github.com/ahaoboy/jerryscript-build
-
-          # hermes
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
-
-          # xst
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
-
-          # graaljs
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
-
-          # add jsc to path
-          sudo find /System/Library/Frameworks/JavaScriptCore.framework -iname jsc
-          sudo ln -s "$(sudo find /System/Library -name jsc)" ~/.easy-install/jsc
-      - name: run
-        run: |
-
-          which node
-          which deno
-          which mujs
-          which llrt
-          which tjs
-          which qjs
-          which qjs-ng
-          # which boa
-          which jerry
-          which hermes
-          which xst
-          which graaljs
-          which bun
-          # which jsc
-
-          node --version
-          deno --version
-          llrt --version
-          tjs --version
-          # boa --version
-          jerry --version
-          hermes --version
-          graaljs --version
-          bun --version
-          xst -v
-
-          node ./scripts/build.js
-          node ./scripts/update.js > macos-arm64.json
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-arm64
-          path: ./macos-arm64.json
-
-  bench-ubuntu:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 23
-      - uses: denoland/setup-deno@v1
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: install easy-install
-        uses: ahaoboy/easy-setup@v1
-        with:
-          url: https://github.com/ahaoboy/easy-install
-      - name: install
-        run: |
-          # sudo apt upgrade -y
-          # sudo apt update
-          # sudo apt install wget unzip python3 curl -y
-
-          # install spidermonkey
-          ei https://github.com/ahaoboy/spidermonkey-build
-
-          # install v8
-          ei https://github.com/ahaoboy/v8-build
-
-          # install jsc, libjavascriptcoregtk-bin needs 2404
-          ei https://github.com/ahaoboy/jsc-build
-
-          # install jerryscript
-          ei https://github.com/ahaoboy/jerryscript-build
-
-          # install quickjs-ng
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
-          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
-          mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
-
-          # install quickjs
-          ei https://github.com/ahaoboy/quickjs-build
-
-          # install mujs
-          ei https://github.com/ahaoboy/mujs-build
-
-          # install tjs
-          ei https://github.com/ahaoboy/txiki.js-build
-
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
-
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
-
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
-
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
-
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
-
-      - name: run
-        run: |
-          which node
-          which deno
-          which mujs
-          which llrt
-          which tjs
-          which qjs
-          which qjs-ng
-          which boa
-          which hermes
-          which xst
-          which graaljs
-          which bun
-          which jsc
-          which d8
-          which js
-          which jerry
-
-          node --version
-          deno --version
-          llrt --version
-          tjs --version
-          boa --version
-          # jerry --version
-          hermes --version
-          graaljs --version
-          bun --version
-          xst -v
-          js --version
-          jerry --version
-
-          node ./scripts/build.js
-          node ./scripts/update.js > ubuntu.json
-
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: ubuntu
-          path: ./ubuntu.json
-  bench-windows:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 23
-      - uses: denoland/setup-deno@v1
-      - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
-      - name: install easy-install
-        uses: ahaoboy/easy-setup@v1
-        with:
-          url: https://github.com/ahaoboy/easy-install
-      - name: install
-        run: |
-          # qjs-ng
-          ei https://github.com/ahaoboy/quickjs-ng-build
-          mv ~/.easy-install/qjs.exe ~/.easy-install/qjs-ng.exe
-
-          # mujs
-          ei https://github.com/ahaoboy/mujs-build
-
-          # tjs
-          ei https://github.com/ahaoboy/txiki.js-build
-
-          # boa
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
-
-          # llrt
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
-
-          # jerryscript
-          # ei https://github.com/ahaoboy/jerryscript-build
-
-          # hermes
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
-
-          # xst
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
-
-
-          # graaljs
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv ~/.easy-install/graaljs/bin/js.exe ~/.easy-install/graaljs/bin/graaljs.exe
-
-      - name: run
-        run: |
-          which node
-          which deno
-          which mujs
-          which llrt
-          which tjs
-          # which qjs
-          which qjs-ng
-          which boa
-          which hermes
-          which xst
-          which graaljs
-          which bun
-
-          node --version
-          deno --version
-          llrt --version
-          tjs --version
-          boa --version
-          # jerry --version
-          hermes --version
-          graaljs --version
-          bun --version
-          # xst -v
-
-          node ./scripts/build.js
-          node ./scripts/update.js > windows.json
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: windows
-          path: ./windows.json
+        - name: run
+          run: |
+            node ./scripts/build.js
+            node ./scripts/update.js > ${{ matrix.target }}.json
+        - name: Upload
+          uses: actions/upload-artifact@v4
+          with:
+            name: ${{ matrix.target }}
+            path: ./${{ matrix.target }}.json
   update:
-    needs: ["bench-ubuntu", "bench-windows", "bench-macos-amd64","bench-macos-arm64"]
+    needs: ["bench"]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
