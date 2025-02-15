@@ -42,9 +42,6 @@ jobs:
             url: https://github.com/ahaoboy/easy-install
         - name: install
           run: |
-            if [ ! -f ~/.bashrc ]; then
-                touch ~/.bashrc
-            fi
             files=(
               https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/node.json
               https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/bun.json
