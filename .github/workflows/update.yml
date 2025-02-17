@@ -39,10 +39,8 @@ jobs:
         - name: install easy-install
           uses: ahaoboy/easy-setup@v1
           with:
-            url: https://github.com/ahaoboy/easy-install
-        - name: install
-          run: |
-            files=(
+            url: |-
+              https://github.com/ahaoboy/easy-install
               https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/node.json
               https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/bun.json
               https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
@@ -56,12 +54,8 @@ jobs:
               https://github.com/ahaoboy/jsc-build
               https://github.com/ahaoboy/jerryscript-build
               https://github.com/ahaoboy/mujs-build
-            )
-            for file in "${files[@]}"; do
-              ei $file
-              source ~/.bashrc
-            done
-
+        - name: install
+          run: |
             ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
             mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
             mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
