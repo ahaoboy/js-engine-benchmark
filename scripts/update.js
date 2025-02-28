@@ -8,6 +8,7 @@ const execList = [
   "qjs-ng",
   "tjs",
   'mujs',
+  'mujs-one',
   "boa",
   "hermes",
   "xst",
@@ -29,6 +30,7 @@ const subCmd = {
 // for better display
 const nameMap = {
   'qjs-ng': "qjs(ng)",
+  'mujs-one': "mujs(one)",
   'd8': "v8",
   'js': "spidermonkey",
 }
