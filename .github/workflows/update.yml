@@ -54,6 +54,7 @@ jobs:
               https://github.com/ahaoboy/jsc-build
               https://github.com/ahaoboy/jerryscript-build
               https://github.com/ahaoboy/mujs-build
+              https://github.com/ahaoboy/mujs-one
         - name: install
           run: |
             ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json

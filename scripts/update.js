@@ -8,6 +8,7 @@ const execList = [
   "qjs-ng",
   "tjs",
   'mujs',
+  'mujs-one',
   "boa",
   "hermes",
   "xst",
