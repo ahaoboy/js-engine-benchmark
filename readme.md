@@ -41,7 +41,7 @@ npm run update
 - quickjs-ng: https://github.com/ahaoboy/quickjs-ng-build
 - quickjs: https://github.com/ahaoboy/quickjs-build
 - mujs: https://github.com/ahaoboy/mujs-build
-- mujs: https://github.com/ahaoboy/mujs-one
+- mujs-one: https://github.com/ahaoboy/mujs-one
 - txiki.js: https://github.com/ahaoboy/txiki.js-build
 - boa: https://github.com/boa-dev/boa
 - llrt: https://github.com/awslabs/llrt
