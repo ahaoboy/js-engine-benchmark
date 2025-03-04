@@ -158,6 +158,15 @@ function getDllSize(p) {
     }
     dllSize += getFileSize(path)
   }
+
+  if (p.includes("graaljs")) {
+    const dir = path.dirname(path.dirname(p))
+    const lib = path.join(dir, 'lib')
+    const modules = path.join(dir, 'modules')
+    dllSize += getFileSize(lib)
+    dllSize += getFileSize(modules)
+  }
+
   return dllSize
 
 }
@@ -181,7 +190,7 @@ async function main() {
       const execPath = execSync(`which ${i}`).toString().trim()
 
       const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
-      console.error(test)
+      console.error(execPath, test)
 
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
@@ -201,7 +210,6 @@ async function main() {
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
-
       const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
       const json = toJSON(out)
       for (const [k, v] of Object.entries(json)) {
@@ -209,8 +217,12 @@ async function main() {
         obj[i] = v
         data[k] = obj
       }
+      if (!('Score/KB' in data)) {
+        data['Score/KB'] = {}
+      }
+      data['Score/KB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024) | 0
     } catch (e) {
-
+      console.error(e)
     }
   }
 

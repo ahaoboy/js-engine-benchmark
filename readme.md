@@ -49,6 +49,23 @@ npm run update
 - graaljs: https://github.com/oracle/graaljs
 - XS: https://github.com/Moddable-OpenSource/moddable
 
+## Note
+
+### graaljs size
+
+lib and modules need to be included in the dll size
+
+```
+Could not canonicalize /root/.easy-install/graaljs/../wasm.jar
+Could not canonicalize /root/.easy-install/graaljs/../../ruby/jline3.jar
+Could not canonicalize /root/.easy-install/graaljs/../../../lib/graalvm/graaljs-launcher.jar
+Could not canonicalize /root/.easy-install/graaljs/../../../lib/graalvm/launcher-common.jar
+Error while loading /root/.easy-install/graaljs/../../../lib/server/libjvm.so:
+/root/.easy-install/graaljs/../../../lib/server/libjvm.so: cannot open shared object file: No such file or directory
+Could not load JVM.
+```
+
+
 
 ## bench
 
