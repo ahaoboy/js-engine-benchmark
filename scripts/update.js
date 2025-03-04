@@ -217,10 +217,10 @@ async function main() {
         obj[i] = v
         data[k] = obj
       }
-      if (!('Score/KB' in data)) {
-        data['Score/KB'] = {}
+      if (!('Score/MB' in data)) {
+        data['Score/MB'] = {}
       }
-      data['Score/KB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024) | 0
+      data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024) | 0
     } catch (e) {
       console.error(e)
     }
