@@ -55,6 +55,7 @@ jobs:
               https://github.com/ahaoboy/jerryscript-build
               https://github.com/ahaoboy/mujs-build
               https://github.com/ahaoboy/mujs-one
+              https://github.com/ahaoboy/rquickjs-cli
         - name: install primjs
           if: "!startsWith(matrix.os, 'windows')"
           run: |

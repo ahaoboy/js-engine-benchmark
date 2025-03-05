@@ -6,6 +6,7 @@ const execList = [
   "llrt",
   "qjs",
   "primjs",
+  "rquickjs",
   "qjs-ng",
   "tjs",
   'mujs',
@@ -57,12 +58,12 @@ async function execCmd(cmd) {
 }
 
 async function getVersion(cmd) {
+  if (['primjs', 'rquickjs'].includes(cmd)) {
+    return ''
+  }
   if (cmd === 'llrt') {
     const text = await execCmd(`${cmd} --version`)
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
-  }
-  if (cmd === 'primjs') {
-    return ''
   }
   if (cmd === 'qjs') {
     const text = await execCmd(`${cmd} -h`)
