@@ -57,6 +57,9 @@ jobs:
               https://github.com/ahaoboy/mujs-one
         - name: install
           run: |
+            ei https://github.com/ahaoboy/primjs-build
+            mv ~/.easy-install/qjs ~/.easy-install/primjs
+
             ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
             mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
             mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng

@@ -5,6 +5,7 @@ const { exec, execSync } = require('child_process');
 const execList = [
   "llrt",
   "qjs",
+  "primjs",
   "qjs-ng",
   "tjs",
   'mujs',
@@ -59,6 +60,9 @@ async function getVersion(cmd) {
   if (cmd === 'llrt') {
     const text = await execCmd(`${cmd} --version`)
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'primjs') {
+    return ''
   }
   if (cmd === 'qjs') {
     const text = await execCmd(`${cmd} -h`)
