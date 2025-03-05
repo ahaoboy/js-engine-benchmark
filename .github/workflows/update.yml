@@ -55,11 +55,13 @@ jobs:
               https://github.com/ahaoboy/jerryscript-build
               https://github.com/ahaoboy/mujs-build
               https://github.com/ahaoboy/mujs-one
-        - name: install
+        - name: install primjs
+          if: "!startsWith(matrix.os, 'windows')"
           run: |
             ei https://github.com/ahaoboy/primjs-build
             mv ~/.easy-install/qjs ~/.easy-install/primjs
-
+        - name: install
+          run: |
             ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
             mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
             mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
@@ -68,6 +70,7 @@ jobs:
 
             ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
             mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+
 
         - name: run
           run: |
