@@ -142,7 +142,7 @@ function getFileSize(filePath) {
   }
 }
 
-function getDependencies(programPath) {
+function getDllSize(programPath) {
   let dependencies = [];
 
   try {
