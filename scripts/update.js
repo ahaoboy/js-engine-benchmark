@@ -188,9 +188,9 @@ function humanSize(n) {
     return `${n}K`
   }
   if (n < 1024 * 1024) {
-    return `${(n / 1024).toFixed(1)}M`
+    return `${parseFloat((n / 1024).toFixed(1))}M`
   }
-  return `${(n / 1024 / 1024).toFixed(1)}G`
+  return `${parseFloat((n / 1024 / 1024).toFixed(1))}G`
 }
 
 async function main() {
