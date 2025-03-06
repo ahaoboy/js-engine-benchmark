@@ -179,6 +179,13 @@ function getDllSize(programPath) {
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
+function toFixed(n) {
+  const fixed = n.toFixed(1);
+  if (fixed.endsWith('.0')) {
+    return parseInt(fixed);
+  }
+  return fixed
+}
 function humanSize(n) {
   if (n === 0) {
     return '0'
@@ -188,9 +195,9 @@ function humanSize(n) {
     return `${n}K`
   }
   if (n < 1024 * 1024) {
-    return `${parseFloat((n / 1024).toFixed(1))}M`
+    return `${toFixed((n / 1024))}M`
   }
-  return `${parseFloat((n / 1024 / 1024).toFixed(1))}G`
+  return `${toFixed((n / 1024 / 1024))}G`
 }
 
 async function main() {
