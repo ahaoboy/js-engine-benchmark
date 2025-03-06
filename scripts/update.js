@@ -179,17 +179,25 @@ function getDllSize(programPath) {
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
+function toFixed(n) {
+  const fixed = n.toFixed(1);
+  if (fixed.endsWith('.0')) {
+    return parseInt(fixed);
+  }
+  return fixed
+}
 function humanSize(n) {
   if (n === 0) {
     return '0'
   }
+  n = n / 1024
   if (n < 1024) {
-    return `${n}K`
+    return `${toFixed(n)}K`
   }
   if (n < 1024 * 1024) {
-    return `${(n / 1024).toFixed(1)}M`
+    return `${toFixed((n / 1024))}M`
   }
-  return `${(n / 1024 / 1024).toFixed(1)}G`
+  return `${toFixed((n / 1024 / 1024))}G`
 }
 
 async function main() {
@@ -228,7 +236,7 @@ async function main() {
       if (!('Score/MB' in data)) {
         data['Score/MB'] = {}
       }
-      data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024) | 0
+      data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024 * 1024) | 0
     } catch (e) {
       console.error(e)
     }
