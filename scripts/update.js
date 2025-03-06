@@ -183,6 +183,7 @@ function humanSize(n) {
   if (n === 0) {
     return '0'
   }
+  n = n / 1024
   if (n < 1024) {
     return `${n}K`
   }
