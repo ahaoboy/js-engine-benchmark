@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const { exec, execSync } = require('child_process');
+const os = require('os');
 
 const execList = [
   "llrt",
@@ -130,50 +131,52 @@ async function getVersion(cmd) {
 }
 
 const data = {}
+const platform = os.platform();
 
-function getFileSize(p) {
-  const ls = execSync(`ls -l ${p}`).toString().trim();
-  if (ls.includes(' -> ')) {
-    p = ls.split(" -> ")[1].trim()
-  }
-  return +execSync(`du ${p}`).toString().split(" ")[0].split("\t")[0].trim()
-}
-function getDllSize(p) {
-  let list = []
+function getFileSize(filePath) {
   try {
-    list = execSync(`ldd ${p}`).toString().trim().split("\n")
-  } catch (e) {
-    //         not a dynamic executable
-    return 0
+    const stats = fs.statSync(filePath);
+    return stats.size;
+  } catch (err) {
+    return 0;
   }
+}
 
-  let dllSize = 0
+function getDependencies(programPath) {
+  let dependencies = [];
 
-  for (const line of list) {
-    const path = line.split(' => ')?.[1]?.split(" (")?.[0]
-    if (!path) {
-      continue
+  try {
+    if (platform === 'darwin') {
+      const output = execSync(`otool -L "${programPath}"`, { encoding: 'utf-8' });
+      dependencies = output
+        .split('\n')
+        .slice(1)
+        .map(line => line.trim().split(' ')[0])
+        .filter(dep => dep && !dep.startsWith('('));
+    } else if (platform === 'linux' || platform === 'win32') {
+      const output = execSync(`ldd "${programPath}"`, { encoding: 'utf-8' });
+      for (const line of output.split('\n')) {
+        const path = line.split('=>')?.[1]?.trim().split(" (")?.[0]
+        if (!path) {
+          continue
+        }
+        if (
+          path.startsWith("/lib/") ||
+          path.startsWith("/lib64/") ||
+          path.startsWith("/c/WINDOWS/") ||
+          path.startsWith("linux-")
+        ) {
+          continue
+        }
+        dependencies.push(path)
+      }
     }
-    if (
-      path.startsWith("/lib/") ||
-      path.startsWith("/lib64/") ||
-      path.startsWith("/c/WINDOWS/")
-    ) {
-      continue
-    }
-    dllSize += getFileSize(path)
+  } catch (err) {
+    console.error(`Error getting dependencies: ${err.message}`);
+    return 0;
   }
 
-  if (p.includes("graaljs")) {
-    const dir = path.dirname(path.dirname(p))
-    const lib = path.join(dir, 'lib')
-    const modules = path.join(dir, 'modules')
-    dllSize += getFileSize(lib)
-    dllSize += getFileSize(modules)
-  }
-
-  return dllSize
-
+  return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
 function humanSize(n) {
