@@ -133,9 +133,26 @@ async function getVersion(cmd) {
 const data = {}
 const platform = os.platform();
 
+function isMsys() {
+  return !!process.env['MSYSTEM']
+}
+function toMsysPath(s) {
+  s = s.replaceAll('\\', '/')
+  s = s.replace(/^([A-Za-z]):\//, (_, drive) => `/${drive.toLowerCase()}/`)
+  return s
+}
+function fromMsysPath(s) {
+  if (!isMsys() || !s.startsWith('/')) {
+    return s;
+  }
+  s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:\\`);
+  s = s.replaceAll('/', '\\');
+  return s;
+}
+
 function getFileSize(filePath) {
   try {
-    const stats = fs.statSync(filePath);
+    const stats = fs.statSync(isMsys() ? fromMsysPath(filePath) : filePath);
     return stats.size;
   } catch (err) {
     return 0;
