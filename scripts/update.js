@@ -160,7 +160,20 @@ function getFileSize(filePath) {
 }
 
 function getDllSize(programPath) {
+  if (isMsys()) {
+    programPath = fromMsysPath(programPath)
+  }
+
   let dependencies = [];
+  if (programPath.includes("graaljs")) {
+    const dir = path.dirname(path.dirname(programPath))
+    for (const d of ['lib', 'modules']) {
+      for (const i of fs.readdirSync(path.join(dir, d))) {
+        dependencies.push(path.join(dir, d, i))
+      }
+    }
+  }
+
 
   try {
     if (platform === 'darwin') {
