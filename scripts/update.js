@@ -153,7 +153,7 @@ function fromMsysPath(s) {
 function getFileSize(filePath) {
   try {
     const p = isMsys() ? fromMsysPath(filePath) : filePath
-    if (isMsys() && fs.existsSync(p + '.exe')) {
+    if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + '.exe')) {
       p = p + '.exe'
     }
     const stats = fs.statSync(p);
