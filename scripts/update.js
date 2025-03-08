@@ -145,14 +145,13 @@ function fromMsysPath(s) {
   if (!isMsys() || !s.startsWith('/')) {
     return s;
   }
-  s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:\\`);
-  s = s.replaceAll('/', '\\');
+  s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:/`);
   return s;
 }
 
 function getFileSize(filePath) {
   try {
-    const p = isMsys() ? fromMsysPath(filePath) : filePath
+    let p = isMsys() ? fromMsysPath(filePath) : filePath
     if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + '.exe')) {
       p = p + '.exe'
     }
