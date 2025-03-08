@@ -165,15 +165,6 @@ function getDllSize(programPath) {
   }
 
   let dependencies = [];
-  if (programPath.includes("graaljs")) {
-    const dir = path.dirname(path.dirname(programPath))
-    for (const d of ['lib', 'modules']) {
-      for (const i of fs.readdirSync(path.join(dir, d))) {
-        dependencies.push(path.join(dir, d, i))
-      }
-    }
-  }
-
 
   try {
     if (platform === 'darwin') {
@@ -205,7 +196,14 @@ function getDllSize(programPath) {
     console.error(`Error getting dependencies: ${err.message}`);
     return 0;
   }
-
+  if (programPath.includes("graaljs")) {
+    const dir = path.dirname(path.dirname(programPath))
+    for (const d of ['lib', 'modules']) {
+      for (const i of fs.readdirSync(path.join(dir, d))) {
+        dependencies.push(path.join(dir, d, i))
+      }
+    }
+  }
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
