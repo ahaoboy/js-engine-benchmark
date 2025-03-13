@@ -23,6 +23,7 @@ const execList = [
   'd8',
   'js',
   "jerry",
+  "ch",
   // "dukTape",
 ]
 
@@ -36,6 +37,7 @@ const nameMap = {
   'mujs-one': "mujs(one)",
   'd8': "v8",
   'js': "spidermonkey",
+  'ch': "ChakraCore"
 }
 
 function toJSON(data) {
@@ -61,6 +63,11 @@ async function execCmd(cmd) {
 async function getVersion(cmd) {
   if (['primjs', 'rquickjs'].includes(cmd)) {
     return ''
+  }
+  if (cmd === 'ch') {
+    // ch version 1.13.0.0-beta
+    const text = await execCmd(`${cmd} --version`)
+    return text.split(' ').at(-1) || ""
   }
   if (cmd === 'llrt') {
     const text = await execCmd(`${cmd} --version`)
@@ -204,6 +211,16 @@ function getDllSize(programPath) {
     for (const d of ['lib', 'modules']) {
       for (const i of fs.readdirSync(path.join(dir, d))) {
         dependencies.push(path.join(dir, d, i))
+      }
+    }
+  }
+
+  // libChakraCore.so or libChakraCore.dylib
+  if (programPath.endsWith("ch")) {
+    const dir = path.dirname(programPath)
+    for (const i of fs.readdirSync(dir)) {
+      if (i.includes('libChakraCore')) {
+        dependencies.push(path.join(dir, i))
       }
     }
   }

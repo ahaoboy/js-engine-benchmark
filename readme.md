@@ -26,6 +26,7 @@ npm run update
 - [x] [JerryScript](https://github.com/jerryscript-project/jerryscript): Ultra-lightweight JavaScript engine for the Internet of Things.
 - [x] [primjs](https://github.com/lynx-family/primjs): JavaScript Engine Optimized for Lynx
 - [x] [rquickjs](https://github.com/DelSkayn/rquickjs): High level bindings to the quickjs javascript engine
+- [x] [ChakraCore](https://github.com/chakra-core/ChakraCore): ChakraCore is an open source Javascript engine with a C API.
 - [ ] [DukTape](https://github.com/svaarala/duktape): embeddable Javascript engine with a focus on portability and compact footprint
 - [ ] [ChakraCore](https://github.com/chakra-core/ChakraCore): ChakraCore is an open source Javascript engine with a C API.
 - [ ] [nova](https://github.com/trynova/nova): Nova is a JavaScript and WebAssembly engine written in Rust.
@@ -52,6 +53,7 @@ npm run update
 - XS: https://github.com/Moddable-OpenSource/moddable
 - primjs: https://github.com/ahaoboy/primjs-build
 - rquickjs-cli: https://github.com/ahaoboy/rquickjs-cli
+- ChakraCore: https://github.com/ahaoboy/ChakraCore-build
 
 ## Note
 
