@@ -67,7 +67,7 @@ async function getVersion(cmd) {
   if (cmd === 'ch') {
     // ch version 1.13.0.0-beta
     const text = await execCmd(`${cmd} --version`)
-    return text.split(' ').at(-1) || ""
+    return text.split(' ').at(-1)?.trim() || ""
   }
   if (cmd === 'llrt') {
     const text = await execCmd(`${cmd} --version`)
