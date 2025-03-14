@@ -1,0 +1,143 @@
+[
+  {
+    "name": "bun",
+    "install": "https://github.com/oven-sh/setup-bun",
+    "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one",
+    "url": "https://github.com/oven-sh/bun"
+  },
+  {
+    "name": "node",
+    "install": "https://github.com/actions/setup-node",
+    "description": "Node.js JavaScript runtime",
+    "url": "https://github.com/nodejs/node"
+  },
+  {
+    "name": "deno",
+    "install": "https://github.com/denoland/setup-deno",
+    "description": "A modern runtime for JavaScript and TypeScript",
+    "url": "https://github.com/denoland/deno"
+  },
+  {
+    "name": "graaljs",
+    "install": "https://github.com/oracle/graaljs",
+    "description": "A ECMAScript 2023 compliant JavaScript implementation built on GraalVM. With polyglot language interoperability support. Running Node.js applications!",
+    "url": "https://github.com/oracle/graaljs"
+  },
+  {
+    "name": "hermes",
+    "install": "https://github.com/facebook/hermes",
+    "description": "A JavaScript engine optimized for running React Native",
+    "url": "https://github.com/facebook/hermes",
+    "notes": "Two entries exist, one with version 0.1.0, 64 bit Linux binary with -O option"
+  },
+  {
+    "name": "llrt",
+    "install": "https://github.com/awslabs/llrt",
+    "description": "LLRT (Low Latency Runtime) is a lightweight JavaScript runtime",
+    "url": "https://github.com/awslabs/llrt"
+  },
+  {
+    "name": "txiki.js",
+    "bin": "tjs",
+    "description": "A tiny JavaScript runtime",
+    "url": "https://github.com/saghul/txiki.js",
+    "install": "https://github.com/ahaoboy/txiki.js-build"
+  },
+  {
+    "name": "quickjs",
+    "bin": "qjs",
+    "description": "QuickJS is a small and embeddable Javascript engine. It supports the ES2023 specification including modules, asynchronous generators, proxies and BigInt.",
+    "install": "https://github.com/ahaoboy/quickjs-build",
+    "url": "https://github.com/bellard/quickjs"
+  },
+  {
+    "name": "quickjs-ng",
+    "bin": "qjs-ng",
+    "mdName":"qjs(ng)",
+    "description": "QuickJS, the Next Generation: a mighty JavaScript engine",
+    "install": "https://github.com/quickjs-ng/quickjs",
+    "url": "https://github.com/quickjs-ng/quickjs"
+  },
+  {
+    "name": "mujs",
+    "description": "An embeddable Javascript interpreter in C",
+    "install": "https://github.com/ahaoboy/mujs-build",
+    "url": "https://github.com/ccxvii/mujs"
+  },
+  {
+    "name": "mujs-one",
+    "mdName":"mujs(one)",
+    "description": "mujs by c2rust",
+    "install": "https://github.com/ahaoboy/mujs-one",
+    "url": "https://github.com/ahaoboy/mujs-one"
+  },
+  {
+    "name": "xst",
+    "install": "https://github.com/Moddable-OpenSource/moddable",
+    "description": "Tools for developers to create truly open IoT products using standard JavaScript on low cost microcontrollers",
+    "url": "https://github.com/Moddable-OpenSource/moddable"
+  },
+  {
+    "name": "JavaScriptCore",
+    "bin": "jsc",
+    "description": "JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification",
+    "install": "https://github.com/ahaoboy/jsc-build",
+    "url": "https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore"
+  },
+  {
+    "name": "v8",
+    "bin": "d8",
+    "description": "V8 is Google’s open source high-performance JavaScript and WebAssembly engine",
+    "install": "https://github.com/ahaoboy/v8-build",
+    "url": "https://v8.dev"
+  },
+  {
+    "name": "spidermonkey",
+    "bin": "js",
+    "description": "SpiderMonkey is Mozilla’s JavaScript and WebAssembly Engine, used in Firefox",
+    "install": "https://github.com/ahaoboy/spidermonkey-build",
+    "url": "https://spidermonkey.dev"
+  },
+  {
+    "name": "JerryScript",
+    "bin": "jerry",
+    "description": "Ultra-lightweight JavaScript engine for the Internet of Things",
+    "install": "https://github.com/ahaoboy/jerryscript-build",
+    "url": "https://github.com/jerryscript-project/jerryscript"
+  },
+  {
+    "name": "primjs",
+    "install": "https://github.com/ahaoboy/primjs-build",
+    "description": "JavaScript Engine Optimized for Lynx",
+    "url": "https://github.com/lynx-family/primjs"
+  },
+  {
+    "name": "rquickjs",
+    "install": "https://github.com/ahaoboy/rquickjs-cli",
+    "description": "High level bindings to the quickjs javascript engine",
+    "url": "https://github.com/DelSkayn/rquickjs"
+  },
+  {
+    "name": "ChakraCore",
+    "bin": "ch",
+    "install": "https://github.com/ahaoboy/ChakraCore-build",
+    "description": "ChakraCore is an open source Javascript engine with a C API",
+    "url": "https://github.com/chakra-core/ChakraCore"
+  },
+  {
+    "name": "DukTape",
+    "description": "embeddable Javascript engine with a focus on portability and compact footprint",
+    "url": "https://github.com/svaarala/duktape"
+  },
+  {
+    "name": "nova",
+    "description": "Nova is a JavaScript and WebAssembly engine written in Rust",
+    "url": "https://github.com/trynova/nova"
+  },
+  {
+    "name": "boa",
+    "description": "Boa is an embeddable and experimental Javascript engine written in Rust. Currently, it has support for some of the language.",
+    "install": "https://github.com/boa-dev/boa",
+    "url": "https://github.com/boa-dev/boa"
+  }
+]

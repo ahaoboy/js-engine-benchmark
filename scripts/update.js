@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { exec, execSync } = require('child_process');
 const os = require('os');
+const info = require("../info.json")
 
 const execList = [
   "llrt",
@@ -29,15 +30,6 @@ const execList = [
 
 const subCmd = {
   "tjs": "run"
-}
-
-// for better display
-const nameMap = {
-  'qjs-ng': "qjs(ng)",
-  'mujs-one': "mujs(one)",
-  'd8': "v8",
-  'js': "spidermonkey",
-  'ch': "ChakraCore"
 }
 
 function toJSON(data) {
@@ -270,7 +262,7 @@ async function main() {
       if (!('Dll size' in data)) {
         data['Dll size'] = {}
       }
-      data['Version'][i] = (await getVersion(i)) || ''
+      data['Version'][i] = ((await getVersion(i)) || '').replaceAll("-", ".")
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
@@ -303,7 +295,8 @@ async function main() {
   for (const i in data) {
     const obj = {}
     for (const e of engines) {
-      const name = nameMap[e] ?? e
+      const item = info.find(i => i.bin == e || i.name == e)
+      const name = item.mdName ?? item.name
       obj[name] = data[i][e] ?? ""
     }
     data[i] = obj

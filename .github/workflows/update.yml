@@ -21,70 +21,75 @@ defaults:
 
 jobs:
   bench:
-      strategy:
-        fail-fast: false
-        matrix:
-          include:
-            - name: macos-amd64
-              os: macos-13
-            - name: macos-arm64
-              os: macos-14
-            - name: windows
-              os: windows-latest
-            - name: ubuntu
-              os: ubuntu-24.04
-      runs-on: ${{ matrix.os }}
-      name: bench-${{ matrix.os }}
-      steps:
-        - uses: actions/checkout@v4
-        - name: install easy-install
-          uses: ahaoboy/easy-setup@v1
-          with:
-            url: |-
-              https://github.com/ahaoboy/easy-install
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/node.json
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/bun.json
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
-              https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
-              https://github.com/denoland/deno
-              https://github.com/ahaoboy/txiki.js-build
-              https://github.com/ahaoboy/spidermonkey-build
-              https://github.com/ahaoboy/v8-build
-              https://github.com/ahaoboy/jsc-build
-              https://github.com/ahaoboy/jerryscript-build
-              https://github.com/ahaoboy/mujs-build
-              https://github.com/ahaoboy/mujs-one
-              https://github.com/ahaoboy/rquickjs-cli
-              https://github.com/ahaoboy/ChakraCore-build
-        - name: install primjs
-          if: "!startsWith(matrix.os, 'windows')"
-          run: |
-            ei https://github.com/ahaoboy/primjs-build
-            mv ~/.easy-install/qjs ~/.easy-install/primjs
-        - name: install
-          run: |
-            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
-            mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
-            mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macos-amd64
+            os: macos-13
+          - name: macos-arm64
+            os: macos-14
+          - name: windows
+            os: windows-latest
+          - name: ubuntu
+            os: ubuntu-24.04
+    runs-on: ${{ matrix.os }}
+    name: bench-${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: rc
+      - name: install easy-install
+        uses: ahaoboy/easy-setup@v1
+        with:
+          url: |-
+            https://github.com/ahaoboy/easy-install
+            https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
+            https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
+            https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
+            https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/xst.json
+            https://github.com/ahaoboy/txiki.js-build
+            https://github.com/ahaoboy/spidermonkey-build
+            https://github.com/ahaoboy/v8-build
+            https://github.com/ahaoboy/jsc-build
+            https://github.com/ahaoboy/jerryscript-build
+            https://github.com/ahaoboy/mujs-build
+            https://github.com/ahaoboy/mujs-one
+            https://github.com/ahaoboy/rquickjs-cli
+            https://github.com/ahaoboy/ChakraCore-build
+      - name: install primjs
+        if: "!startsWith(matrix.os, 'windows')"
+        run: |
+          ei https://github.com/ahaoboy/primjs-build
+          mv ~/.easy-install/qjs ~/.easy-install/primjs
+      - name: install
+        run: |
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
+          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
+          mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
 
-            ei https://github.com/ahaoboy/quickjs-build
+          ei https://github.com/ahaoboy/quickjs-build
 
-            ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-            mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
+          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
 
-
-        - name: run
-          run: |
-            node ./scripts/build.js
-            rm -rf ${{ matrix.name }}.json
-            node ./scripts/update.js > ${{ matrix.name }}.json
-        - name: Upload
-          uses: actions/upload-artifact@v4
-          with:
-            name: ${{ matrix.name }}
-            path: ./${{ matrix.name }}.json
+      - name: run
+        run: |
+          node ./scripts/build.js
+          rm -rf ${{ matrix.name }}.json
+          node ./scripts/update.js > ${{ matrix.name }}.json
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.name }}
+          path: ./${{ matrix.name }}.json
   update:
     needs: ["bench"]
     runs-on: ubuntu-latest

@@ -35,9 +35,71 @@ const windowsMd = json2md(windowsJSON)
 const macosAmd64Md = json2md(macosAmd64JSON)
 const macosArm64Md = json2md(macosArm64JSON)
 
+
+function getMdLink(url) {
+  if (!url) {
+    return "❌"
+  }
+  const v = url.split('/')
+  const repo = v.at(-1)
+  return `[${repo}](${url})`
+}
+
+function getSupport(name) {
+  const v = {
+    unix: ubuntuJSON,
+    macArm: macosArm64JSON,
+    macAmd: macosAmd64JSON,
+    windows: windowsJSON
+  }
+
+  const s = []
+  for (const [k, json] of Object.entries(v)) {
+    const icon = json['Score'][name] > 0 ? '✅' : "❌"
+    s.push(`${icon}${k}`);
+  }
+  return s.join('<br>')
+}
+
+function getInfo() {
+  const info = require("../info.json");
+  info.sort((a, b) => (ubuntuJSON['Score'][b.mdName ?? b.name] || 0) - (ubuntuJSON['Score'][a.mdName ?? a.name] || 0))
+
+  const header = ["name", "repo", "score", "platform", "description",]
+  const headerMd = '| ' + header.join(' | ') + ' |' + "\n" + "|" + " --- |".repeat(header.length)
+  const infoMd = [headerMd]
+
+  for (const i of info) {
+    const name = i.mdName ?? i.name
+    const score = ubuntuJSON['Score'][name] || ''
+    const size = ubuntuJSON['Total size'][name] || ''
+    const scoreMB = ubuntuJSON['Score/MB'][name] || ''
+    let url = getMdLink(i.url)
+    if (i.install && (i.install != i.url)) {
+      url += ("<br><br>" + getMdLink(i.install))
+    }
+    let scoreMd = `${score}<br>${size}`
+    if (scoreMB) {
+      scoreMd += `<br>${scoreMB}/M`
+    }
+    const v = [
+      i.name,
+      url,
+      scoreMd,
+      getSupport(name),
+      i.description
+    ]
+    infoMd.push('| ' + v.join(" | ") + " |")
+  }
+
+  return infoMd.join('\n') + "\n"
+}
+
+const info = getInfo()
+
 const time = new Date().toLocaleString()
-const md = `\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
-const marker = "\n## bench\n"
+const md = "\n" + info + `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
+const marker = "\n## Engine & Runtime\n"
 const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
 
 fs.writeFileSync(mdPath, doc)
