@@ -45,7 +45,7 @@ jobs:
           node-version: latest
       - uses: denoland/setup-deno@v2
         with:
-          deno-version: rc
+          deno-version: latest
       - name: install easy-install
         uses: ahaoboy/easy-setup@v1
         with:
