@@ -64,6 +64,9 @@ jobs:
             https://github.com/ahaoboy/mujs-one
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
+      - name: install engine262
+        run: |
+          npm i @engine262/engine262 -g
       - name: install primjs
         if: "!startsWith(matrix.os, 'windows')"
         run: |
