@@ -58,12 +58,17 @@ jobs:
             https://github.com/ahaoboy/txiki.js-build
             https://github.com/ahaoboy/spidermonkey-build
             https://github.com/ahaoboy/v8-build
-            https://github.com/ahaoboy/jsc-build
             https://github.com/ahaoboy/jerryscript-build
             https://github.com/ahaoboy/mujs-build
             https://github.com/ahaoboy/mujs-one
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
+      - name: install ladybird
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
+        run: |
+          ei https://github.com/ahaoboy/ladybird-js-build
+          mv ~/.easy-install/js ~/.easy-install/ladybird
+
       - name: install engine262
         run: |
           npm i @engine262/engine262 -g
@@ -82,6 +87,9 @@ jobs:
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
           mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+
+          ei https://github.com/ahaoboy/jsc-build
+
 
       - name: run
         run: |

@@ -38,7 +38,7 @@ load('navier-stokes.js');
 
 var success = true;
 
-if (typeof print === 'undefined'){
+if (typeof print === 'undefined' || (typeof console !== 'undefined' && typeof console.log === 'function')){
   var print = console.log
 }
 

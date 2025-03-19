@@ -25,6 +25,8 @@ const execList = [
   'js',
   "jerry",
   "ch",
+  "engine262",
+  "ladybird"
   // "dukTape",
 ]
 
@@ -36,7 +38,8 @@ function toJSON(data) {
   const json = {}
   for (const line of data.split("\n")) {
     if (line.includes(':')) {
-      const [k, v] = line.split(':').map(i => i.trim())
+      // ladybird: "Richards: 292"
+      const [k, v] = line.replaceAll('"', '').split(':').map(i => i.trim())
       json[k] = +v
     }
   }
@@ -53,8 +56,13 @@ async function execCmd(cmd) {
 }
 
 async function getVersion(cmd) {
-  if (['primjs', 'rquickjs'].includes(cmd)) {
+  if (['primjs', 'rquickjs', 'ladybird'].includes(cmd)) {
     return ''
+  }
+  if (cmd === "engine262") {
+    // engine262 v0.0.1-5dece49950e94360d45198df59f3adf4ceb94cb4
+    const text = (await execCmd(`${cmd} -h`)).trim()
+    return text.match(/v(\d+\.\d+\.\d+)/)?.[1].trim()
   }
   if (cmd === 'ch') {
     // ch version 1.13.0.0-beta
