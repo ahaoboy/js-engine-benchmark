@@ -4,6 +4,9 @@ const { exec, execSync } = require('child_process');
 const os = require('os');
 const info = require("../info.json")
 
+const TEST_JS_PATH = path.join(__dirname, "test.js")
+const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js")
+
 const execList = [
   "llrt",
   "qjs",
@@ -47,9 +50,10 @@ function toJSON(data) {
   return json
 }
 
-async function execCmd(cmd) {
+async function execCmd(cmd, cwd) {
   return new Promise(r => {
-    exec(cmd, (err, stdout, stderr) => {
+    exec(cmd, { cwd }, (err, stdout, stderr) => {
+      console.error(stdout, stderr)
       r(stdout)
     })
   })
@@ -123,7 +127,8 @@ async function getVersion(cmd) {
     return ''
   }
   if (cmd === 'd8') {
-    const text = await execCmd(`echo "exit" | ${cmd}`)
+    const cwd = path.dirname(getExePath('d8'))
+    const text = await execCmd(`echo "exit" | ${cmd}`, cwd)
     return text.match(/version ([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }
   if (cmd === 'js') {
@@ -248,13 +253,18 @@ function humanSize(n) {
   return `${toFixed((n / 1024 / 1024))}G`
 }
 
+function getExePath(i) {
+  const execPath = execSync(`which ${i}`).toString().trim()
+  return fromMsysPath(execPath)
+}
+
 async function main() {
   for (const i of execList) {
     try {
-      const execPath = execSync(`which ${i}`).toString().trim()
-
-      const test = await execCmd(`${i} ${subCmd[i] || ""} ./scripts/test.js`)
-      console.error(execPath, test)
+      const execPath = getExePath(i)
+      const execDir = path.dirname((execPath))
+      const test = await execCmd(`${execPath} ${subCmd[i] || ""} ${TEST_JS_PATH}`, execDir)
+      console.error(execPath, execDir, test)
 
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
@@ -274,7 +284,7 @@ async function main() {
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
-      const out = await execCmd(`${i} ${subCmd[i] || ""} ./dist/run.js`)
+      const out = await execCmd(`${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`, execDir)
       const json = toJSON(out)
       for (const [k, v] of Object.entries(json)) {
         const obj = data[k] || {}
