@@ -90,6 +90,11 @@ jobs:
 
           ei https://github.com/ahaoboy/jsc-build
 
+      - name: Set jsc environment variable only on macOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.easy-install/jsc/bin" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=/Users/runner/.easy-install/jsc/bin" >> $GITHUB_ENV
 
       - name: run
         run: |

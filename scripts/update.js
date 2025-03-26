@@ -181,14 +181,40 @@ function getDllSize(programPath) {
 
   let dependencies = [];
 
+  // JavaScriptCore
+  if (programPath.endsWith("jsc")) {
+    const dir = path.dirname(programPath)
+    const dllPath = dir + '/JavaScriptCore.framework/Versions/A/JavaScriptCore'
+    dependencies.push(dllPath)
+  }
+
+  if (programPath.includes("graaljs")) {
+    const dir = path.dirname(path.dirname(programPath))
+    for (const d of ['lib', 'modules']) {
+      for (const i of fs.readdirSync(path.join(dir, d))) {
+        dependencies.push(path.join(dir, d, i))
+      }
+    }
+  }
+
+  // libChakraCore.so or libChakraCore.dylib
+  if (programPath.endsWith("ch")) {
+    const dir = path.dirname(programPath)
+    for (const i of fs.readdirSync(dir)) {
+      if (i.includes('libChakraCore')) {
+        dependencies.push(path.join(dir, i))
+      }
+    }
+  }
+
   try {
     if (platform === 'darwin') {
       const output = execSync(`otool -L "${programPath}"`, { encoding: 'utf-8' });
-      dependencies = output
+      dependencies = dependencies.concat(output
         .split('\n')
         .slice(1)
         .map(line => line.trim().split(' ')[0])
-        .filter(dep => dep && !dep.startsWith('('));
+        .filter(dep => dep && !dep.startsWith('(')));
     } else if (platform === 'linux' || platform === 'win32') {
       const output = execSync(`ldd "${programPath}"`, { encoding: 'utf-8' });
       for (const line of output.split('\n')) {
@@ -209,26 +235,9 @@ function getDllSize(programPath) {
     }
   } catch (err) {
     console.error(`Error getting dependencies: ${err.message}`);
-    return 0;
-  }
-  if (programPath.includes("graaljs")) {
-    const dir = path.dirname(path.dirname(programPath))
-    for (const d of ['lib', 'modules']) {
-      for (const i of fs.readdirSync(path.join(dir, d))) {
-        dependencies.push(path.join(dir, d, i))
-      }
-    }
+    return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
   }
 
-  // libChakraCore.so or libChakraCore.dylib
-  if (programPath.endsWith("ch")) {
-    const dir = path.dirname(programPath)
-    for (const i of fs.readdirSync(dir)) {
-      if (i.includes('libChakraCore')) {
-        dependencies.push(path.join(dir, i))
-      }
-    }
-  }
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
@@ -264,10 +273,12 @@ async function main() {
       const execPath = getExePath(i)
       const execDir = path.dirname((execPath))
       const test = await execCmd(`${execPath} ${subCmd[i] || ""} ${TEST_JS_PATH}`, execDir)
-      console.error(execPath, execDir, test)
 
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
+
+      console.error(execPath, execDir, test, fileSize, dllSize)
+
       if (!('Version' in data)) {
         data['Version'] = {}
       }

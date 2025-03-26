@@ -79,6 +79,7 @@
   },
   {
     "name": "JavaScriptCore",
+    "mdName":"jsc",
     "bin": "jsc",
     "description": "JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification",
     "install": "https://github.com/ahaoboy/jsc-build",
