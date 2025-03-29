@@ -304,6 +304,9 @@ async function main() {
       data['Dll size'][i] = humanSize(dllSize)
       const out = await execCmd(`${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`, execDir)
       const json = toJSON(out)
+      if(!json['Score']){
+        continue
+      }
       for (const [k, v] of Object.entries(json)) {
         const obj = data[k] || {}
         obj[i] = v
