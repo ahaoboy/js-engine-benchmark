@@ -63,6 +63,8 @@ jobs:
             https://github.com/ahaoboy/mujs-one
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
+            https://github.com/ahaoboy/jsc-build
+            https://github.com/ahaoboy/goja-build
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
         run: |
@@ -87,8 +89,6 @@ jobs:
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
           mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
-
-          ei https://github.com/ahaoboy/jsc-build
 
       - name: Set jsc environment variable only on macOS
         if: startsWith(matrix.os, 'macos')

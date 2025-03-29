@@ -29,7 +29,8 @@ const execList = [
   "jerry",
   "ch",
   "engine262",
-  "ladybird"
+  "ladybird",
+  "goja",
   // "dukTape",
 ]
 
@@ -39,10 +40,14 @@ const subCmd = {
 
 function toJSON(data) {
   const json = {}
-  for (const line of data.split("\n")) {
-    if (line.includes(':')) {
+  const offset = data.split('\n').find(i => i.includes('----'))?.indexOf('----') || 0;
+  for (const line of data.split("\n").filter(i => i.trim().length)) {
+    if (line.includes(':') && !line.includes('----')) {
       // ladybird: "Richards: 292"
-      const [k, v] = line.replaceAll('"', '').split(':').map(i => i.trim())
+      // goja: 2025/03/29 16:43:06 DeltaBlue: 525
+      const [k, v] = line.slice(offset).replaceAll('"', '')
+        .split(':')
+        .map(i => i.trim())
       json[k] = +v
     }
   }
@@ -54,13 +59,15 @@ async function execCmd(cmd, cwd) {
   return new Promise(r => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error(stdout, stderr)
-      r(stdout)
+
+      // goja output to stderr
+      r(stdout || stderr)
     })
   })
 }
 
 async function getVersion(cmd) {
-  if (['primjs', 'rquickjs', 'ladybird'].includes(cmd)) {
+  if (['primjs', 'rquickjs', 'ladybird', "goja"].includes(cmd)) {
     return ''
   }
   if (cmd === "engine262") {

@@ -53,7 +53,7 @@
   {
     "name": "quickjs-ng",
     "bin": "qjs-ng",
-    "mdName":"qjs(ng)",
+    "mdName": "qjs(ng)",
     "description": "QuickJS, the Next Generation: a mighty JavaScript engine",
     "install": "https://github.com/quickjs-ng/quickjs",
     "url": "https://github.com/quickjs-ng/quickjs"
@@ -66,7 +66,7 @@
   },
   {
     "name": "mujs-one",
-    "mdName":"mujs(one)",
+    "mdName": "mujs(one)",
     "description": "mujs by c2rust",
     "install": "https://github.com/ahaoboy/mujs-one",
     "url": "https://github.com/ahaoboy/mujs-one"
@@ -79,7 +79,7 @@
   },
   {
     "name": "JavaScriptCore",
-    "mdName":"jsc",
+    "mdName": "jsc",
     "bin": "jsc",
     "description": "JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification",
     "install": "https://github.com/ahaoboy/jsc-build",
@@ -151,5 +151,11 @@
     "install": "https://github.com/ahaoboy/ladybird-js-build",
     "description": "Truly independent web browser",
     "url": "https://github.com/LadybirdBrowser/ladybird"
+  },
+  {
+    "name": "goja",
+    "install": "https://github.com/ahaoboy/goja-build",
+    "description": "ECMAScript/JavaScript engine in pure Go",
+    "url": "https://github.com/dop251/goja"
   }
 ]
