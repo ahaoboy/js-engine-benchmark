@@ -70,7 +70,7 @@ jobs:
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
         run: |
           ei https://github.com/ahaoboy/ladybird-js-build
-          mv ~/.easy-install/js ~/.easy-install/ladybird
+          mv ~/.ei/js ~/.ei/ladybird
 
       - name: install engine262
         run: |
@@ -79,23 +79,23 @@ jobs:
         if: "!startsWith(matrix.os, 'windows')"
         run: |
           ei https://github.com/ahaoboy/primjs-build
-          mv ~/.easy-install/qjs ~/.easy-install/primjs
+          mv ~/.ei/qjs ~/.ei/primjs
       - name: install
         run: |
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
-          mv ~/.easy-install/qjs ~/.easy-install/qjs-ng
-          mv ~/.easy-install/qjsc ~/.easy-install/qjsc-ng
+          mv ~/.ei/qjs ~/.ei/qjs-ng
+          mv ~/.ei/qjsc ~/.ei/qjsc-ng
 
           ei https://github.com/ahaoboy/quickjs-build
 
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
-          mv ~/.easy-install/graaljs/bin/js ~/.easy-install/graaljs/bin/graaljs
+          mv ~/.ei/graaljs/bin/js ~/.ei/graaljs/bin/graaljs
 
       - name: Set jsc environment variable only on macOS
         if: startsWith(matrix.os, 'macos')
         run: |
-          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.easy-install/jsc/bin" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=/Users/runner/.easy-install/jsc/bin" >> $GITHUB_ENV
+          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
 
       - name: run
         run: |
