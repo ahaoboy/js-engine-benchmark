@@ -31,6 +31,7 @@ const execList = [
   "engine262",
   "ladybird",
   "goja",
+  "kiesel",
   // "dukTape",
 ]
 
