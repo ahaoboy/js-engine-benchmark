@@ -144,14 +144,14 @@ jobs:
           node ./scripts/update-readme.js
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy"
-          git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./readme.md
+          git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./README.md
           git commit -m"update"
-          cat readme.md
-      - name: Upload readme
+          cat README.md
+      - name: Upload README
         uses: actions/upload-artifact@v4
         with:
-          name: readme
-          path: readme.md
+          name: README
+          path: README.md
       - name: Push changes
         uses: ad-m/github-push-action@master
         if: github.ref == 'refs/heads/main'
