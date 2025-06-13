@@ -163,5 +163,11 @@
     "install": "https://github.com/ahaoboy/kiesel-build",
     "description": "A JavaScript engine written in Zig https://kiesel.dev",
     "url": "https://codeberg.org/kiesel-js/kiesel"
+  },
+  {
+    "name": "mozjs",
+    "install": "https://github.com/ahaoboy/mozjs-cli",
+    "description": "Rust bindings to SpiderMonkey",
+    "url": "https://github.com/servo/mozjs"
   }
 ]

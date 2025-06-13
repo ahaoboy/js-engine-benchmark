@@ -32,6 +32,7 @@ const execList = [
   "ladybird",
   "goja",
   "kiesel",
+  "mozjs",
   // "dukTape",
 ]
 
@@ -68,7 +69,7 @@ async function execCmd(cmd, cwd) {
 }
 
 async function getVersion(cmd) {
-  if (['primjs', 'rquickjs', 'ladybird', "goja"].includes(cmd)) {
+  if (['primjs', 'rquickjs', 'ladybird', "goja", "mozjs", "kiesel"].includes(cmd)) {
     return ''
   }
   if (cmd === "engine262") {

@@ -66,6 +66,7 @@ jobs:
             https://github.com/ahaoboy/jsc-build
             https://github.com/ahaoboy/goja-build
             https://github.com/ahaoboy/kiesel-build
+            https://github.com/ahaoboy/mozjs-cli
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
         run: |
