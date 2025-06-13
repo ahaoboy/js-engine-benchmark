@@ -5,7 +5,7 @@ const ubuntuJSON = require("../ubuntu.json")
 const windowsJSON = require("../windows.json")
 const macosAmd64JSON = require("../macos-amd64.json")
 const macosArm64JSON = require("../macos-arm64.json")
-const mdPath = path.resolve("./readme.md")
+const mdPath = path.resolve("./README.md")
 
 function json2md(data) {
   const keys = Object.keys(data)
