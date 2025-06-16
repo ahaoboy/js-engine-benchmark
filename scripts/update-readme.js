@@ -6,6 +6,7 @@ const windowsJSON = require("../windows.json")
 const macosAmd64JSON = require("../macos-amd64.json")
 const macosArm64JSON = require("../macos-arm64.json")
 const mdPath = path.resolve("./README.md")
+const INFO = require("../info.json")
 
 function json2md(data) {
   const keys = Object.keys(data)
@@ -98,8 +99,10 @@ function getInfo() {
 const info = getInfo()
 
 const time = new Date().toLocaleString()
-const md = "\n" + info + `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
-const marker = "\n## Engine & Runtime\n"
-const doc = fs.readFileSync(mdPath, 'utf8').split(marker)[0] + marker + md
+const mdTable = "\n" + info + `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
+const marker = `## Engine & Runtime (${INFO.length})\n`
+const mdTpl = fs.readFileSync(mdPath, 'utf8')
+const markerIndex = mdTpl.indexOf(`## Engine & Runtime`)
+const doc = mdTpl.slice(0, markerIndex) + marker + mdTable
 
 fs.writeFileSync(mdPath, doc)

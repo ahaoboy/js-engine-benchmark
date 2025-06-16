@@ -70,7 +70,7 @@ async function execCmd(cmd, cwd) {
 }
 
 async function getVersion(cmd) {
-  if (['primjs', 'rquickjs', 'ladybird', "goja", "mozjs", "kiesel"].includes(cmd)) {
+  if (['primjs', 'rquickjs', 'ladybird', "goja", "mozjs", "kiesel", "jint-cli"].includes(cmd)) {
     return ''
   }
   if (cmd === "engine262") {
