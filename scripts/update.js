@@ -33,6 +33,7 @@ const execList = [
   "goja",
   "kiesel",
   "mozjs",
+  "jint-cli",
   // "dukTape",
 ]
 

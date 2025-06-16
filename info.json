@@ -169,5 +169,12 @@
     "install": "https://github.com/ahaoboy/mozjs-cli",
     "description": "Rust bindings to SpiderMonkey",
     "url": "https://github.com/servo/mozjs"
+  },
+  {
+    "name": "jint",
+    "bin": "jint-cli",
+    "install": "https://github.com/ahaoboy/jint-cli",
+    "description": "Javascript Interpreter for .NET",
+    "url": "https://github.com/sebastienros/jint"
   }
 ]
