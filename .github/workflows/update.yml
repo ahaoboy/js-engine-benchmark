@@ -76,6 +76,14 @@ jobs:
             https://github.com/ahaoboy/mozjs-cli
             https://github.com/ahaoboy/jint-cli
             https://github.com/aalykiot/dune
+
+      - name: install rhino
+        run: |
+          curl -L -o ~/.ei/rhino.jar https://github.com/mozilla/rhino/releases/download/Rhino1_7_15_Release/rhino-1.7.15.jar
+          echo '#!/bin/bash' > ~/.ei/rhino
+          echo 'java -jar ~/.ei/rhino.jar "$@"' >> ~/.ei/rhino
+          chmod +x ~/.ei/rhino
+
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
         run: |

@@ -100,7 +100,10 @@ const info = getInfo()
 
 const time = new Date().toLocaleString()
 const mdTable = "\n" + info + `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`
-const marker = `## Engine & Runtime (${INFO.length})\n`
+
+const total = INFO.length
+const pass = Object.values(ubuntuJSON['Score']).filter(i=>i>0).length
+const marker = `## Engine & Runtime (${pass}/${total})\n`
 const mdTpl = fs.readFileSync(mdPath, 'utf8')
 const markerIndex = mdTpl.indexOf(`## Engine & Runtime`)
 const doc = mdTpl.slice(0, markerIndex) + marker + mdTable

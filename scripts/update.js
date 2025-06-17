@@ -36,6 +36,7 @@ const execList = [
   "jint-cli",
   "dune",
   "jjs",
+  "rhino"
   // "dukTape",
 ]
 
