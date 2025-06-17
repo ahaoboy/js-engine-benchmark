@@ -176,5 +176,10 @@
     "install": "https://github.com/ahaoboy/jint-cli",
     "description": "Javascript Interpreter for .NET",
     "url": "https://github.com/sebastienros/jint"
+  },
+  {
+    "name": "dune",
+    "description": "JavascriptA hobby runtime for JavaScript and TypeScript",
+    "url": "https://github.com/aalykiot/dune"
   }
 ]

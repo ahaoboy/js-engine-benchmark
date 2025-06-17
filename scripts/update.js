@@ -34,6 +34,7 @@ const execList = [
   "kiesel",
   "mozjs",
   "jint-cli",
+  "dune",
   // "dukTape",
 ]
 
