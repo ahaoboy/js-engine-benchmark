@@ -46,6 +46,13 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: latest
+
+      # jjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin" # See 'Supported distributions' for available options
+          java-version: "21"
+
       - name: install easy-install
         uses: ahaoboy/easy-setup@v1
         with:

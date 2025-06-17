@@ -181,5 +181,10 @@
     "name": "dune",
     "description": "JavascriptA hobby runtime for JavaScript and TypeScript",
     "url": "https://github.com/aalykiot/dune"
+  },
+  {
+    "name": "jjs",
+    "description": "Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification.",
+    "url": "https://github.com/openjdk/nashorn"
   }
 ]
