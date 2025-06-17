@@ -301,13 +301,18 @@ async function main() {
       if (!('Dll size' in data)) {
         data['Dll size'] = {}
       }
+      if (!('Time' in data)) {
+        data['Time'] = {}
+      }
       data['Version'][i] = ((await getVersion(i)) || '').replaceAll("-", ".")
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
+      const startTime = +new Date()
       const out = await execCmd(`${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`, execDir)
+      const endTime = +new Date()
       const json = toJSON(out)
-      if(!json['Score']){
+      if (!json['Score']) {
         continue
       }
       for (const [k, v] of Object.entries(json)) {
@@ -319,6 +324,7 @@ async function main() {
         data['Score/MB'] = {}
       }
       data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024 * 1024) | 0
+      data['Time'][i] = ((endTime - startTime) / 1000) | 0
     } catch (e) {
       console.error(e)
     }

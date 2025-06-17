@@ -142,7 +142,7 @@ jobs:
           cp ./windows/windows.json ./windows.json
           cp ./macos-amd64/macos-amd64.json ./macos-amd64.json
           cp ./macos-arm64/macos-arm64.json ./macos-arm64.json
-          node ./scripts/update-readme.js
+          npm run update:doc
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy"
           git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./README.md
