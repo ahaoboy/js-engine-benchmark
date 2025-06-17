@@ -301,9 +301,7 @@ async function main() {
       if (!('Dll size' in data)) {
         data['Dll size'] = {}
       }
-      if (!('Time' in data)) {
-        data['Time'] = {}
-      }
+
       data['Version'][i] = ((await getVersion(i)) || '').replaceAll("-", ".")
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
@@ -324,7 +322,11 @@ async function main() {
         data['Score/MB'] = {}
       }
       data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024 * 1024) | 0
-      data['Time'][i] = ((endTime - startTime) / 1000) | 0
+
+      if (!('Time(s)' in data)) {
+        data['Time(s)'] = {}
+      }
+      data['Time(s)'][i] = ((endTime - startTime) / 1000) | 0
     } catch (e) {
       console.error(e)
     }
