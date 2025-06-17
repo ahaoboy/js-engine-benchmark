@@ -184,7 +184,12 @@
   },
   {
     "name": "jjs",
-    "description": "Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification.",
+    "description": "Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification",
     "url": "https://github.com/openjdk/nashorn"
+  },
+  {
+    "name": "rhino",
+    "description": "Rhino is an open-source implementation of JavaScript written entirely in Java",
+    "url": "https://github.com/mozilla/rhino"
   }
 ]
