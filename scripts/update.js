@@ -64,7 +64,8 @@ function toJSON(data) {
 
 async function execCmd(cmd, cwd) {
   return new Promise(r => {
-    exec(cmd, { cwd }, (err, stdout, stderr) => {
+    exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
+    // exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error(stdout, stderr)
 
       // goja output to stderr
