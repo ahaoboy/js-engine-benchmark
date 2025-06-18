@@ -189,6 +189,7 @@
   },
   {
     "name": "rhino",
+    "bin": "rhino.sh",
     "description": "Rhino is an open-source implementation of JavaScript written entirely in Java",
     "url": "https://github.com/mozilla/rhino"
   }

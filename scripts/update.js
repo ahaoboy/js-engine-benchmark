@@ -8,6 +8,7 @@ const TEST_JS_PATH = path.join(__dirname, "test.js")
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js")
 
 const execList = [
+  "rhino.sh",
   "llrt",
   "qjs",
   "primjs",
@@ -36,7 +37,6 @@ const execList = [
   "jint-cli",
   "dune",
   "jjs",
-  "rhino"
   // "dukTape",
 ]
 
@@ -63,13 +63,14 @@ function toJSON(data) {
 }
 
 async function execCmd(cmd, cwd) {
+  console.error(`cmd:`, { cmd, cwd })
   return new Promise(r => {
-    exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
-    // exec(cmd, { cwd }, (err, stdout, stderr) => {
-      console.error(stdout, stderr)
+    // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
+    exec(cmd, { cwd }, (err, stdout, stderr) => {
+      console.error("exec output", {err, stdout, stderr})
 
       // goja output to stderr
-      r(stdout || stderr)
+      r(stdout?.trim() || stderr?.trim())
     })
   })
 }
@@ -287,12 +288,12 @@ async function main() {
     try {
       const execPath = getExePath(i)
       const execDir = path.dirname((execPath))
-      const test = await execCmd(`${execPath} ${subCmd[i] || ""} ${TEST_JS_PATH}`, execDir)
+      const test = (await execCmd(`${execPath} ${subCmd[i] || ""} ${TEST_JS_PATH}`, execDir)).trim()
 
       const fileSize = getFileSize(execPath)
       const dllSize = getDllSize(execPath)
 
-      console.error(execPath, execDir, test, fileSize, dllSize)
+      console.error('execPath', { execPath, execDir, test, fileSize, dllSize })
 
       if (!('Version' in data)) {
         data['Version'] = {}
@@ -314,6 +315,8 @@ async function main() {
       const startTime = +new Date()
       const out = await execCmd(`${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`, execDir)
       const endTime = +new Date()
+      console.error("out: ", out)
+
       const json = toJSON(out)
       if (!json['Score']) {
         continue
@@ -357,6 +360,7 @@ async function main() {
     data[i] = obj
   }
 
+  console.error(JSON.stringify(data))
   console.log(JSON.stringify(data))
 }
 
