@@ -159,6 +159,10 @@ async function getVersion(cmd) {
     const text = await execCmd(`echo "exit" | ${cmd}`)
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }
+  if (cmd === 'jjs') {
+    const text = await execCmd(`echo "exit" | ${cmd} -v`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
   return ''
 }
 
