@@ -8,6 +8,7 @@ const TEST_JS_PATH = path.join(__dirname, "test.js")
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js")
 
 const execList = [
+  "duk",
   "rhino.sh",
   "llrt",
   "qjs",
@@ -37,7 +38,6 @@ const execList = [
   "jint-cli",
   "dune",
   "jjs",
-  // "dukTape",
 ]
 
 const subCmd = {

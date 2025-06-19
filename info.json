@@ -126,9 +126,11 @@
     "url": "https://github.com/chakra-core/ChakraCore"
   },
   {
-    "name": "DukTape",
+    "name": "duktape",
+    "bin": "duk",
     "description": "embeddable Javascript engine with a focus on portability and compact footprint",
-    "url": "https://github.com/svaarala/duktape"
+    "url": "https://github.com/svaarala/duktape",
+    "install": "https://github.com/ahaoboy/duktape-build"
   },
   {
     "name": "nova",

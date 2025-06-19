@@ -76,6 +76,7 @@ jobs:
             https://github.com/ahaoboy/mozjs-cli
             https://github.com/ahaoboy/jint-cli
             https://github.com/aalykiot/dune
+            https://github.com/ahaoboy/duktape-build
 
       - name: install rhino
         run: |
