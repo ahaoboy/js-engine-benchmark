@@ -67,7 +67,7 @@ async function execCmd(cmd, cwd) {
   return new Promise(r => {
     // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
-      console.error("exec output", {err, stdout, stderr})
+      console.error("exec output", { err, stdout, stderr })
 
       // goja output to stderr
       r(stdout?.trim() || stderr?.trim())
@@ -84,7 +84,7 @@ async function getVersion(cmd) {
     const text = (await execCmd(`${cmd} -h`)).trim()
     return text.match(/v(\d+\.\d+\.\d+)/)?.[1].trim()
   }
-  if (cmd === 'ch') {
+  if (cmd === 'ch' || cmd === 'dune') {
     // ch version 1.13.0.0-beta
     const text = await execCmd(`${cmd} --version`)
     return text.split(' ').at(-1)?.trim() || ""
