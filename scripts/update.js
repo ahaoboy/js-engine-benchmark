@@ -59,8 +59,19 @@ function toJSON(data) {
         .replaceAll('INFO ', '')
         .split(':')
         .map(i => i.trim())
+
+      if (!['Version', 'Total size',
+        'Exe size', 'Dll size',
+        'Richards', 'DeltaBlue',
+        'Crypto', 'RayTrace',
+        'EarleyBoyer', 'RegExp',
+        'Splay', 'NavierStokes',
+        'Score', 'Score/MB',
+        'Time(s)'].includes(k)) {
+        continue
+      }
       const n = +v
-      json[k] = n === NaN ? 0 : n
+      json[k] = n === NaN ? 0 : n | 0
     }
   }
 
@@ -194,10 +205,33 @@ function fromMsysPath(s) {
   return s;
 }
 
+function getJavaSize() {
+  const v = [
+    "/usr/lib/jvm",
+    "C:/Program Files/Java",
+    "/Library/Java/JavaVirtualMachines",
+    "C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/21.0.7-6.0/x64",
+    "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6/x64",
+    "/Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6.0/x64/Contents/Home",
+    "/Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6.0/arm64/Contents/Home"
+  ]
+
+  for (const i of v) {
+    try {
+      const n = +execSync(`du -s "${i}"`).toString().split("\t")[0].split(' ')[0]
+      if (n > 0)
+        return n * 1000
+    } catch (e) {
+      // console.log('error: ', e.me)
+    }
+  }
+  return 0
+}
+
 function getFileSize(filePath) {
   try {
-    if(filePath.includes("rhino.sh")){
-      return getFileSize(getExePath("java"))
+    if (filePath.includes("rhino.sh") || filePath.includes("jjs")) {
+      return getJavaSize()
     }
     let p = isMsys() ? fromMsysPath(filePath) : filePath
     if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + '.exe')) {
@@ -340,36 +374,41 @@ async function main() {
       console.error("out: ", out)
 
       const json = toJSON(out)
-      if (!json['Score']) {
-        continue
-      }
+      console.error('json:', JSON.stringify(json))
+      // if (!json['Score']) {
+      //   continue
+      // }
       for (const [k, v] of Object.entries(json)) {
         const obj = data[k] || {}
         obj[i] = v
         data[k] = obj
       }
+      if (!('Score' in data)) {
+        data['Score'] = {}
+      }
       if (!('Score/MB' in data)) {
         data['Score/MB'] = {}
       }
-      data['Score/MB'][i] = (data['Score'][i] / (fileSize + dllSize) * 1024 * 1024) | 0
+      const score = data['Score'][i];
+      data['Score/MB'][i] = (score / (fileSize + dllSize) * 1024 * 1024) | 0
 
       if (!('Time(s)' in data)) {
         data['Time(s)'] = {}
       }
       data['Time(s)'][i] = ((endTime - startTime) / 1000) | 0
     } catch (e) {
-      console.error(e)
+      console.error('error:', e)
     }
   }
 
   // sort by score
   const keys = Object.keys(data)
   if (!keys.length) {
-    console.log(JSON.stringify(data))
+    console.error('no keys', JSON.stringify(data))
     return
   }
   const engines = Object.keys(data[keys[0]]).sort((a, b) => {
-    return (+data['Score'][b]) - (+data['Score'][a])
+    return (+(data['Score'][b] || 0)) - (+(data['Score'][a] || 0))
   })
 
   for (const i in data) {
