@@ -155,6 +155,10 @@ async function getVersion(cmd) {
     const text = await execCmd(`${cmd} --version`)
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }
+  if (cmd === 'duk') {
+    const text = await execCmd(`echo "exit" | ${cmd}`)
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
   return ''
 }
 
@@ -308,7 +312,9 @@ async function main() {
         data['Dll size'] = {}
       }
 
-      data['Version'][i] = ((await getVersion(i)) || '').replaceAll("-", ".")
+      const version = ((await getVersion(i)) || '').replaceAll("-", ".")
+      data['Version'][i] = version
+      console.error("version: ", version)
       data['Total size'][i] = humanSize(fileSize + dllSize)
       data['Exe size'][i] = humanSize(fileSize)
       data['Dll size'][i] = humanSize(dllSize)
