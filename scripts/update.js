@@ -76,7 +76,7 @@ async function execCmd(cmd, cwd) {
 }
 
 async function getVersion(cmd) {
-  if (['primjs', 'rquickjs', 'ladybird', "goja", "mozjs", "kiesel", "jint-cli"].includes(cmd)) {
+  if (['primjs', 'rquickjs', 'ladybird', "goja", "mozjs", "jint-cli"].includes(cmd)) {
     return ''
   }
   if (cmd === "engine262") {
@@ -155,7 +155,7 @@ async function getVersion(cmd) {
     const text = await execCmd(`${cmd} --version`)
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }
-  if (cmd === 'duk') {
+  if (cmd === 'duk' || 'kiesel') {
     const text = await execCmd(`echo "exit" | ${cmd}`)
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }
