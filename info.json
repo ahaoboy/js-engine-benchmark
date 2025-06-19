@@ -194,5 +194,11 @@
     "bin": "rhino.sh",
     "description": "Rhino is an open-source implementation of JavaScript written entirely in Java",
     "url": "https://github.com/mozilla/rhino"
+  },
+  {
+    "name": "njs",
+    "description": "A subset of JavaScript language to use in nginx",
+    "url": "https://github.com/nginx/njs",
+    "install": "https://github.com/ahaoboy/njs-build"
   }
 ]

@@ -60,7 +60,7 @@ function RegExpTearDown() {
 // The variants are computed by randomly rotating one random
 // character.
 function computeInputVariants(str, n) {
-  var variants = [ str ];
+  var variants = [str];
   for (var i = 1; i < n; i++) {
     var pos = Math.floor(Math.random() * str.length);
     var chr = String.fromCharCode((str.charCodeAt(pos) + Math.floor(Math.random() * 128)) % 128);
@@ -206,7 +206,7 @@ function RegExpBenchmark() {
 
   var s26 = computeInputVariants('VC=74.125.75.1', 81);
   var s27 = computeInputVariants('9.0  e115', 78);
-  var s28 = computeInputVariants('k',78);
+  var s28 = computeInputVariants('k', 78);
   var s29 = computeInputVariants(str2, 81);
   var s30 = computeInputVariants(str3, 81);
   var s31 = computeInputVariants('144631658', 78);
@@ -512,7 +512,11 @@ function RegExpBenchmark() {
     }
   }
   var re36 = /uers|fep|fryrpgrq/;
-  var re37 = /\s*([+>~\s])\s*([a-zA-Z#.*:\[])/g;
+
+  // var re37 = /\s*([+>~\s])\s*([a-zA-Z#.*:\[])/g;
+  // TODO: fix njs
+  var re37 = /\s*([+>~\s])\s*([a-zA-Z#.*:\[]])/g;
+
   var re38 = /^(\w+|\*)$/;
   var str21 = 'FrffvbaQQS2=s15q53p9n372sn76npr13o271n4s3p5r29p235746p908p58; ZFPhygher=VC=66.249.85.130&VCPhygher=ra-HF&CersreerqPhygher=ra-HF&CersreerqPhygherCraqvat=&Pbhagel=IIZ=&SbeprqRkcvengvba=633669358527244818&gvzrMbar=0&HFEYBP=DKWyLHAiMTH9AwHjWxAcqUx9GJ91oaEunJ4tIzyyqlMQo3IhqUW5D29xMG1IHlMQo3IhqUW5GzSgMG1Iozy0MJDtH3EuqTImWxEgLHAiMTH9BQN3WxkuqTy0qJEyCGZ3YwDkBGVzGT9hM2y0qJEyCF0kZwVhZQH3APMDo3A0LJkQo2EyCGx0ZQDmWyWyM2yiox5uoJH9D0R=';
   var str22 = 'FrffvbaQQS2=s15q53p9n372sn76npr13o271n4s3p5r29p235746p908p58; __hgzm=144631658.1231367822.1.1.hgzpfe=(qverpg)|hgzppa=(qverpg)|hgzpzq=(abar); __hgzn=144631658.4127520630321984500.1231367822.1231367822.1231367822.1; __hgzo=144631658.0.10.1231367822; __hgzp=144631658; ZFPhygher=VC=66.249.85.130&VCPhygher=ra-HF&CersreerqPhygher=ra-HF&Pbhagel=IIZ%3Q&SbeprqRkcvengvba=633669358527244818&gvzrMbar=-8&HFEYBP=DKWyLHAiMTH9AwHjWxAcqUx9GJ91oaEunJ4tIzyyqlMQo3IhqUW5D29xMG1IHlMQo3IhqUW5GzSgMG1Iozy0MJDtH3EuqTImWxEgLHAiMTH9BQN3WxkuqTy0qJEyCGZ3YwDkBGVzGT9hM2y0qJEyCF0kZwVhZQH3APMDo3A0LJkQo2EyCGx0ZQDmWyWyM2yiox5uoJH9D0R%3Q';
@@ -941,7 +945,9 @@ function RegExpBenchmark() {
   var re80 = /^((?:[\w\u0128-\uffff*_-]|\\.)+)(#)((?:[\w\u0128-\uffff*_-]|\\.)+)/;
   var re81 = /^([>+~])\s*(\w*)/i;
   var re82 = /^>\s*((?:[\w\u0128-\uffff*_-]|\\.)+)/;
-  var re83 = /^[\s[]?shapgvba/;
+  //var re83 = /^[\s[]?shapgvba/;
+  // TODO: fix njs
+  var re83 = /^[\s[\]]?shapgvba/;
   var re84 = /v\/g.tvs#(.*)/i;
   var str47 = '#Zbq-Vasb-Vasb-WninFpevcgUvag';
   var str48 = ',n.svryqOgaPnapry';

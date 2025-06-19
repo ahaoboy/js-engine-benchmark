@@ -77,6 +77,7 @@ jobs:
             https://github.com/ahaoboy/jint-cli
             https://github.com/aalykiot/dune
             https://github.com/ahaoboy/duktape-build
+            https://github.com/ahaoboy/njs-build
 
       - name: install rhino
         run: |
@@ -161,7 +162,7 @@ jobs:
           cp ./macos-arm64/macos-arm64.json ./macos-arm64.json
           npm run --silent update:doc
           git config --global user.email "504595380@qq.com"
-          git config --global user.name "ahaoboy"
+          git config --global user.name "ahaoboy-ci"
           git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./README.md
           git commit -m"update"
           cat README.md

@@ -8,6 +8,7 @@ const TEST_JS_PATH = path.join(__dirname, "test.js")
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js")
 
 const execList = [
+  "njs",
   "duk",
   "rhino.sh",
   "llrt",
@@ -162,6 +163,10 @@ async function getVersion(cmd) {
   if (cmd === 'jjs') {
     const text = await execCmd(`echo 'exit()' | ${cmd} -v`)
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
+  }
+  if (cmd === 'njs') {
+    const text = await execCmd(`${cmd} -v`)
+    return text.trim()
   }
   return ''
 }
