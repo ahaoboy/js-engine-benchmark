@@ -54,6 +54,7 @@ function PrintError(name, error) {
 
 
 function PrintScore(score) {
+  // FIXME: always print score?
   if (success) {
     print('----');
     // print('Score (version ' + BenchmarkSuite.version + '): ' + score);

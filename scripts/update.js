@@ -53,10 +53,14 @@ function toJSON(data) {
     if (line.includes(':') && !line.includes('----')) {
       // ladybird: "Richards: 292"
       // goja: 2025/03/29 16:43:06 DeltaBlue: 525
-      const [k, v] = line.slice(offset).replaceAll('"', '')
+      const [k, v] = line.slice(offset)
+        .replaceAll('"', '')
+        // rhino: INFO Richards: 56.3
+        .replaceAll('INFO ', '')
         .split(':')
         .map(i => i.trim())
-      json[k] = +v
+      const n = +v
+      json[k] = n === NaN ? 0 : n
     }
   }
 
@@ -192,6 +196,9 @@ function fromMsysPath(s) {
 
 function getFileSize(filePath) {
   try {
+    if(filePath.includes("rhino.sh")){
+      return getFileSize(getExePath("java"))
+    }
     let p = isMsys() ? fromMsysPath(filePath) : filePath
     if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + '.exe')) {
       p = p + '.exe'

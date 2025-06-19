@@ -81,7 +81,7 @@ jobs:
 
       - name: install rhino
         run: |
-          curl -L -o ~/.ei/rhino.jar https://github.com/mozilla/rhino/releases/download/Rhino1_7_15_Release/rhino-1.7.15.jar
+          curl -L -o ~/.ei/rhino.jar https://github.com/ahaoboy/rhino-cli/releases/latest/download/rhino-all-1.8.1-20250614.122300-24.jar
           echo '#!/bin/bash' > ~/.ei/rhino.sh
           echo 'java -jar ~/.ei/rhino.jar "$@"' >> ~/.ei/rhino.sh
           chmod 777 ~/.ei/rhino.sh
