@@ -37,33 +37,33 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 
 | name | repo | score | platform | description |
 | --- | --- | --- | --- | --- |
-| bun | [bun](https://github.com/oven-sh/bun)<br><br>[setup-bun](https://github.com/oven-sh/setup-bun) | 47990<br>97.2M<br>493/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one |
-| JavaScriptCore | [JavaScriptCore](https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore)<br><br>[jsc-build](https://github.com/ahaoboy/jsc-build) | 47659<br>37.4M<br>1272/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification |
-| v8 | [v8.dev](https://v8.dev)<br><br>[v8-build](https://github.com/ahaoboy/v8-build) | 45318<br>53.3M<br>850/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | V8 is Google’s open source high-performance JavaScript and WebAssembly engine |
-| deno | [deno](https://github.com/denoland/deno)<br><br>[setup-deno](https://github.com/denoland/setup-deno) | 41077<br>103.1M<br>398/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A modern runtime for JavaScript and TypeScript |
-| node | [node](https://github.com/nodejs/node)<br><br>[setup-node](https://github.com/actions/setup-node) | 40199<br>121.6M<br>330/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Node.js JavaScript runtime |
-| dune | [dune](https://github.com/aalykiot/dune) | 39376<br>67.1M<br>586/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavascriptA hobby runtime for JavaScript and TypeScript |
-| ChakraCore | [ChakraCore](https://github.com/chakra-core/ChakraCore)<br><br>[ChakraCore-build](https://github.com/ahaoboy/ChakraCore-build) | 20101<br>19.4M<br>1035/M | ✅unix<br>❌macArm<br>✅macAmd<br>✅windows | ChakraCore is an open source Javascript engine with a C API |
-| spidermonkey | [spidermonkey.dev](https://spidermonkey.dev)<br><br>[spidermonkey-build](https://github.com/ahaoboy/spidermonkey-build) | 18955<br>40M<br>473/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | SpiderMonkey is Mozilla’s JavaScript and WebAssembly Engine, used in Firefox |
-| mozjs | [mozjs](https://github.com/servo/mozjs)<br><br>[mozjs-cli](https://github.com/ahaoboy/mozjs-cli) | 17111<br>35.2M<br>485/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | Rust bindings to SpiderMonkey |
-| graaljs | [graaljs](https://github.com/oracle/graaljs) | 13349<br>199.7M<br>66/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A ECMAScript 2023 compliant JavaScript implementation built on GraalVM. With polyglot language interoperability support. Running Node.js applications! |
-| jjs | [nashorn](https://github.com/openjdk/nashorn) | 2733<br>1.1G<br>2/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification |
-| hermes | [hermes](https://github.com/facebook/hermes) | 1535<br>36M<br>42/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A JavaScript engine optimized for running React Native |
-| llrt | [llrt](https://github.com/awslabs/llrt) | 896<br>11.9M<br>75/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | LLRT (Low Latency Runtime) is a lightweight JavaScript runtime |
-| txiki.js | [txiki.js](https://github.com/saghul/txiki.js)<br><br>[txiki.js-build](https://github.com/ahaoboy/txiki.js-build) | 839<br>5.2M<br>162/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A tiny JavaScript runtime |
-| quickjs | [quickjs](https://github.com/bellard/quickjs)<br><br>[quickjs-build](https://github.com/ahaoboy/quickjs-build) | 835<br>4.3M<br>195/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | QuickJS is a small and embeddable Javascript engine. It supports the ES2023 specification including modules, asynchronous generators, proxies and BigInt. |
-| primjs | [primjs](https://github.com/lynx-family/primjs)<br><br>[primjs-build](https://github.com/ahaoboy/primjs-build) | 772<br>857K<br>922/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | JavaScript Engine Optimized for Lynx |
-| rquickjs | [rquickjs](https://github.com/DelSkayn/rquickjs)<br><br>[rquickjs-cli](https://github.com/ahaoboy/rquickjs-cli) | 713<br>1.3M<br>529/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | High level bindings to the quickjs javascript engine |
-| quickjs-ng | [quickjs](https://github.com/quickjs-ng/quickjs) | 651<br>2M<br>330/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | QuickJS, the Next Generation: a mighty JavaScript engine |
-| ladybird | [ladybird](https://github.com/LadybirdBrowser/ladybird)<br><br>[ladybird-js-build](https://github.com/ahaoboy/ladybird-js-build) | 568<br>45.8M<br>12/M | ✅unix<br>✅macArm<br>❌macAmd<br>❌windows | Truly independent web browser |
-| duktape | [duktape](https://github.com/svaarala/duktape)<br><br>[duktape-build](https://github.com/ahaoboy/duktape-build) | 506<br>2.1M<br>238/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | embeddable Javascript engine with a focus on portability and compact footprint |
-| mujs-one | [mujs-one](https://github.com/ahaoboy/mujs-one) | 397<br>685K<br>593/M | ✅unix<br>❌macArm<br>❌macAmd<br>❌windows | mujs by c2rust |
-| mujs | [mujs](https://github.com/ccxvii/mujs)<br><br>[mujs-build](https://github.com/ahaoboy/mujs-build) | 358<br>414.5K<br>884/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | An embeddable Javascript interpreter in C |
+| bun | [bun](https://github.com/oven-sh/bun)<br><br>[setup-bun](https://github.com/oven-sh/setup-bun) | 47982<br>97.2M<br>493/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one |
+| JavaScriptCore | [JavaScriptCore](https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore)<br><br>[jsc-build](https://github.com/ahaoboy/jsc-build) | 47235<br>37.4M<br>1261/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification |
+| v8 | [v8.dev](https://v8.dev)<br><br>[v8-build](https://github.com/ahaoboy/v8-build) | 45613<br>53.3M<br>856/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | V8 is Google’s open source high-performance JavaScript and WebAssembly engine |
+| deno | [deno](https://github.com/denoland/deno)<br><br>[setup-deno](https://github.com/denoland/setup-deno) | 40459<br>103.9M<br>389/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A modern runtime for JavaScript and TypeScript |
+| dune | [dune](https://github.com/aalykiot/dune) | 39408<br>67.1M<br>587/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavascriptA hobby runtime for JavaScript and TypeScript |
+| node | [node](https://github.com/nodejs/node)<br><br>[setup-node](https://github.com/actions/setup-node) | 38541<br>121.6M<br>317/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Node.js JavaScript runtime |
+| ChakraCore | [ChakraCore](https://github.com/chakra-core/ChakraCore)<br><br>[ChakraCore-build](https://github.com/ahaoboy/ChakraCore-build) | 20151<br>19.4M<br>1038/M | ✅unix<br>❌macArm<br>✅macAmd<br>✅windows | ChakraCore is an open source Javascript engine with a C API |
+| spidermonkey | [spidermonkey.dev](https://spidermonkey.dev)<br><br>[spidermonkey-build](https://github.com/ahaoboy/spidermonkey-build) | 18978<br>39.7M<br>477/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | SpiderMonkey is Mozilla’s JavaScript and WebAssembly Engine, used in Firefox |
+| mozjs | [mozjs](https://github.com/servo/mozjs)<br><br>[mozjs-cli](https://github.com/ahaoboy/mozjs-cli) | 17148<br>35.2M<br>486/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | Rust bindings to SpiderMonkey |
+| graaljs | [graaljs](https://github.com/oracle/graaljs) | 10933<br>199.7M<br>54/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A ECMAScript 2023 compliant JavaScript implementation built on GraalVM. With polyglot language interoperability support. Running Node.js applications! |
+| jjs | [nashorn](https://github.com/openjdk/nashorn) | 1965<br>1.1G<br>1/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification |
+| hermes | [hermes](https://github.com/facebook/hermes) | 1540<br>36M<br>42/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A JavaScript engine optimized for running React Native |
+| llrt | [llrt](https://github.com/awslabs/llrt) | 855<br>12.1M<br>70/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | LLRT (Low Latency Runtime) is a lightweight JavaScript runtime |
+| quickjs | [quickjs](https://github.com/bellard/quickjs)<br><br>[quickjs-build](https://github.com/ahaoboy/quickjs-build) | 833<br>4.3M<br>195/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | QuickJS is a small and embeddable Javascript engine. It supports the ES2023 specification including modules, asynchronous generators, proxies and BigInt. |
+| txiki.js | [txiki.js](https://github.com/saghul/txiki.js)<br><br>[txiki.js-build](https://github.com/ahaoboy/txiki.js-build) | 827<br>5.2M<br>160/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A tiny JavaScript runtime |
+| primjs | [primjs](https://github.com/lynx-family/primjs)<br><br>[primjs-build](https://github.com/ahaoboy/primjs-build) | 766<br>857K<br>915/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | JavaScript Engine Optimized for Lynx |
+| rquickjs | [rquickjs](https://github.com/DelSkayn/rquickjs)<br><br>[rquickjs-cli](https://github.com/ahaoboy/rquickjs-cli) | 720<br>1.3M<br>534/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | High level bindings to the quickjs javascript engine |
+| quickjs-ng | [quickjs](https://github.com/quickjs-ng/quickjs) | 645<br>2M<br>326/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | QuickJS, the Next Generation: a mighty JavaScript engine |
+| ladybird | [ladybird](https://github.com/LadybirdBrowser/ladybird)<br><br>[ladybird-js-build](https://github.com/ahaoboy/ladybird-js-build) | 541<br>45.8M<br>11/M | ✅unix<br>✅macArm<br>❌macAmd<br>❌windows | Truly independent web browser |
+| duktape | [duktape](https://github.com/svaarala/duktape)<br><br>[duktape-build](https://github.com/ahaoboy/duktape-build) | 488<br>2.1M<br>229/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | embeddable Javascript engine with a focus on portability and compact footprint |
+| mujs-one | [mujs-one](https://github.com/ahaoboy/mujs-one) | 388<br>685K<br>580/M | ✅unix<br>❌macArm<br>❌macAmd<br>❌windows | mujs by c2rust |
+| mujs | [mujs](https://github.com/ccxvii/mujs)<br><br>[mujs-build](https://github.com/ahaoboy/mujs-build) | 376<br>414.5K<br>928/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | An embeddable Javascript interpreter in C |
 | goja | [goja](https://github.com/dop251/goja)<br><br>[goja-build](https://github.com/ahaoboy/goja-build) | 278<br>13.2M<br>21/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | ECMAScript/JavaScript engine in pure Go |
-| xst | [moddable](https://github.com/Moddable-OpenSource/moddable) | 270<br>2.1M<br>130/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | Tools for developers to create truly open IoT products using standard JavaScript on low cost microcontrollers |
+| xst | [moddable](https://github.com/Moddable-OpenSource/moddable) | 268<br>2.1M<br>129/M | ✅unix<br>✅macArm<br>✅macAmd<br>❌windows | Tools for developers to create truly open IoT products using standard JavaScript on low cost microcontrollers |
 | jint | [jint](https://github.com/sebastienros/jint)<br><br>[jint-cli](https://github.com/ahaoboy/jint-cli) | 188<br>69M<br>2/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Javascript Interpreter for .NET |
 | boa | [boa](https://github.com/boa-dev/boa) | 107<br>27M<br>3/M | ✅unix<br>❌macArm<br>✅macAmd<br>✅windows | Boa is an embeddable and experimental Javascript engine written in Rust. Currently, it has support for some of the language. |
-| kiesel | [kiesel](https://codeberg.org/kiesel-js/kiesel)<br><br>[kiesel-build](https://github.com/ahaoboy/kiesel-build) | 106<br>12.6M<br>8/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A JavaScript engine written in Zig https://kiesel.dev |
+| kiesel | [kiesel](https://codeberg.org/kiesel-js/kiesel)<br><br>[kiesel-build](https://github.com/ahaoboy/kiesel-build) | 105<br>12.6M<br>8/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A JavaScript engine written in Zig https://kiesel.dev |
 | JerryScript | [jerryscript](https://github.com/jerryscript-project/jerryscript)<br><br>[jerryscript-build](https://github.com/ahaoboy/jerryscript-build) | <br>454.2K | ❌unix<br>❌macArm<br>❌macAmd<br>❌windows | Ultra-lightweight JavaScript engine for the Internet of Things |
 | nova | [nova](https://github.com/trynova/nova) | <br> | ❌unix<br>❌macArm<br>❌macAmd<br>❌windows | Nova is a JavaScript and WebAssembly engine written in Rust |
 | engine262 | [engine262](https://github.com/engine262/engine262) | <br>7.3K | ❌unix<br>❌macArm<br>❌macAmd<br>❌windows | An implementation of ECMA-262 in JavaScript |
@@ -71,77 +71,77 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 | njs | [njs](https://github.com/nginx/njs)<br><br>[njs-build](https://github.com/ahaoboy/njs-build) | <br>8.4M | ❌unix<br>❌macArm<br>❌macAmd<br>❌windows | A subset of JavaScript language to use in nginx |
 
 ## bench
-7/7/2025, 1:54:50 AM
+7/14/2025, 1:58:47 AM
 
 ### ubuntu
-| Engine | bun | jsc | v8 | deno | node | dune | ChakraCore | spidermonkey | mozjs | graaljs | jjs | hermes | llrt | txiki.js | quickjs | primjs | rquickjs | qjs(ng) | ladybird | duktape | mujs(one) | mujs | goja | xst | jint | boa | kiesel | njs | rhino | JerryScript | engine262 |
+| Engine | bun | jsc | v8 | deno | dune | node | ChakraCore | spidermonkey | mozjs | graaljs | jjs | hermes | llrt | quickjs | txiki.js | primjs | rquickjs | qjs(ng) | ladybird | duktape | mujs(one) | mujs | goja | xst | jint | boa | kiesel | njs | rhino | JerryScript | engine262 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Version | 1.2.18 | 0 | 13.6.0 | 2.4.0 | 24.3.0 | 0.10.0 | 1.13.0.0.beta | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 0.5.1.beta | 24.12.0 | 2025.04.26 | 0 | 0 | 0.10.1 | 0 | 2.99.99 | 0 | 1.3.5 | 0 | 16.9.1 | 0 | 0.20.0 | 0.1.0.dev | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
-| Total size | 97.2M | 37.4M | 53.3M | 103.1M | 121.6M | 67.1M | 19.4M | 40M | 35.2M | 199.7M | 1.1G | 36M | 11.9M | 5.2M | 4.3M | 857K | 1.3M | 2M | 45.8M | 2.1M | 685K | 414.5K | 13.2M | 2.1M | 69M | 27M | 12.6M | 8.4M | 1.1G | 454.2K | 7.3K |
-| Exe size | 97.2M | 37.4M | 937.8K | 103.1M | 121.6M | 67.1M | 571K | 40M | 35.2M | 1M | 1.1G | 36M | 11.9M | 5.2M | 4.3M | 857K | 1.3M | 2M | 45.8M | 2.1M | 685K | 414.5K | 13.2M | 2.1M | 69M | 27M | 12.6M | 8.4M | 1.1G | 454.2K | 7.3K |
+| Version | 1.2.18 | 0 | 13.6.0 | 2.4.1 | 0.10.0 | 24.4.0 | 1.13.0.0.beta | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 0.6.0.beta | 2025.04.26 | 24.12.0 | 0 | 0 | 0.10.1 | 0 | 2.99.99 | 0 | 1.3.5 | 0 | 16.9.1 | 0 | 0.20.0 | 0.1.0.dev | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
+| Total size | 97.2M | 37.4M | 53.3M | 103.9M | 67.1M | 121.6M | 19.4M | 39.7M | 35.2M | 199.7M | 1.1G | 36M | 12.1M | 4.3M | 5.2M | 857K | 1.3M | 2M | 45.8M | 2.1M | 685K | 414.5K | 13.2M | 2.1M | 69M | 27M | 12.6M | 8.4M | 1.1G | 454.2K | 7.3K |
+| Exe size | 97.2M | 37.4M | 937.8K | 103.9M | 67.1M | 121.6M | 571K | 39.7M | 35.2M | 1M | 1.1G | 36M | 12.1M | 4.3M | 5.2M | 857K | 1.3M | 2M | 45.8M | 2.1M | 685K | 414.5K | 13.2M | 2.1M | 69M | 27M | 12.6M | 8.4M | 1.1G | 454.2K | 7.3K |
 | Dll size | 0 | 0 | 52.3M | 0 | 0 | 0 | 18.8M | 0 | 0 | 198.6M | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| Richards | 41695 | 41148 | 34748 | 32411 | 32340 | 32616 | 23306 | 12952 | 13086 | 35595 | 14089 | 1129 | 807 | 705 | 669 | 612 | 588 | 577 | 497 | 292 | 245 | 227 | 205 | 90 | 106 | 60 | 60 | 545 | 125 | 273 | 0 |
-| DeltaBlue | 53185 | 57139 | 95448 | 76406 | 76221 | 75408 | 25225 | 13118 | 12827 | 37535 | 217 | 1058 | 730 | 689 | 667 | 627 | 582 | 581 | 466 | 332 | 352 | 321 | 252 | 165 | 114 | 55 | 56 | 519 | 185 | 266 | 0 |
-| Crypto | 50082 | 52380 | 42697 | 41613 | 41780 | 41554 | 31785 | 20275 | 17484 | 28599 | 8510 | 1370 | 695 | 592 | 725 | 578 | 505 | 380 | 916 | 791 | 190 | 184 | 123 | 334 | 99 | 81 | 62 | 804 | 125 | 299 | 0 |
-| RayTrace | 117362 | 117066 | 106336 | 69781 | 66525 | 68824 | 35040 | 27722 | 28018 | 5789 | 1285 | 1547 | 1192 | 1097 | 918 | 954 | 889 | 709 | 555 | 578 | 530 | 487 | 277 | 498 | 254 | 165 | 141 | 579 | 409 | 345 | 0 |
-| EarleyBoyer | 67620 | 69889 | 80333 | 74293 | 71453 | 74396 | 7183 | 37713 | 37148 | 33838 | 877 | 3373 | 2006 | 1766 | 1492 | 1414 | 1372 | 1225 | 743 | 599 | 534 | 510 | 509 | 327 | 288 | 193 | 142 | 0 | 393 | 0 | 0 |
-| RegExp | 21842 | 20042 | 10253 | 10212 | 10032 | 10162 | 7878 | 8828 | 8758 | 1389 | 1016 | 552 | 198 | 223 | 227 | 235 | 225 | 185 | 62 | 136 | 221 | 200 | 210 | 97 | 251 | 48 | 95 | 109 | 0 | 0 | 0 |
-| Splay | 36744 | 37592 | 37070 | 38325 | 35783 | 27976 | 19841 | 23795 | 12501 | 2994 | 7110 | 3545 | 1822 | 2029 | 1817 | 1834 | 1499 | 1698 | 1276 | 1300 | 1278 | 862 | 956 | 405 | 470 | 230 | 332 | 1825 | 756 | 0 | 0 |
-| NavierStokes | 39771 | 35066 | 38694 | 38765 | 38803 | 38842 | 36249 | 22024 | 21980 | 32402 | 14692 | 1847 | 1178 | 976 | 1293 | 981 | 942 | 931 | 1550 | 919 | 476 | 474 | 200 | 878 | 153 | 173 | 119 | 1185 | 222 | 0 | 0 |
-| Score | 47990 | 47659 | 45318 | 41077 | 40199 | 39376 | 20101 | 18955 | 17111 | 13349 | 2733 | 1535 | 896 | 839 | 835 | 772 | 713 | 651 | 568 | 506 | 397 | 358 | 278 | 270 | 188 | 107 | 106 | 0 | 0 | 0 | 0 |
-| Score/MB | 493 | 1272 | 850 | 398 | 330 | 586 | 1035 | 473 | 485 | 66 | 2 | 42 | 75 | 162 | 195 | 922 | 529 | 330 | 12 | 238 | 593 | 884 | 21 | 130 | 2 | 3 | 8 | 0 | 0 | 0 | 0 |
-| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 21 | 20 | 20 | 24 | 37 | 34 | 47 | 50 | 48 | 50 | 53 | 59 | 88 | 67 | 80 | 86 | 113 | 128 | 146 | 234 | 232 | 55 | 95 | 32 | 0 |
+| Richards | 40551 | 41512 | 34998 | 32270 | 32940 | 25996 | 23405 | 12589 | 13552 | 35464 | 10029 | 1112 | 649 | 674 | 707 | 602 | 597 | 578 | 480 | 255 | 205 | 223 | 198 | 90 | 102 | 61 | 59 | 545 | 127 | 272 | 0 |
+| DeltaBlue | 56372 | 52927 | 94774 | 74806 | 75646 | 74171 | 25207 | 13085 | 12794 | 26090 | 248 | 1059 | 678 | 660 | 690 | 619 | 595 | 578 | 465 | 308 | 357 | 323 | 250 | 165 | 110 | 55 | 56 | 521 | 168 | 278 | 0 |
+| Crypto | 49401 | 52013 | 42684 | 41907 | 41672 | 41486 | 31785 | 20101 | 17890 | 17085 | 8889 | 1367 | 551 | 759 | 532 | 571 | 549 | 379 | 899 | 782 | 189 | 184 | 122 | 337 | 98 | 81 | 61 | 844 | 122 | 295 | 0 |
+| RayTrace | 119434 | 122986 | 106706 | 68153 | 68745 | 66377 | 34784 | 27620 | 27870 | 5296 | 1153 | 1577 | 1152 | 899 | 1064 | 941 | 886 | 686 | 584 | 547 | 522 | 487 | 276 | 497 | 256 | 165 | 140 | 589 | 393 | 341 | 0 |
+| EarleyBoyer | 69144 | 68308 | 79668 | 72790 | 74063 | 69662 | 7123 | 38591 | 36635 | 24928 | 1037 | 3370 | 1839 | 1499 | 1779 | 1404 | 1365 | 1225 | 777 | 581 | 528 | 504 | 507 | 326 | 285 | 195 | 140 | 0 | 466 | 0 | 0 |
+| RegExp | 21093 | 19800 | 10274 | 9961 | 10092 | 9861 | 7894 | 8819 | 8676 | 1375 | 630 | 553 | 258 | 229 | 229 | 235 | 225 | 182 | 63 | 134 | 220 | 198 | 211 | 96 | 247 | 49 | 94 | 112 | 0 | 0 | 0 |
+| Splay | 36049 | 37225 | 39124 | 37119 | 28098 | 34365 | 20141 | 24692 | 12403 | 2134 | 2445 | 3664 | 2393 | 1796 | 1980 | 1807 | 1441 | 1654 | 872 | 1300 | 1307 | 1266 | 994 | 391 | 475 | 226 | 321 | 1952 | 812 | 0 | 0 |
+| NavierStokes | 39623 | 35022 | 38732 | 38694 | 38803 | 38842 | 36803 | 21898 | 21941 | 33323 | 5453 | 1822 | 898 | 1243 | 981 | 999 | 940 | 930 | 1464 | 936 | 471 | 490 | 202 | 870 | 166 | 177 | 118 | 1231 | 220 | 0 | 0 |
+| Score | 47982 | 47235 | 45613 | 40459 | 39408 | 38541 | 20151 | 18978 | 17148 | 10933 | 1965 | 1540 | 855 | 833 | 827 | 766 | 720 | 645 | 541 | 488 | 388 | 376 | 278 | 268 | 188 | 107 | 105 | 0 | 0 | 0 | 0 |
+| Score/MB | 493 | 1261 | 856 | 389 | 587 | 317 | 1038 | 477 | 486 | 54 | 1 | 42 | 70 | 195 | 160 | 915 | 534 | 326 | 11 | 229 | 580 | 928 | 21 | 129 | 2 | 3 | 8 | 0 | 0 | 0 | 0 |
+| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 21 | 20 | 20 | 24 | 38 | 34 | 46 | 48 | 50 | 49 | 52 | 60 | 87 | 68 | 82 | 85 | 113 | 129 | 143 | 233 | 235 | 53 | 97 | 31 | 0 |
 ### macos-arm64
-| Engine | jsc | bun | deno | dune | node | v8 | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | llrt | qjs(ng) | quickjs | rquickjs | ladybird | primjs | duktape | mujs | goja | xst | jint | kiesel | njs | rhino | JerryScript | engine262 |
+| Engine | bun | jsc | deno | dune | node | v8 | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | llrt | qjs(ng) | quickjs | primjs | rquickjs | ladybird | duktape | mujs | xst | goja | jint | kiesel | njs | rhino | JerryScript | engine262 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Version | 0 | 1.2.18 | 2.4.0 | 0.10.0 | 24.3.0 | 13.6.0 | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 24.12.0 | 0.5.1.beta | 0.8.0 | 2025.04.26 | 0 | 0 | 0 | 2.99.99 | 1.3.5 | 0 | 16.9.1 | 0 | 0.1.0.dev | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
-| Total size | 94.2M | 56.4M | 83.6M | 57.4M | 110.7M | 861K | 131.5M | 32.8M | 194M | 653.8M | 15.7M | 3.6M | 10.3M | 4.1M | 975.9K | 1.2M | 41.1M | 1.5M | 562.1K | 429.1K | 12.7M | 1.6M | 75.4M | 12.4M | 2.4M | 653.8M | 575.4K | 7.3K |
-| Exe size | 914.7K | 56.4M | 83.6M | 57.4M | 110.7M | 861K | 65.7M | 32.8M | 147.4K | 653.8M | 7.9M | 3.6M | 10.3M | 2.1M | 975.9K | 1.2M | 41.1M | 1.5M | 562.1K | 429.1K | 12.7M | 1.6M | 75.4M | 12.4M | 1.8M | 653.8M | 575.4K | 7.3K |
-| Dll size | 93.3M | 0 | 0 | 0 | 0 | 0 | 65.7M | 0 | 193.8M | 0 | 7.9M | 0 | 0 | 2.1M | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 566.7K | 0 | 0 | 0 |
-| Richards | 51389 | 51947 | 48533 | 47336 | 45607 | 35196 | 15169 | 13891 | 37438 | 20761 | 1305 | 1333 | 1187 | 1250 | 1065 | 982 | 803 | 757 | 537 | 408 | 335 | 114 | 151 | 114 | 763 | 198 | 215 | 0 |
-| DeltaBlue | 77814 | 73986 | 104863 | 108473 | 104361 | 98093 | 17270 | 17177 | 53926 | 1362 | 1256 | 1324 | 1246 | 1146 | 1026 | 1028 | 807 | 779 | 632 | 600 | 397 | 226 | 153 | 104 | 836 | 262 | 242 | 0 |
-| Crypto | 72778 | 71140 | 58918 | 60685 | 59764 | 37073 | 24423 | 21603 | 46786 | 11608 | 1487 | 1227 | 997 | 965 | 1283 | 917 | 1708 | 1045 | 1390 | 311 | 199 | 557 | 126 | 116 | 1212 | 108 | 272 | 0 |
-| RayTrace | 185589 | 175895 | 92129 | 93683 | 96495 | 88651 | 49209 | 46203 | 5540 | 3160 | 2567 | 2151 | 2059 | 1421 | 1184 | 1323 | 1154 | 1226 | 1141 | 1014 | 474 | 752 | 327 | 221 | 738 | 581 | 339 | 0 |
-| EarleyBoyer | 107210 | 104667 | 105758 | 105290 | 102108 | 70558 | 52364 | 45148 | 48837 | 1529 | 5231 | 3328 | 3145 | 2308 | 2123 | 2225 | 1475 | 2402 | 1214 | 1111 | 863 | 452 | 346 | 247 | 0 | 676 | 0 | 0 |
-| RegExp | 33524 | 32613 | 15350 | 15440 | 15425 | 11740 | 13234 | 11682 | 2017 | 725 | 720 | 315 | 308 | 275 | 263 | 262 | 108 | 175 | 263 | 333 | 297 | 333 | 200 | 132 | 203 | 0 | 0 | 0 |
-| Splay | 54715 | 55854 | 52301 | 48609 | 51983 | 41650 | 31716 | 15830 | 4515 | 2897 | 4785 | 3672 | 2648 | 2486 | 2133 | 2109 | 2334 | 797 | 2025 | 1307 | 1389 | 523 | 551 | 436 | 655 | 971 | 0 | 0 |
-| NavierStokes | 34030 | 33438 | 40540 | 40580 | 40513 | 36358 | 21432 | 19453 | 34656 | 27103 | 1619 | 2153 | 1340 | 2187 | 2182 | 1661 | 1971 | 2401 | 1571 | 772 | 326 | 1574 | 196 | 212 | 1898 | 279 | 0 | 0 |
-| Score | 66032 | 64688 | 55881 | 55772 | 55578 | 44072 | 24911 | 21059 | 17312 | 4164 | 1917 | 1579 | 1341 | 1270 | 1201 | 1122 | 992 | 940 | 927 | 642 | 442 | 437 | 227 | 176 | 0 | 0 | 0 | 0 |
-| Score/MB | 700 | 1145 | 668 | 971 | 501 | 52415 | 189 | 641 | 89 | 6 | 122 | 437 | 130 | 308 | 1260 | 950 | 24 | 621 | 1688 | 1532 | 34 | 271 | 3 | 14 | 0 | 0 | 0 | 0 |
-| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 23 | 31 | 29 | 37 | 39 | 40 | 40 | 41 | 58 | 47 | 43 | 54 | 77 | 81 | 125 | 144 | 41 | 87 | 33 | 0 |
+| Version | 1.2.18 | 0 | 2.4.1 | 0.10.0 | 24.4.0 | 13.6.0 | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 24.12.0 | 0.6.0.beta | 0.8.0 | 2025.04.26 | 0 | 0 | 0 | 2.99.99 | 1.3.5 | 16.9.1 | 0 | 0 | 0.1.0.dev | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
+| Total size | 56.4M | 94.2M | 83.8M | 57.4M | 110.8M | 861K | 131M | 32.8M | 194M | 653.8M | 15.7M | 3.6M | 10.3M | 4.1M | 975.9K | 1.5M | 1.2M | 41.2M | 562.1K | 429.1K | 1.6M | 12.7M | 75.4M | 12.4M | 2.4M | 653.8M | 575.4K | 7.3K |
+| Exe size | 56.4M | 914.7K | 83.8M | 57.4M | 110.8M | 861K | 65.5M | 32.8M | 147.4K | 653.8M | 7.9M | 3.6M | 10.3M | 2.1M | 975.9K | 1.5M | 1.2M | 41.2M | 562.1K | 429.1K | 1.6M | 12.7M | 75.4M | 12.4M | 1.8M | 653.8M | 575.4K | 7.3K |
+| Dll size | 0 | 93.3M | 0 | 0 | 0 | 0 | 65.5M | 0 | 193.8M | 0 | 7.9M | 0 | 0 | 2.1M | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 566.7K | 0 | 0 | 0 |
+| Richards | 52893 | 52476 | 48558 | 48456 | 45575 | 30773 | 15254 | 15346 | 37381 | 21051 | 1373 | 1338 | 1092 | 1349 | 1136 | 783 | 1089 | 884 | 539 | 410 | 120 | 335 | 156 | 115 | 757 | 196 | 217 | 0 |
+| DeltaBlue | 74343 | 73946 | 106245 | 111091 | 104308 | 94714 | 16080 | 17885 | 57668 | 1034 | 1252 | 1338 | 1190 | 1251 | 1163 | 957 | 1123 | 809 | 629 | 613 | 225 | 374 | 170 | 102 | 842 | 263 | 242 | 0 |
+| Crypto | 72101 | 74418 | 60285 | 59816 | 60196 | 38158 | 26812 | 22273 | 47429 | 17302 | 1459 | 1236 | 1030 | 1230 | 1399 | 1121 | 1009 | 1710 | 1395 | 314 | 561 | 201 | 147 | 118 | 1214 | 100 | 272 | 0 |
+| RayTrace | 195209 | 190473 | 94867 | 96421 | 95681 | 96347 | 52021 | 51873 | 6001 | 4385 | 2575 | 2146 | 2102 | 1594 | 1289 | 1479 | 1479 | 1143 | 1155 | 1006 | 755 | 479 | 379 | 255 | 812 | 548 | 335 | 0 |
+| EarleyBoyer | 107792 | 106208 | 106793 | 103811 | 103609 | 80461 | 52663 | 50159 | 54764 | 1749 | 5303 | 3297 | 3128 | 2672 | 2379 | 1957 | 2363 | 1450 | 1218 | 1135 | 453 | 869 | 404 | 252 | 0 | 638 | 0 | 0 |
+| RegExp | 33069 | 33524 | 15334 | 15410 | 15410 | 11831 | 13416 | 12872 | 2028 | 725 | 738 | 317 | 329 | 281 | 289 | 226 | 281 | 107 | 263 | 334 | 339 | 300 | 216 | 147 | 203 | 0 | 0 | 0 |
+| Splay | 58005 | 54689 | 52770 | 46768 | 50109 | 37445 | 31896 | 19841 | 4179 | 2094 | 4816 | 3643 | 4323 | 2537 | 2621 | 3676 | 2371 | 2377 | 2415 | 1303 | 609 | 1392 | 573 | 599 | 1960 | 1212 | 0 | 0 |
+| NavierStokes | 33505 | 34474 | 40729 | 40662 | 40729 | 36545 | 21475 | 21475 | 36249 | 19994 | 1649 | 2163 | 1750 | 2188 | 2396 | 2685 | 1735 | 1976 | 1583 | 793 | 1577 | 325 | 199 | 231 | 1902 | 283 | 0 | 0 |
+| Score | 66521 | 66208 | 56500 | 55834 | 55438 | 43965 | 25256 | 23312 | 17854 | 4148 | 1940 | 1581 | 1471 | 1388 | 1338 | 1235 | 1222 | 1003 | 951 | 648 | 450 | 441 | 249 | 192 | 0 | 0 | 0 | 0 |
+| Score/MB | 1178 | 702 | 673 | 972 | 500 | 52287 | 192 | 710 | 92 | 6 | 123 | 438 | 142 | 336 | 1403 | 816 | 1035 | 24 | 1732 | 1546 | 279 | 34 | 3 | 15 | 0 | 0 | 0 | 0 |
+| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 22 | 33 | 29 | 36 | 36 | 37 | 36 | 42 | 40 | 58 | 43 | 53 | 80 | 75 | 115 | 135 | 38 | 87 | 33 | 0 |
 ### macos-amd64
-| Engine | bun | v8 | jsc | deno | node | dune | ChakraCore | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | llrt | quickjs | qjs(ng) | rquickjs | duktape | primjs | mujs | xst | goja | jint | kiesel | boa | njs | rhino | JerryScript | engine262 |
+| Engine | jsc | dune | bun | deno | node | v8 | ChakraCore | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | llrt | quickjs | qjs(ng) | rquickjs | duktape | primjs | mujs | xst | goja | jint | kiesel | boa | njs | rhino | JerryScript | engine262 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Version | 1.2.18 | 13.6.0 | 0 | 2.4.0 | 24.3.0 | 0.10.0 | 1.13.0.0.beta | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 24.12.0 | 0.5.1.beta | 2025.04.26 | 0.8.0 | 0 | 2.99.99 | 0 | 1.3.5 | 16.9.1 | 0 | 0 | 0.1.0.dev | 0.20.0 | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
-| Total size | 61.9M | 861K | 89.6M | 94.1M | 113.5M | 60.4M | 20M | 65.7M | 33.8M | 194.4M | 602.8M | 7.9M | 3.7M | 12.1M | 1M | 2.1M | 1.2M | 525.7K | 693.4K | 441.8K | 1.6M | 13.1M | 68.9M | 12.9M | 25.3M | 7.5M | 602.8M | 570.8K | 7.3K |
-| Exe size | 61.9M | 861K | 1016.1K | 94.1M | 113.5M | 60.4M | 571K | 65.7M | 33.8M | 148.8K | 602.8M | 7.9M | 3.7M | 12.1M | 1M | 2.1M | 1.2M | 525.7K | 693.4K | 441.8K | 1.6M | 13.1M | 68.9M | 12.9M | 25.3M | 2.1M | 602.8M | 570.8K | 7.3K |
-| Dll size | 0 | 0 | 88.6M | 0 | 0 | 0 | 19.5M | 0 | 0 | 194.3M | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5.4M | 0 | 0 | 0 |
-| Richards | 28665 | 22148 | 29396 | 29996 | 21728 | 21284 | 24955 | 9627 | 9496 | 43174 | 10142 | 460 | 453 | 422 | 401 | 430 | 394 | 182 | 253 | 135 | 89 | 143 | 99 | 43 | 25 | 346 | 70 | 112 | 0 |
-| DeltaBlue | 44292 | 81471 | 34930 | 50891 | 46818 | 50633 | 22512 | 11181 | 10824 | 49225 | 257 | 476 | 521 | 487 | 448 | 495 | 435 | 207 | 283 | 194 | 136 | 170 | 112 | 40 | 22 | 374 | 96 | 129 | 0 |
-| Crypto | 43067 | 42133 | 35560 | 34425 | 33661 | 32159 | 25776 | 15866 | 13106 | 25463 | 5631 | 544 | 280 | 277 | 325 | 280 | 251 | 310 | 198 | 108 | 172 | 72 | 81 | 47 | 39 | 416 | 74 | 139 | 0 |
-| RayTrace | 116030 | 105892 | 101822 | 71631 | 70743 | 65267 | 34819 | 31640 | 30932 | 8140 | 798 | 1050 | 823 | 778 | 419 | 481 | 442 | 417 | 345 | 344 | 415 | 241 | 212 | 111 | 74 | 141 | 300 | 216 | 0 |
-| EarleyBoyer | 63436 | 71736 | 59316 | 65974 | 62764 | 59332 | 6311 | 34274 | 32464 | 37070 | 665 | 1633 | 1228 | 1189 | 793 | 871 | 609 | 450 | 587 | 410 | 311 | 404 | 249 | 110 | 80 | 0 | 309 | 0 | 0 |
-| RegExp | 17257 | 8693 | 17547 | 8828 | 8745 | 7592 | 5252 | 8067 | 7622 | 1412 | 317 | 271 | 87 | 90 | 82 | 76 | 75 | 88 | 76 | 103 | 130 | 170 | 100 | 52 | 21 | 61 | 0 | 0 | 0 |
-| Splay | 37298 | 42872 | 38884 | 36777 | 35783 | 23999 | 20678 | 21734 | 13191 | 4140 | 2188 | 2257 | 1467 | 944 | 915 | 873 | 791 | 905 | 601 | 468 | 279 | 529 | 439 | 258 | 129 | 189 | 546 | 0 | 0 |
-| NavierStokes | 32698 | 35362 | 32945 | 35474 | 36693 | 32945 | 34804 | 24462 | 24684 | 25918 | 3831 | 788 | 615 | 555 | 757 | 585 | 571 | 404 | 339 | 270 | 521 | 120 | 113 | 102 | 71 | 757 | 145 | 0 | 0 |
-| Score | 41304 | 40755 | 38628 | 36062 | 33904 | 30779 | 18198 | 17278 | 15515 | 14934 | 1461 | 748 | 519 | 473 | 427 | 421 | 375 | 303 | 286 | 218 | 218 | 192 | 149 | 78 | 47 | 0 | 0 | 0 | 0 |
-| Score/MB | 667 | 48470 | 430 | 383 | 298 | 509 | 907 | 262 | 458 | 76 | 2 | 95 | 138 | 39 | 417 | 204 | 303 | 590 | 422 | 505 | 135 | 14 | 2 | 6 | 1 | 0 | 0 | 0 | 0 |
-| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 21 | 20 | 20 | 23 | 53 | 51 | 84 | 83 | 87 | 92 | 99 | 102 | 111 | 125 | 138 | 161 | 190 | 307 | 521 | 97 | 142 | 52 | 0 |
+| Version | 0 | 0.10.0 | 1.2.18 | 2.4.1 | 24.4.0 | 13.6.0 | 1.13.0.0.beta | 141.0 | 0 | 24.1.2 | 11.0.27 | 0.12.0 | 24.12.0 | 0.6.0.beta | 2025.04.26 | 0.8.0 | 0 | 2.99.99 | 0 | 1.3.5 | 16.9.1 | 0 | 0 | 0.1.0.dev | 0.20.0 | 0.9.1 | 0 | 3.0.0 | 0.0.1 |
+| Total size | 89.6M | 60.4M | 61.9M | 94.3M | 113.5M | 861K | 20M | 65.5M | 33.8M | 194.4M | 602.8M | 7.9M | 3.7M | 12.2M | 1M | 2.1M | 1.2M | 525.7K | 693.4K | 441.8K | 1.6M | 13.1M | 68.9M | 12.9M | 25.3M | 7.5M | 602.8M | 570.8K | 7.3K |
+| Exe size | 1016.1K | 60.4M | 61.9M | 94.3M | 113.5M | 861K | 571K | 65.5M | 33.8M | 148.8K | 602.8M | 7.9M | 3.7M | 12.2M | 1M | 2.1M | 1.2M | 525.7K | 693.4K | 441.8K | 1.6M | 13.1M | 68.9M | 12.9M | 25.3M | 2.1M | 602.8M | 570.8K | 7.3K |
+| Dll size | 88.6M | 0 | 0 | 0 | 0 | 0 | 19.5M | 0 | 0 | 194.3M | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 5.4M | 0 | 0 | 0 |
+| Richards | 26685 | 30967 | 28227 | 29802 | 20913 | 17474 | 18880 | 7438 | 7459 | 26533 | 12571 | 395 | 392 | 377 | 360 | 331 | 324 | 204 | 206 | 146 | 71 | 122 | 70 | 48 | 25 | 363 | 78 | 98 | 0 |
+| DeltaBlue | 34719 | 55784 | 43327 | 47426 | 50600 | 61040 | 16920 | 9052 | 8847 | 23174 | 295 | 445 | 454 | 447 | 462 | 412 | 340 | 226 | 223 | 201 | 113 | 139 | 83 | 44 | 22 | 378 | 114 | 99 | 0 |
+| Crypto | 34389 | 34110 | 39860 | 32728 | 25109 | 29532 | 20675 | 13951 | 9800 | 15053 | 5134 | 414 | 260 | 261 | 314 | 246 | 248 | 333 | 168 | 111 | 153 | 62 | 65 | 49 | 35 | 409 | 74 | 102 | 0 |
+| RayTrace | 100861 | 67413 | 109814 | 66015 | 58533 | 74665 | 29822 | 19166 | 22570 | 5402 | 800 | 842 | 819 | 755 | 345 | 403 | 398 | 438 | 301 | 338 | 327 | 208 | 190 | 99 | 68 | 268 | 296 | 174 | 0 |
+| EarleyBoyer | 55485 | 62222 | 49194 | 59393 | 58684 | 50855 | 4646 | 26287 | 25765 | 9886 | 1108 | 1467 | 1233 | 1096 | 646 | 720 | 656 | 509 | 482 | 408 | 256 | 393 | 219 | 96 | 73 | 0 | 280 | 0 | 0 |
+| RegExp | 15562 | 8282 | 12663 | 7985 | 7313 | 6617 | 4880 | 6735 | 5733 | 715 | 357 | 239 | 94 | 80 | 71 | 65 | 67 | 101 | 66 | 103 | 100 | 187 | 88 | 47 | 18 | 81 | 0 | 0 | 0 |
+| Splay | 31814 | 31048 | 26631 | 31211 | 32971 | 29003 | 18262 | 20560 | 9347 | 1599 | 1385 | 1911 | 1644 | 1708 | 705 | 736 | 641 | 993 | 544 | 444 | 268 | 569 | 334 | 274 | 113 | 475 | 524 | 0 | 0 |
+| NavierStokes | 27427 | 36210 | 24955 | 33142 | 35657 | 27936 | 32994 | 10960 | 19011 | 18531 | 10569 | 729 | 622 | 460 | 627 | 534 | 512 | 443 | 302 | 261 | 488 | 116 | 104 | 81 | 60 | 845 | 142 | 0 | 0 |
+| Score | 35318 | 35095 | 34930 | 33261 | 30679 | 29914 | 15092 | 12795 | 11828 | 7543 | 1751 | 645 | 509 | 468 | 372 | 355 | 335 | 333 | 243 | 219 | 185 | 179 | 122 | 75 | 43 | 0 | 0 | 0 | 0 |
+| Score/MB | 394 | 580 | 564 | 352 | 270 | 35576 | 752 | 195 | 349 | 38 | 2 | 82 | 136 | 38 | 363 | 172 | 271 | 648 | 358 | 507 | 115 | 13 | 1 | 5 | 1 | 0 | 0 | 0 | 0 |
+| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 22 | 20 | 20 | 25 | 44 | 54 | 82 | 90 | 99 | 106 | 104 | 93 | 126 | 126 | 163 | 173 | 215 | 338 | 584 | 76 | 140 | 64 | 0 |
 ### windows
-| Engine | v8 | bun | jsc | node | dune | deno | ChakraCore | spidermonkey | graaljs | jjs | hermes | quickjs | txiki.js | rquickjs | llrt | qjs(ng) | duktape | mujs | goja | jint | kiesel | boa | rhino | xst | engine262 |
+| Engine | v8 | jsc | bun | deno | dune | node | ChakraCore | spidermonkey | graaljs | jjs | hermes | quickjs | txiki.js | rquickjs | llrt | qjs(ng) | mujs | duktape | goja | jint | kiesel | boa | rhino | xst | engine262 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Version | 13.6.101 | 1.2.18 | 0 | 24.3.0 | 0.10.0 | 2.4.0 | 1.11.24.0 | 141.0 | 24.1.2 | 1.8.0 | 0.12.0 | 2025.04.26 | 24.12.0 | 0 | 0.5.1.beta | 0.8.0 | 2.7.0 | 1.3.5 | 0 | 0 | 0.1.0.dev | 0.20.0 | 0 | 0 | 0.0.1 |
-| Total size | 52.6M | 131.9M | 122.8M | 115.8M | 78.7M | 140.5M | 14.4M | 51.3M | 196.1M | 338M | 86.6M | 11.8M | 38.1M | 9.3M | 41.8M | 9M | 7.6M | 7.5M | 19.5M | 96.1M | 46.3M | 42.4M | 320.6M | 5.9M | 0.4K |
-| Exe size | 27.6M | 112.2M | 337K | 84.8M | 48.4M | 108.3M | 342.9K | 33.8M | 349.1K | 320.6M | 3M | 4.9M | 5.7M | 1.5M | 12.7M | 1.7M | 777.7K | 665.3K | 13.3M | 68.8M | 33.2M | 27.4M | 320.6M | 1.3M | 0.4K |
-| Dll size | 25M | 19.8M | 122.5M | 31.1M | 30.3M | 32.3M | 14.1M | 17.5M | 195.8M | 17.3M | 83.5M | 6.9M | 32.4M | 7.8M | 29.1M | 7.3M | 6.9M | 6.9M | 6.2M | 27.3M | 13.2M | 15M | 0 | 4.7M | 0 |
-| Richards | 34903 | 37268 | 36100 | 33226 | 32446 | 28065 | 24348 | 13122 | 42069 | 5465 | 700 | 502 | 452 | 434 | 434 | 430 | 212 | 229 | 194 | 105 | 55 | 49 | 0 | 0 | 0 |
-| DeltaBlue | 83547 | 48107 | 46005 | 73351 | 75183 | 56200 | 28384 | 12807 | 28951 | 216 | 615 | 470 | 403 | 403 | 377 | 403 | 264 | 331 | 230 | 116 | 49 | 42 | 0 | 0 | 0 |
-| Crypto | 43085 | 45446 | 48384 | 40585 | 42091 | 41949 | 33670 | 20443 | 21108 | 1512 | 784 | 543 | 421 | 512 | 417 | 369 | 312 | 183 | 110 | 93 | 59 | 75 | 0 | 0 | 0 |
-| RayTrace | 100565 | 101378 | 106114 | 66089 | 65793 | 68375 | 52265 | 28359 | 4953 | 1318 | 1019 | 544 | 737 | 587 | 600 | 585 | 440 | 451 | 228 | 266 | 131 | 135 | 0 | 0 | 0 |
-| EarleyBoyer | 82154 | 56439 | 61431 | 71405 | 72970 | 73567 | 43075 | 39518 | 24246 | 972 | 2246 | 1008 | 1140 | 986 | 1005 | 984 | 529 | 544 | 456 | 299 | 125 | 141 | 0 | 0 | 0 |
-| RegExp | 9790 | 19749 | 19495 | 9961 | 9738 | 9851 | 10193 | 9255 | 1085 | 1011 | 408 | 190 | 195 | 174 | 191 | 186 | 109 | 196 | 197 | 279 | 90 | 43 | 0 | 0 | 0 |
-| Splay | 38961 | 35992 | 35041 | 32365 | 28310 | 33525 | 29598 | 24203 | 2896 | 4832 | 2371 | 1039 | 1474 | 978 | 1035 | 1002 | 741 | 583 | 747 | 537 | 327 | 184 | 0 | 0 | 0 |
-| NavierStokes | 38990 | 40068 | 33950 | 38951 | 39060 | 39060 | 36989 | 21963 | 27899 | 3975 | 1103 | 1040 | 745 | 729 | 713 | 679 | 1037 | 508 | 183 | 151 | 115 | 165 | 0 | 0 | 0 |
-| Score | 44521 | 43691 | 43208 | 39446 | 38960 | 37940 | 29570 | 19261 | 11325 | 1607 | 976 | 589 | 586 | 532 | 525 | 511 | 369 | 344 | 247 | 195 | 98 | 88 | 0 | 0 | 0 |
-| Score/MB | 846 | 331 | 351 | 340 | 494 | 269 | 2053 | 375 | 57 | 4 | 11 | 49 | 15 | 57 | 12 | 57 | 48 | 45 | 12 | 2 | 2 | 2 | 0 | 0 | 0 |
-| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 24 | 40 | 41 | 58 | 60 | 60 | 61 | 64 | 85 | 82 | 124 | 148 | 249 | 283 | 0 | 132 | 0 |
+| Version | 13.6.101 | 0 | 1.2.18 | 2.4.1 | 0.10.0 | 24.4.0 | 1.11.24.0 | 141.0 | 24.1.2 | 1.8.0 | 0.12.0 | 2025.04.26 | 24.12.0 | 0 | 0.6.0.beta | 0.8.0 | 1.3.5 | 2.7.0 | 0 | 0 | 0.1.0.dev | 0.20.0 | 0 | 0 | 0.0.1 |
+| Total size | 52.6M | 122.8M | 131.9M | 140.9M | 78.7M | 115.8M | 14.4M | 52.2M | 196.1M | 338M | 86.6M | 11.8M | 38.1M | 9.3M | 43.3M | 9M | 7.5M | 7.6M | 19.5M | 96.1M | 46.3M | 42.4M | 320.6M | 5.9M | 0.4K |
+| Exe size | 27.6M | 337K | 112.2M | 108.6M | 48.4M | 84.8M | 342.9K | 33.6M | 349.1K | 320.6M | 3M | 4.9M | 5.7M | 1.5M | 12.9M | 1.7M | 665.3K | 777.7K | 13.3M | 68.8M | 33.2M | 27.4M | 320.6M | 1.3M | 0.4K |
+| Dll size | 25M | 122.5M | 19.8M | 32.3M | 30.3M | 31.1M | 14.1M | 18.5M | 195.8M | 17.3M | 83.5M | 6.9M | 32.4M | 7.8M | 30.5M | 7.3M | 6.9M | 6.9M | 6.2M | 27.3M | 13.2M | 15M | 0 | 4.7M | 0 |
+| Richards | 35436 | 36894 | 36598 | 33025 | 33272 | 31415 | 24132 | 13214 | 36286 | 5408 | 714 | 516 | 451 | 441 | 378 | 427 | 233 | 215 | 197 | 90 | 52 | 48 | 0 | 0 | 0 |
+| DeltaBlue | 100625 | 46216 | 43281 | 74793 | 73490 | 61153 | 28444 | 13124 | 29525 | 177 | 616 | 462 | 403 | 403 | 357 | 403 | 331 | 258 | 228 | 117 | 50 | 41 | 0 | 0 | 0 |
+| Crypto | 41810 | 48564 | 43551 | 41858 | 40988 | 39481 | 34071 | 20293 | 22781 | 1917 | 793 | 535 | 420 | 516 | 375 | 366 | 186 | 315 | 112 | 91 | 59 | 74 | 0 | 0 | 0 |
+| RayTrace | 101082 | 98493 | 91611 | 59865 | 66821 | 64758 | 48717 | 27898 | 3253 | 2414 | 1011 | 543 | 684 | 596 | 604 | 587 | 438 | 437 | 225 | 261 | 127 | 132 | 0 | 0 | 0 |
+| EarleyBoyer | 82424 | 59590 | 54884 | 70702 | 71115 | 70498 | 43117 | 38657 | 27530 | 1366 | 2231 | 981 | 1134 | 982 | 984 | 973 | 541 | 497 | 449 | 288 | 123 | 130 | 0 | 0 | 0 |
+| RegExp | 9738 | 19255 | 19073 | 9738 | 9656 | 9851 | 9880 | 9299 | 996 | 651 | 399 | 187 | 193 | 173 | 182 | 185 | 196 | 109 | 196 | 276 | 88 | 42 | 0 | 0 | 0 |
+| Splay | 37005 | 33550 | 34886 | 31472 | 28367 | 31610 | 16714 | 24187 | 2950 | 5127 | 2320 | 1003 | 1417 | 936 | 1254 | 977 | 1171 | 961 | 870 | 493 | 321 | 182 | 0 | 0 | 0 |
+| NavierStokes | 38951 | 33801 | 39988 | 39060 | 38842 | 38951 | 36878 | 21919 | 24709 | 3869 | 1095 | 1028 | 741 | 750 | 719 | 670 | 506 | 828 | 186 | 147 | 115 | 166 | 0 | 0 | 0 |
+| Score | 45204 | 42484 | 41749 | 38896 | 38734 | 37836 | 27195 | 19232 | 10593 | 1724 | 972 | 582 | 575 | 533 | 515 | 507 | 375 | 367 | 252 | 187 | 97 | 87 | 0 | 0 | 0 |
+| Score/MB | 859 | 345 | 316 | 276 | 492 | 326 | 1888 | 368 | 54 | 5 | 11 | 49 | 15 | 57 | 11 | 56 | 49 | 48 | 12 | 1 | 2 | 2 | 0 | 0 | 0 |
+| Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 23 | 42 | 41 | 58 | 61 | 61 | 62 | 63 | 82 | 85 | 124 | 147 | 252 | 292 | 0 | 131 | 0 |
