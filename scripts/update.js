@@ -47,6 +47,7 @@ const execList = [
 const subCmd = {
   "tjs": "run",
   "dune": "run",
+  "spiderfire": "run",
 }
 
 function toJSON(data) {
