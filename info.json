@@ -200,5 +200,10 @@
     "description": "A subset of JavaScript language to use in nginx",
     "url": "https://github.com/nginx/njs",
     "install": "https://github.com/ahaoboy/njs-build"
+  },
+  {
+    "name": "ringojs",
+    "description": "RingoJS is a JavaScript platform built on the JVM and optimized for server-side applications",
+    "url": "https://github.com/ringo/ringojs"
   }
 ]

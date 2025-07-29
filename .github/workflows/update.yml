@@ -100,6 +100,8 @@ jobs:
         run: |
           ei https://github.com/ahaoboy/primjs-build
           mv ~/.ei/qjs ~/.ei/primjs
+
+          ei https://github.com/ringo/ringojs/releases/download/v4.0.0/ringojs-4.0.0.tar.gz
       - name: install
         run: |
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
