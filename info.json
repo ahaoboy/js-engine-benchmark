@@ -202,7 +202,7 @@
     "install": "https://github.com/ahaoboy/njs-build"
   },
   {
-    "name": "ringojs",
+    "name": "ringo",
     "description": "RingoJS is a JavaScript platform built on the JVM and optimized for server-side applications",
     "url": "https://github.com/ringo/ringojs"
   },
