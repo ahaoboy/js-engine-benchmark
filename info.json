@@ -217,5 +217,11 @@
     "description": "JavaScript Runtime built with Mozilla's SpiderMonkey Engine",
     "url": "https://github.com/Redfire75369/spiderfire",
     "install": "https://github.com/ahaoboy/spiderfire-build"
+  },
+  {
+    "name": "bare",
+    "description": "Small and modular JavaScript runtime for desktop and mobile",
+    "url": "https://github.com/holepunchto/bare",
+    "install": "https://github.com/ahaoboy/bare-build"
   }
 ]

@@ -83,6 +83,8 @@ jobs:
             https://github.com/ahaoboy/duktape-build
             https://github.com/ahaoboy/njs-build
             https://github.com/ahaoboy/spiderfire-build
+            https://github.com/ahaoboy/lo-build
+            https://github.com/ahaoboy/bare-build
 
       - name: install rhino
         run: |
