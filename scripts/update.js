@@ -40,6 +40,7 @@ const execList = [
   "dune",
   "jjs",
   "ringo",
+  "lo",
 ]
 
 const subCmd = {
@@ -118,7 +119,7 @@ async function getVersion(cmd) {
     const text = await execCmd(`${cmd} -h`)
     return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim()
   }
-  if (cmd === 'tjs') {
+  if (cmd === 'tjs' || cmd === "lo") {
     const text = await execCmd(`${cmd} --version`)
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim()
   }

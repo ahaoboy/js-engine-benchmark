@@ -205,5 +205,11 @@
     "name": "ringojs",
     "description": "RingoJS is a JavaScript platform built on the JVM and optimized for server-side applications",
     "url": "https://github.com/ringo/ringojs"
+  },
+  {
+    "name": "lo",
+    "description": "it's JavaScript Jim, but not as we know it",
+    "url": "https://github.com/just-js/lo",
+    "install": "https://github.com/ahaoboy/lo-build"
   }
 ]
