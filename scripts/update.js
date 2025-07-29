@@ -41,6 +41,7 @@ const execList = [
   "jjs",
   "ringo",
   "lo",
+  "spiderfire",
 ]
 
 const subCmd = {

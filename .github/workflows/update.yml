@@ -82,6 +82,7 @@ jobs:
             https://github.com/aalykiot/dune
             https://github.com/ahaoboy/duktape-build
             https://github.com/ahaoboy/njs-build
+            https://github.com/ahaoboy/spiderfire-build
 
       - name: install rhino
         run: |

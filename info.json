@@ -211,5 +211,11 @@
     "description": "it's JavaScript Jim, but not as we know it",
     "url": "https://github.com/just-js/lo",
     "install": "https://github.com/ahaoboy/lo-build"
+  },
+  {
+    "name": "spiderfire",
+    "description": "JavaScript Runtime built with Mozilla's SpiderMonkey Engine",
+    "url": "https://github.com/Redfire75369/spiderfire",
+    "install": "https://github.com/ahaoboy/spiderfire-build"
   }
 ]
