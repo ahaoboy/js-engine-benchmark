@@ -85,6 +85,7 @@ jobs:
             https://github.com/ahaoboy/spiderfire-build
             https://github.com/ahaoboy/lo-build
             https://github.com/ahaoboy/bare-build
+            https://github.com/ahaoboy/nova-build
 
       - name: install rhino
         run: |

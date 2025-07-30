@@ -135,7 +135,8 @@
   {
     "name": "nova",
     "description": "Nova is a JavaScript and WebAssembly engine written in Rust",
-    "url": "https://github.com/trynova/nova"
+    "url": "https://github.com/trynova/nova",
+    "install": "https://github.com/ahaoboy/nova-build"
   },
   {
     "name": "boa",

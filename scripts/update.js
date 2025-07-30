@@ -43,12 +43,14 @@ const execList = [
   "lo",
   "spiderfire",
   "bare",
+  "nova",
 ]
 
 const subCmd = {
   "tjs": "run",
   "dune": "run",
   "spiderfire": "run",
+  "nova": "eval",
 }
 
 function toJSON(data) {
