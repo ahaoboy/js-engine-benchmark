@@ -46,7 +46,9 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: latest
-
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       # jjs
       - uses: actions/setup-java@v4
         with:
@@ -149,7 +151,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 23
+          node-version: latest
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/download-artifact@v4
         with:
           path: windows
@@ -170,25 +175,56 @@ jobs:
           path: macos-arm64
           pattern: macos-arm64
           merge-multiple: true
-      - run: |
-          cp ./ubuntu/ubuntu.json ./ubuntu.json
-          cp ./windows/windows.json ./windows.json
-          cp ./macos-amd64/macos-amd64.json ./macos-amd64.json
-          cp ./macos-arm64/macos-arm64.json ./macos-arm64.json
+
+      - name: update json
+        if: github.ref == 'refs/heads/main'
+        run: |
+          mv ./ubuntu/ubuntu.json ./ubuntu.json
+          mv ./windows/windows.json ./windows.json
+          mv ./macos-amd64/macos-amd64.json ./macos-amd64.json
+          mv ./macos-arm64/macos-arm64.json ./macos-arm64.json
+          rm -rf ./ubuntu
+          rm -rf ./windows
+          rm -rf ./macos-amd64
+          rm -rf ./macos-arm64
           npm run --silent update:doc
+
+      - name: build web
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd web
+          pnpm i
+          pnpm run update:data
+          pnpm run build
+      - name: commit
+        if: github.ref == 'refs/heads/main'
+        run: |
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy-ci"
-          git add ./windows.json ./ubuntu.json ./macos-amd64.json ./macos-arm64.json ./README.md
+          git add .
           git commit -m"update"
           cat README.md
+
       - name: Upload README
         uses: actions/upload-artifact@v4
+        if: github.ref == 'refs/heads/main'
         with:
           name: README
           path: README.md
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         if: github.ref == 'refs/heads/main'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
+
+      - name: Deploy to doc branch
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./web/dist
+          publish_branch: doc
+          force_orphan: true
+          cname: github.com
