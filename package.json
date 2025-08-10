@@ -7,6 +7,7 @@
     "update:doc": "node ./scripts/update-readme.js",
     "update": "node ./scripts/update.js",
     "build": "node ./scripts/build.js",
+    "build-lib": "node ./scripts/build-lib.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
