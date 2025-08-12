@@ -65,6 +65,12 @@
     "url": "https://github.com/ccxvii/mujs"
   },
   {
+    "name": "mujs-pgo",
+    "description": "An embeddable Javascript interpreter in C",
+    "install": "https://github.com/ahaoboy/mujs-pgo-build",
+    "url": "https://github.com/ccxvii/mujs"
+  },
+  {
     "name": "mujs-one",
     "mdName": "mujs(one)",
     "description": "mujs by c2rust",

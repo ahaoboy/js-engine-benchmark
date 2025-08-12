@@ -44,6 +44,7 @@ const execList = [
   "spiderfire",
   "bare",
   "nova",
+  "mujs-pgo",
 ]
 
 const subCmd = {
