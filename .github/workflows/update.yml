@@ -74,6 +74,7 @@ jobs:
             https://github.com/ahaoboy/jerryscript-build
             https://github.com/ahaoboy/mujs-build
             https://github.com/ahaoboy/mujs-one
+            https://github.com/ahaoboy/mujs-pgo-build
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
             https://github.com/ahaoboy/jsc-build
