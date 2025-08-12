@@ -66,6 +66,7 @@
   },
   {
     "name": "mujs-pgo",
+    "mdName": "mujs(pgo)",
     "description": "An embeddable Javascript interpreter in C",
     "install": "https://github.com/ahaoboy/mujs-pgo-build",
     "url": "https://github.com/ccxvii/mujs"
