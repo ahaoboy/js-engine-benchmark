@@ -109,25 +109,30 @@ function getOption(data: DataItem[], engines: string[], maxCount: number) {
   return option;
 }
 
+const OS = [
+  "ubuntu", "windows", "macos-arm64"
+]
+
 function App() {
   const [data, setData] = useState<DataItem[]>([]);
   const chartRef = useRef<ECharts>(null);
   const [engines, setEngines] = useState<string[]>([]);
   const [selectEngines, setSelectEngines] = useState<string[]>([]);
   const [maxCount, setMaxCount] = useState(60);
+  const [os, setOs] = useState("ubuntu");
 
   useEffect(() => {
-    fetch("ubuntu.json").then((resp) => resp.json()).then((i: DataItem[]) => {
+    fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
       const names = getNames(i);
       setData(i);
       setEngines(names);
       setSelectEngines(names.slice(0, 3));
     });
-  }, []);
+  }, [os]);
 
   useEffect(() => {
     update();
-  }, [data, engines, selectEngines, maxCount]);
+  }, [data, engines, selectEngines, maxCount, os]);
 
   function update() {
     if (!chartRef.current) {
@@ -174,8 +179,15 @@ function App() {
                 label: 20 + i * 20,
                 value: 20 + i * 20,
               }))}
-            >
-            </Select>
+            />
+            <Select
+              value={os}
+              onChange={(e) => setOs(e)}
+              options={OS.map(i => ({
+                label: i,
+                value: i,
+              }))}
+            />
           </Flex>
         </Flex>
         <Flex gap="middle" className="auto-size">

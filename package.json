@@ -4,16 +4,16 @@
   "description": "js-bench",
   "main": "index.js",
   "scripts": {
-    "update:doc": "node ./scripts/update-readme.js",
-    "update": "node ./scripts/update.js",
-    "build": "node ./scripts/build.js",
-    "build-lib": "node ./scripts/build-lib.js",
+    "update:doc": "bun ./scripts/update-readme.js",
+    "update": "bun ./scripts/update.js",
+    "build": "bun ./scripts/build.js",
+    "build-lib": "bun ./scripts/build-lib.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/node": "24.0.3"
+    "@types/node": "24.2.1"
   }
 }

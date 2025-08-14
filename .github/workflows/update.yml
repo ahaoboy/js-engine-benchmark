@@ -77,7 +77,7 @@ jobs:
             https://github.com/ahaoboy/mujs-pgo-build
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
-            https://github.com/ahaoboy/JavaScriptCore-build
+            https://github.com/ahaoboy/jsc-build
             https://github.com/ahaoboy/goja-build
             https://github.com/ahaoboy/kiesel-build
             https://github.com/ahaoboy/mozjs-cli
@@ -153,6 +153,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: latest
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
       - uses: pnpm/action-setup@v4
         with:
           version: 10
