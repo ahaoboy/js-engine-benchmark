@@ -77,7 +77,7 @@ jobs:
             https://github.com/ahaoboy/mujs-pgo-build
             https://github.com/ahaoboy/rquickjs-cli
             https://github.com/ahaoboy/ChakraCore-build
-            https://github.com/ahaoboy/jsc-build
+            https://github.com/ahaoboy/JavaScriptCore-build
             https://github.com/ahaoboy/goja-build
             https://github.com/ahaoboy/kiesel-build
             https://github.com/ahaoboy/mozjs-cli
@@ -129,11 +129,11 @@ jobs:
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
           mv ~/.ei/graaljs/bin/js ~/.ei/graaljs/bin/graaljs
 
-      - name: Set jsc environment variable only on macOS
+      - name: Set JavaScriptCore environment variable only on macOS
         if: startsWith(matrix.os, 'macos')
         run: |
-          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
+          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
+          echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
 
       - name: run
         run: |

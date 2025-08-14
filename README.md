@@ -6,6 +6,8 @@ npm run build
 npm run update
 ```
 
+https://ahaoboy.github.io/js-engine-benchmark/
+
 ## Note
 
 ### graaljs
@@ -38,7 +40,7 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 | name | repo | score | platform | description |
 | --- | --- | --- | --- | --- |
 | bun | [bun](https://github.com/oven-sh/bun)<br><br>[setup-bun](https://github.com/oven-sh/setup-bun) | 47981<br>98.4M<br>487/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one |
-| JavaScriptCore | [JavaScriptCore](https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore)<br><br>[jsc-build](https://github.com/ahaoboy/jsc-build) | 47354<br>37.4M<br>1264/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification |
+| JavaScriptCore | [JavaScriptCore](https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore)<br><br>[JavaScriptCore-build](https://github.com/ahaoboy/JavaScriptCore-build) | 47354<br>37.4M<br>1264/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification |
 | v8 | [v8.dev](https://v8.dev)<br><br>[v8-build](https://github.com/ahaoboy/v8-build) | 45269<br>53.3M<br>849/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | V8 is Google’s open source high-performance JavaScript and WebAssembly engine |
 | deno | [deno](https://github.com/denoland/deno)<br><br>[setup-deno](https://github.com/denoland/setup-deno) | 40980<br>106.5M<br>384/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | A modern runtime for JavaScript and TypeScript |
 | node | [node](https://github.com/nodejs/node)<br><br>[setup-node](https://github.com/actions/setup-node) | 40041<br>123.1M<br>325/M | ✅unix<br>✅macArm<br>✅macAmd<br>✅windows | Node.js JavaScript runtime |
@@ -79,7 +81,7 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 8/14/2025, 7:32:23 AM
 
 ### ubuntu
-| Engine | bun | jsc | v8 | deno | node | bare | dune | lo | ChakraCore | spidermonkey | mozjs | spiderfire | graaljs | jjs | hermes | llrt | quickjs | txiki.js | primjs | njs | rquickjs | qjs(ng) | ladybird | duktape | mujs(pgo) | mujs(one) | mujs | ringo | goja | xst | jint | boa | kiesel | rhino | JerryScript | engine262 | nova |
+| Engine | bun | JavaScriptCore | v8 | deno | node | bare | dune | lo | ChakraCore | spidermonkey | mozjs | spiderfire | graaljs | jjs | hermes | llrt | quickjs | txiki.js | primjs | njs | rquickjs | quickjs-ng | ladybird | duktape | mujs-pgo | mujs-one | mujs | ringo | goja | xst | jint | boa | kiesel | rhino | JerryScript | engine262 | nova |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Version | 1.2.20 | 0 | 13.6.0 | 2.4.4 | 24.5.0 | 0 | 0.10.0 | 0 | 1.13.0.0.beta | 142.0 | 0 | 0 | 24.1.2 | 0 | 0.12.0 | 0.6.2.beta | 2025.04.26 | 24.12.0 | 0 | 0.9.2 | 0 | 0.10.1 | 0 | 2.99.99 | 0 | 0 | 1.3.5 | 4.0.0 | 0 | 16.9.1 | 0 | 0.20.0 | 0.1.0.dev | 0 | 3.0.0 | 0.0.1 | 0 |
 | Total size | 98.4M | 37.4M | 53.3M | 106.5M | 123.1M | 65.2M | 67.1M | 40.7M | 19.4M | 39.6M | 35.2M | 51M | 199.7M | 1.1G | 36M | 12.3M | 4.3M | 5.2M | 831.3K | 8.4M | 1.3M | 2M | 46.1M | 2.1M | 446.6K | 685K | 414.5K | 2.7K | 13.2M | 2.1M | 69M | 27M | 12.6M | 1.1G | 454.2K | 7.3K | 9.7M |
@@ -97,7 +99,7 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 | Score/MB | 487 | 1264 | 849 | 384 | 325 | 613 | 583 | 948 | 1030 | 482 | 482 | 332 | 47 | 2 | 42 | 71 | 196 | 160 | 952 | 87 | 535 | 330 | 12 | 236 | 926 | 591 | 854 | 107322 | 21 | 127 | 2 | 3 | 8 | 0 | 0 | 0 | 0 |
 | Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 21 | 20 | 20 | 20 | 24 | 41 | 34 | 46 | 48 | 49 | 50 | 61 | 52 | 59 | 87 | 67 | 80 | 80 | 86 | 103 | 113 | 130 | 141 | 234 | 231 | 87 | 31 | 0 | 421 |
 ### macos-arm64
-| Engine | jsc | bun | deno | dune | node | bare | v8 | spidermonkey | mozjs | spiderfire | graaljs | jjs | hermes | primjs | txiki.js | llrt | qjs(ng) | quickjs | rquickjs | ladybird | duktape | njs | mujs | xst | goja | ringo | jint | kiesel | rhino | JerryScript | engine262 | nova |
+| Engine | JavaScriptCore | bun | deno | dune | node | bare | v8 | spidermonkey | mozjs | spiderfire | graaljs | jjs | hermes | primjs | txiki.js | llrt | quickjs-ng | quickjs | rquickjs | ladybird | duktape | njs | mujs | xst | goja | ringo | jint | kiesel | rhino | JerryScript | engine262 | nova |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Version | 0 | 1.2.20 | 2.4.4 | 0.10.0 | 24.5.0 | 0 | 13.6.0 | 142.0 | 0 | 0 | 24.1.2 | 0 | 0.12.0 | 0 | 24.12.0 | 0.6.2.beta | 0.8.0 | 2025.04.26 | 0 | 0 | 2.99.99 | 0.9.2 | 1.3.5 | 16.9.1 | 0 | 4.0.0 | 0 | 0.1.0.dev | 0 | 3.0.0 | 0.0.1 | 0 |
 | Total size | 94.2M | 56.8M | 85.6M | 57.4M | 111.5M | 45.5M | 861K | 131.2M | 32.8M | 46.3M | 194M | 0 | 15.7M | 1.8M | 3.6M | 10.5M | 4.1M | 975.9K | 1.2M | 41.6M | 562.1K | 2.4M | 429.1K | 1.6M | 12.7M | 2.7K | 75.4M | 12.4M | 0 | 575.4K | 7.3K | 8.5M |
@@ -115,7 +117,7 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 | Score/MB | 692 | 1145 | 639 | 946 | 476 | 1036 | 50554 | 188 | 670 | 440 | 75 | 0 | 119 | 900 | 435 | 137 | 325 | 1375 | 990 | 23 | 1635 | 349 | 1551 | 271 | 33 | 114907 | 3 | 14 | 0 | 0 | 0 | 0 |
 | Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 23 | 39 | 30 | 36 | 37 | 37 | 39 | 37 | 40 | 62 | 43 | 53 | 54 | 83 | 79 | 109 | 126 | 140 | 91 | 34 | 0 | 281 |
 ### macos-amd64
-| Engine | v8 | bun | jsc | bare | deno | dune | node | ChakraCore | spiderfire | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | njs | llrt | qjs(ng) | rquickjs | quickjs | primjs | duktape | xst | mujs | goja | ringo | jint | kiesel | boa | rhino | JerryScript | engine262 | nova |
+| Engine | v8 | bun | JavaScriptCore | bare | deno | dune | node | ChakraCore | spiderfire | spidermonkey | mozjs | graaljs | jjs | hermes | txiki.js | njs | llrt | quickjs-ng | rquickjs | quickjs | primjs | duktape | xst | mujs | goja | ringo | jint | kiesel | boa | rhino | JerryScript | engine262 | nova |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Version | 13.6.0 | 1.2.20 | 0 | 0 | 2.4.4 | 0.10.0 | 24.5.0 | 1.13.0.0.beta | 0 | 142.0 | 0 | 24.1.2 | 0 | 0.12.0 | 24.12.0 | 0.9.2 | 0.6.2.beta | 0.8.0 | 0 | 2025.04.26 | 0 | 2.99.99 | 16.9.1 | 1.3.5 | 0 | 4.0.0 | 0 | 0.1.0.dev | 0.20.0 | 0 | 3.0.0 | 0.0.1 | 0 |
 | Total size | 861K | 62.5M | 89.6M | 47.1M | 96.4M | 60.4M | 113.7M | 20M | 48.2M | 65.6M | 33.8M | 194.4M | 0 | 7.9M | 3.7M | 7.5M | 12.4M | 2.1M | 1.2M | 1M | 994.6K | 525.7K | 1.6M | 441.8K | 13.1M | 2.7K | 68.9M | 12.9M | 25.3M | 0 | 570.8K | 7.3K | 8.9M |
@@ -133,7 +135,7 @@ dlopen() failed; dlerror says '/home/runner/.easy-install/libChakraCore.so
 | Score/MB | 41051 | 545 | 380 | 698 | 302 | 431 | 205 | 862 | 296 | 211 | 362 | 39 | 0 | 77 | 124 | 53 | 31 | 175 | 286 | 342 | 306 | 494 | 118 | 433 | 13 | 49679 | 1 | 5 | 1 | 0 | 0 | 0 | 0 |
 | Time(s) | 20 | 20 | 20 | 20 | 20 | 20 | 20 | 22 | 20 | 20 | 20 | 27 | 76 | 57 | 88 | 94 | 99 | 96 | 99 | 101 | 108 | 122 | 162 | 141 | 173 | 190 | 238 | 350 | 588 | 173 | 57 | 0 | 642 |
 ### windows
-| Engine | v8 | jsc | bun | node | deno | dune | ChakraCore | spidermonkey | spiderfire | graaljs | jjs | hermes | quickjs | txiki.js | llrt | qjs(ng) | rquickjs | mujs(pgo) | mujs | duktape | goja | jint | kiesel | boa | rhino | xst | engine262 | ringo | nova |
+| Engine | v8 | JavaScriptCore | bun | node | deno | dune | ChakraCore | spidermonkey | spiderfire | graaljs | jjs | hermes | quickjs | txiki.js | llrt | quickjs-ng | rquickjs | mujs-pgo | mujs | duktape | goja | jint | kiesel | boa | rhino | xst | engine262 | ringo | nova |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Version | 13.6.101 | 0 | 1.2.20 | 24.5.0 | 2.4.4 | 0.10.0 | 1.11.24.0 | 142.0 | 0 | 24.1.2 | 1.8.0 | 0.12.0 | 2025.04.26 | 24.12.0 | 0.6.2.beta | 0.8.0 | 0 | 0 | 1.3.5 | 2.7.0 | 0 | 0 | 0.1.0.dev | 0.20.0 | 0 | 0 | 0.0.1 | 4.0.0 | 0 |
 | Total size | 52.6M | 122.8M | 132.7M | 116.3M | 143.1M | 78.7M | 14.4M | 51M | 72.8M | 196.1M | 17.3M | 112.9M | 11.8M | 38.1M | 42.2M | 9M | 8M | 7.6M | 7.5M | 7.6M | 19.5M | 96.1M | 46.3M | 42.4M | 0 | 5.9M | 0.4K | 2.7K | 16.6M |

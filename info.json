@@ -53,7 +53,6 @@
   {
     "name": "quickjs-ng",
     "bin": "qjs-ng",
-    "mdName": "qjs(ng)",
     "description": "QuickJS, the Next Generation: a mighty JavaScript engine",
     "install": "https://github.com/quickjs-ng/quickjs",
     "url": "https://github.com/quickjs-ng/quickjs"
@@ -66,14 +65,12 @@
   },
   {
     "name": "mujs-pgo",
-    "mdName": "mujs(pgo)",
     "description": "An embeddable Javascript interpreter in C",
     "install": "https://github.com/ahaoboy/mujs-pgo-build",
     "url": "https://github.com/ccxvii/mujs"
   },
   {
     "name": "mujs-one",
-    "mdName": "mujs(one)",
     "description": "mujs by c2rust",
     "install": "https://github.com/ahaoboy/mujs-one",
     "url": "https://github.com/ahaoboy/mujs-one"
@@ -86,7 +83,6 @@
   },
   {
     "name": "JavaScriptCore",
-    "mdName": "jsc",
     "bin": "jsc",
     "description": "JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification",
     "install": "https://github.com/ahaoboy/jsc-build",
