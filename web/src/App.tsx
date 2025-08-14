@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import * as echarts from "echarts";
 import type { ECharts } from "echarts";
-import { Button, Checkbox, Flex } from "antd";
+import { Button, Checkbox, Flex, Select } from "antd";
 import { ConfigProvider, theme } from "antd";
 
 const CheckboxGroup = Checkbox.Group;
@@ -21,8 +21,6 @@ type Serie = {
   data: (number | undefined)[];
 };
 
-const MAX_DATA_COUNT = 100;
-
 function getNames(data: DataItem[]): string[] {
   const s = new Set<string>();
   for (const i of data) {
@@ -39,10 +37,10 @@ function getNames(data: DataItem[]): string[] {
   return v;
 }
 
-function getOption(data: DataItem[], engines: string[]) {
+function getOption(data: DataItem[], engines: string[], maxCount: number) {
   const names = getNames(data);
   const legend: string[] = names.filter((i) => engines.includes(i));
-  const start = Math.max(0, data.length - MAX_DATA_COUNT);
+  const start = Math.max(0, data.length - maxCount);
   const xAxis = data.map((i) => new Date(i.time).toLocaleDateString()).slice(
     start,
   );
@@ -67,11 +65,12 @@ function getOption(data: DataItem[], engines: string[]) {
   }
 
   for (const i of legend) {
+    const start = Math.max(0, seriesData[i].length - maxCount);
     series.push({
       name: i,
       type: "line",
       smooth: true,
-      data: seriesData[i],
+      data: seriesData[i].slice(start),
     });
   }
 
@@ -115,6 +114,7 @@ function App() {
   const chartRef = useRef<ECharts>(null);
   const [engines, setEngines] = useState<string[]>([]);
   const [selectEngines, setSelectEngines] = useState<string[]>([]);
+  const [maxCount, setMaxCount] = useState(60);
 
   useEffect(() => {
     fetch("ubuntu.json").then((resp) => resp.json()).then((i: DataItem[]) => {
@@ -127,7 +127,7 @@ function App() {
 
   useEffect(() => {
     update();
-  }, [data, engines, selectEngines]);
+  }, [data, engines, selectEngines, maxCount]);
 
   function update() {
     if (!chartRef.current) {
@@ -143,7 +143,7 @@ function App() {
     if (!data.length) {
       return;
     }
-    const option = getOption(data, selectEngines);
+    const option = getOption(data, selectEngines, maxCount);
     chartRef.current.setOption(option, true);
     chartRef.current.resize();
   }
@@ -167,6 +167,15 @@ function App() {
               Select All
             </Button>
             <Button onClick={() => setSelectEngines([])}>Clear tAll</Button>
+            <Select
+              onChange={(e) => setMaxCount(e)}
+              value={maxCount}
+              options={Array(5).fill(0).map((_, i) => ({
+                label: 20 + i * 20,
+                value: 20 + i * 20,
+              }))}
+            >
+            </Select>
           </Flex>
         </Flex>
         <Flex gap="middle" className="auto-size">
