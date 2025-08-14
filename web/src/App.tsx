@@ -7,7 +7,7 @@ import { ConfigProvider, theme } from "antd";
 
 const CheckboxGroup = Checkbox.Group;
 const { defaultAlgorithm, darkAlgorithm } = theme;
-const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const isDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
 
 type DataItem = {
   time: number;
@@ -18,30 +18,49 @@ type Serie = {
   name: string;
   type: string;
   smooth: boolean;
-  data: number[];
+  data: (number | undefined)[];
 };
 
-function getNames(data: DataItem[]) {
-  const last = data[data.length - 1];
-  const legend: string[] = [];
-  for (const [k, v] of Object.entries(last.data["Score"])) {
-    if (+v) {
-      legend.push(k);
+const MAX_DATA_COUNT = 100;
+
+function getNames(data: DataItem[]): string[] {
+  const s = new Set<string>();
+  for (const i of data) {
+    for (const [k, v] of Object.entries(i.data["Score"])) {
+      if (+v) {
+        s.add(k);
+      }
     }
   }
-  return legend;
+
+  const v = [...s];
+  const last = data[data.length - 1];
+  v.sort((a, b) => +last.data["Score"][b] - +last.data["Score"][a]);
+  return v;
 }
+
 function getOption(data: DataItem[], engines: string[]) {
-  const legend: string[] = getNames(data).filter((i) => engines.includes(i));
-  const xAxis = data.map((i) => new Date(i.time).toLocaleDateString());
+  const names = getNames(data);
+  const legend: string[] = names.filter((i) => engines.includes(i));
+  const start = Math.max(0, data.length - MAX_DATA_COUNT);
+  const xAxis = data.map((i) => new Date(i.time).toLocaleDateString()).slice(
+    start,
+  );
+
   const series: Serie[] = [];
 
-  const seriesData: Record<string, number[]> = {};
-  for (const i of data) {
-    for (const [key, score] of Object.entries(i.data["Score"])) {
+  const seriesData: Record<string, (number | undefined)[]> = {};
+  for (let i = 0; i < data.length; i++) {
+    const item = data[i];
+    for (const [key, score] of Object.entries(item.data["Score"])) {
+      if (!legend.includes(key)) {
+        continue;
+      }
       const v = seriesData[key] || [];
       if (+score) {
-        v.push(+score);
+        v[i] = +score;
+      } else {
+        v[i] = undefined;
       }
       seriesData[key] = v;
     }
@@ -116,7 +135,7 @@ function App() {
       // TODO: dark mode
       const chart = echarts.init(chartDom);
       chartRef.current = chart;
-      window.addEventListener("resize", function () {
+      globalThis.addEventListener("resize", function () {
         chart.resize();
       });
       return;
