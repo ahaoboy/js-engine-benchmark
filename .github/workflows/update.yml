@@ -145,9 +145,9 @@ jobs:
 
       - name: run
         run: |
-          npm run --silent build
+          bun run --silent build
           rm -rf ${{ matrix.name }}.json
-          npm run --silent update > ${{ matrix.name }}.json
+          bun run --silent update > ${{ matrix.name }}.json
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
@@ -192,15 +192,15 @@ jobs:
           rm -rf ./ubuntu
           rm -rf ./windows
           rm -rf ./macos-arm64
-          npm run --silent update:doc
+          bun run --silent update:doc
 
       - name: build web
         if: github.ref == 'refs/heads/main'
         run: |
           cd web
           pnpm i
-          pnpm run update:data
-          pnpm run build
+          bun run update:data
+          bun run build
       - name: commit
         if: github.ref == 'refs/heads/main'
         run: |
