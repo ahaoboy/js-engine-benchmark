@@ -17,9 +17,8 @@ function json2md(data) {
 
   const headerRow = `| Engine | ${engines.join(" | ")} |`;
 
-  const separatorRow = `| ${
-    new Array(engines.length + 1).fill(0).map(() => "---").join(" | ")
-  } |`;
+  const separatorRow = `| ${new Array(engines.length + 1).fill(0).map(() => "---").join(" | ")
+    } |`;
 
   const rows: string[] = [];
   for (const k of keys) {
@@ -64,8 +63,7 @@ function getSupport(name) {
 }
 
 function getInfo() {
-  const info = require("../info.json");
-  info.sort((a, b) =>
+  INFO.sort((a, b) =>
     (ubuntuJSON["Score"][b.name] || 0) - (ubuntuJSON["Score"][a.name] || 0)
   );
 
@@ -74,7 +72,7 @@ function getInfo() {
     " --- |".repeat(header.length);
   const infoMd = [headerMd];
 
-  for (const i of info) {
+  for (const i of INFO) {
     const name = i.name;
     const score = ubuntuJSON["Score"][name] || "";
     const size = ubuntuJSON["Total size"][name] || "";
