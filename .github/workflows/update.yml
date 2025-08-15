@@ -118,6 +118,16 @@ jobs:
         run: |
           ei https://github.com/ringo/ringojs/releases/download/v4.0.0/ringojs-4.0.0.zip
 
+      - name: install ubuntu x64
+        if: "startsWith(matrix.os, 'ubuntu')"
+        run: |
+          ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-linux-x86_64.zip
+
+      - name: install macos arm64
+        if: "startsWith(matrix.os, 'macos-14')"
+        run: |
+          ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-macos-arm64.zip
+
       - name: install
         run: |
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json

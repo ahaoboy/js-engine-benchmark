@@ -227,5 +227,11 @@
     "description": "Small and modular JavaScript runtime for desktop and mobile",
     "url": "https://github.com/holepunchto/bare",
     "install": "https://github.com/ahaoboy/bare-build"
+  },
+  {
+    "name": "hako",
+    "description": "An embeddable, lightweight, secure, high-performance JavaScript engine",
+    "url": "https://github.com/andrewmd5/hako",
+    "install": "https://github.com/andrewmd5/hako-cli"
   }
 ]
