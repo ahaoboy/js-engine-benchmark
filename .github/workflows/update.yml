@@ -25,10 +25,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: macos-amd64
-            os: macos-13
           - name: macos-arm64
-            os: macos-14
+            os: macos-15
           - name: windows
             os: windows-latest
           - name: ubuntu
@@ -98,7 +96,7 @@ jobs:
           chmod 777 ~/.ei/rhino.sh
 
       - name: install ladybird
-        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-14'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
         run: |
           ei https://github.com/ahaoboy/ladybird-js-build
           mv ~/.ei/js ~/.ei/ladybird
@@ -124,7 +122,7 @@ jobs:
           ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-linux-x86_64.zip
 
       - name: install macos arm64
-        if: "startsWith(matrix.os, 'macos-14')"
+        if: "startsWith(matrix.os, 'macos-15')"
         run: |
           ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-macos-arm64.zip
 
@@ -181,11 +179,6 @@ jobs:
           merge-multiple: true
       - uses: actions/download-artifact@v4
         with:
-          path: macos-amd64
-          pattern: macos-amd64
-          merge-multiple: true
-      - uses: actions/download-artifact@v4
-        with:
           path: macos-arm64
           pattern: macos-arm64
           merge-multiple: true
@@ -195,11 +188,9 @@ jobs:
         run: |
           mv ./ubuntu/ubuntu.json ./ubuntu.json
           mv ./windows/windows.json ./windows.json
-          mv ./macos-amd64/macos-amd64.json ./macos-amd64.json
           mv ./macos-arm64/macos-arm64.json ./macos-arm64.json
           rm -rf ./ubuntu
           rm -rf ./windows
-          rm -rf ./macos-amd64
           rm -rf ./macos-arm64
           npm run --silent update:doc
 

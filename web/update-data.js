@@ -5,7 +5,6 @@ const PUBLIC_DIR = "public";
 const DATA_DIR = "..";
 
 const NAMES = [
-  "macos-amd64",
   "macos-arm64",
   "ubuntu",
   "windows",

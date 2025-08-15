@@ -3,7 +3,6 @@ const fs = require("fs");
 
 const ubuntuJSON = require("../ubuntu.json");
 const windowsJSON = require("../windows.json");
-const macosAmd64JSON = require("../macos-amd64.json");
 const macosArm64JSON = require("../macos-arm64.json");
 const mdPath = path.resolve("./README.md");
 const INFO = require("../info.json");
@@ -35,7 +34,6 @@ function json2md(data) {
 
 const ubuntuMd = json2md(ubuntuJSON);
 const windowsMd = json2md(windowsJSON);
-const macosAmd64Md = json2md(macosAmd64JSON);
 const macosArm64Md = json2md(macosArm64JSON);
 
 function getMdLink(url) {
@@ -104,7 +102,7 @@ const info = getInfo();
 
 const time = new Date().toLocaleString();
 const mdTable = "\n" + info +
-  `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### macos-amd64\n${macosAmd64Md}\n### windows\n${windowsMd}\n`;
+  `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### windows\n${windowsMd}\n`;
 
 const total = INFO.length;
 const pass = Object.values(ubuntuJSON["Score"]).filter((i) => i > 0).length;
