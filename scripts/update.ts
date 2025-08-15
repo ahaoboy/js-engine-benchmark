@@ -1,13 +1,14 @@
-const fs = require("fs");
-const path = require("path");
-const { exec, execSync } = require("child_process");
-const os = require("os");
-const info = require("../info.json");
+import fs from "fs";
+import path from "path";
+import { exec, execSync } from "child_process";
+import os from "os";
+import info from "../info.json";
+import process from "node:process";
 
 const TEST_JS_PATH = path.join(__dirname, "test.js");
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js");
 
-const execList = info.map(i => i.bin || i.name)
+const execList = info.map((i) => i.bin || i.name);
 
 const subCmd = {
   "tjs": "run",
@@ -60,9 +61,9 @@ function toJSON(data) {
   return json;
 }
 
-function execCmd(cmd, cwd) {
+function execCmd(cmd: string, cwd?: string) {
   console.error(`cmd:`, { cmd, cwd });
-  return new Promise((r) => {
+  return new Promise<string>((r) => {
     // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error("exec output", { err, stdout, stderr });
@@ -239,7 +240,7 @@ function getDllSize(programPath) {
     programPath = fromMsysPath(programPath);
   }
 
-  let dependencies = [];
+  let dependencies: string[] = [];
 
   // JavaScriptCore
   if (programPath.endsWith("jsc")) {
@@ -341,9 +342,9 @@ async function main() {
       const version = ((await getVersion(i)) || "").replaceAll("-", ".");
       data["Version"][i] = version;
       console.error("version: ", version);
-      data["Total size"][i] = (fileSize + dllSize);
-      data["Exe size"][i] = (fileSize);
-      data["Dll size"][i] = (dllSize);
+      data["Total size"][i] = fileSize + dllSize;
+      data["Exe size"][i] = fileSize;
+      data["Dll size"][i] = dllSize;
       const startTime = +new Date();
       const out = await execCmd(
         `${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`,
@@ -394,6 +395,9 @@ async function main() {
     const obj = {};
     for (const e of engines) {
       const item = info.find((i) => i.bin == e || i.name == e);
+      if (!item) {
+        continue;
+      }
       const name = item.name;
       obj[name] = data[i][e] ?? "";
     }

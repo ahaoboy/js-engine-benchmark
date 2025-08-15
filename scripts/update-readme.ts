@@ -1,33 +1,12 @@
-const path = require("path");
-const fs = require("fs");
+import { resolve } from "path";
+import ubuntuJSON from "../ubuntu.json";
+import { readFileSync, writeFileSync } from "fs";
+import windowsJSON from "../windows.json";
+import macosArm64JSON from "../macos-arm64.json";
+import INFO from "../info.json";
+import { humanSize } from "../web/src/tool";
 
-const ubuntuJSON = require("../ubuntu.json");
-const windowsJSON = require("../windows.json");
-const macosArm64JSON = require("../macos-arm64.json");
-const mdPath = path.resolve("./README.md");
-const INFO = require("../info.json");
-
-function toFixed(n) {
-  const fixed = n.toFixed(1);
-  if (fixed.endsWith(".0")) {
-    return parseInt(fixed);
-  }
-  return fixed;
-}
-
-function humanSize(n) {
-  if (n === 0) {
-    return "0";
-  }
-  n = n / 1024;
-  if (n < 1024) {
-    return `${toFixed(n)}K`;
-  }
-  if (n < 1024 * 1024) {
-    return `${toFixed(n / 1024)}M`;
-  }
-  return `${toFixed(n / 1024 / 1024)}G`;
-}
+const mdPath = resolve("./README.md");
 
 function json2md(data) {
   const keys = Object.keys(data);
@@ -42,12 +21,13 @@ function json2md(data) {
     new Array(engines.length + 1).fill(0).map(() => "---").join(" | ")
   } |`;
 
-  const rows = [];
+  const rows: string[] = [];
   for (const k of keys) {
     const row = [k];
     for (const i of engines) {
-      const v = data[k][i] || 0
-      row.push(k.endsWith(" size") ? humanSize(v) : v);
+      const v = data[k][i] || 0;
+      const s = k.endsWith(" size") ? humanSize(v) : v;
+      row.push(s || "");
     }
     rows.push(`| ${row.join(" | ")} |`);
   }
@@ -75,7 +55,7 @@ function getSupport(name) {
     windows: windowsJSON,
   };
 
-  const s = [];
+  const s: string[] = [];
   for (const [k, json] of Object.entries(v)) {
     const icon = json["Score"][name] > 0 ? "✅" : "❌";
     s.push(`${icon}${k}`);
@@ -127,10 +107,11 @@ const mdTable = "\n" + info +
   `\n## bench\n${time}\n\n### ubuntu\n${ubuntuMd}\n### macos-arm64\n${macosArm64Md}\n### windows\n${windowsMd}\n`;
 
 const total = INFO.length;
-const pass = Object.values(ubuntuJSON["Score"]).filter((i) => i > 0).length;
+const pass =
+  Object.values(ubuntuJSON["Score"]).filter((i) => +i > 0 && !isNaN(+i)).length;
 const marker = `## Engine & Runtime (${pass}/${total})\n`;
-const mdTpl = fs.readFileSync(mdPath, "utf8");
+const mdTpl = readFileSync(mdPath, "utf8");
 const markerIndex = mdTpl.indexOf(`## Engine & Runtime`);
 const doc = mdTpl.slice(0, markerIndex) + marker + mdTable;
 
-fs.writeFileSync(mdPath, doc);
+writeFileSync(mdPath, doc);

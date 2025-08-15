@@ -4,10 +4,10 @@
   "description": "js-bench",
   "main": "index.js",
   "scripts": {
-    "update:doc": "bun ./scripts/update-readme.js",
-    "update": "bun ./scripts/update.js",
-    "build": "bun ./scripts/build.js",
-    "build-lib": "bun ./scripts/build-lib.js",
+    "update:doc": "bun ./scripts/update-readme.ts",
+    "update": "bun ./scripts/update.ts",
+    "build": "bun ./scripts/build.ts",
+    "build-lib": "bun ./scripts/build-lib.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

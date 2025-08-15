@@ -4,6 +4,7 @@ import * as echarts from "echarts";
 import type { ECharts } from "echarts";
 import { Button, Checkbox, Flex, Select } from "antd";
 import { ConfigProvider, theme } from "antd";
+import { humanSize } from "./tool";
 
 const CheckboxGroup = Checkbox.Group;
 const { defaultAlgorithm, darkAlgorithm } = theme;
@@ -20,31 +21,6 @@ type Serie = {
   smooth: boolean;
   data: (number | undefined)[];
 };
-
-function toFixed(n: number) {
-  if (!n) {
-    return 0;
-  }
-  const fixed = n.toFixed(1);
-  if (fixed.endsWith(".0")) {
-    return parseInt(fixed);
-  }
-  return fixed;
-}
-
-function humanSize(n: number) {
-  if (n === 0 || isNaN(n)) {
-    return "0";
-  }
-  n = n / 1024;
-  if (n < 1024) {
-    return `${toFixed(n)}K`;
-  }
-  if (n < 1024 * 1024) {
-    return `${toFixed(n / 1024)}M`;
-  }
-  return `${toFixed(n / 1024 / 1024)}G`;
-}
 
 function getNames(data: DataItem[]): string[] {
   const s = new Set<string>();
