@@ -7,6 +7,28 @@ const macosArm64JSON = require("../macos-arm64.json");
 const mdPath = path.resolve("./README.md");
 const INFO = require("../info.json");
 
+function toFixed(n) {
+  const fixed = n.toFixed(1);
+  if (fixed.endsWith(".0")) {
+    return parseInt(fixed);
+  }
+  return fixed;
+}
+
+function humanSize(n) {
+  if (n === 0) {
+    return "0";
+  }
+  n = n / 1024;
+  if (n < 1024) {
+    return `${toFixed(n)}K`;
+  }
+  if (n < 1024 * 1024) {
+    return `${toFixed(n / 1024)}M`;
+  }
+  return `${toFixed(n / 1024 / 1024)}G`;
+}
+
 function json2md(data) {
   const keys = Object.keys(data);
 
@@ -24,7 +46,8 @@ function json2md(data) {
   for (const k of keys) {
     const row = [k];
     for (const i of engines) {
-      row.push(data[k][i] || 0);
+      const v = data[k][i] || 0
+      row.push(k.endsWith(" size") ? humanSize(v) : v);
     }
     rows.push(`| ${row.join(" | ")} |`);
   }

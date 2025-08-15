@@ -305,27 +305,6 @@ function getDllSize(programPath) {
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
-function toFixed(n) {
-  const fixed = n.toFixed(1);
-  if (fixed.endsWith(".0")) {
-    return parseInt(fixed);
-  }
-  return fixed;
-}
-function humanSize(n) {
-  if (n === 0) {
-    return "0";
-  }
-  n = n / 1024;
-  if (n < 1024) {
-    return `${toFixed(n)}K`;
-  }
-  if (n < 1024 * 1024) {
-    return `${toFixed(n / 1024)}M`;
-  }
-  return `${toFixed(n / 1024 / 1024)}G`;
-}
-
 function getExePath(i) {
   const execPath = execSync(`which ${i}`).toString().trim();
   return fromMsysPath(execPath);
@@ -362,9 +341,9 @@ async function main() {
       const version = ((await getVersion(i)) || "").replaceAll("-", ".");
       data["Version"][i] = version;
       console.error("version: ", version);
-      data["Total size"][i] = humanSize(fileSize + dllSize);
-      data["Exe size"][i] = humanSize(fileSize);
-      data["Dll size"][i] = humanSize(dllSize);
+      data["Total size"][i] = (fileSize + dllSize);
+      data["Exe size"][i] = (fileSize);
+      data["Dll size"][i] = (dllSize);
       const startTime = +new Date();
       const out = await execCmd(
         `${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`,

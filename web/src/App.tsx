@@ -21,6 +21,31 @@ type Serie = {
   data: (number | undefined)[];
 };
 
+function toFixed(n: number) {
+  if (!n) {
+    return 0;
+  }
+  const fixed = n.toFixed(1);
+  if (fixed.endsWith(".0")) {
+    return parseInt(fixed);
+  }
+  return fixed;
+}
+
+function humanSize(n: number) {
+  if (n === 0 || isNaN(n)) {
+    return "0";
+  }
+  n = n / 1024;
+  if (n < 1024) {
+    return `${toFixed(n)}K`;
+  }
+  if (n < 1024 * 1024) {
+    return `${toFixed(n / 1024)}M`;
+  }
+  return `${toFixed(n / 1024 / 1024)}G`;
+}
+
 function getNames(data: DataItem[]): string[] {
   const s = new Set<string>();
   for (const i of data) {
@@ -37,7 +62,12 @@ function getNames(data: DataItem[]): string[] {
   return v;
 }
 
-function getOption(data: DataItem[], engines: string[], maxCount: number) {
+function getOption(
+  data: DataItem[],
+  engines: string[],
+  maxCount: number,
+  kind: string,
+) {
   const names = getNames(data);
   const legend: string[] = names.filter((i) => engines.includes(i));
   const start = Math.max(0, data.length - maxCount);
@@ -50,7 +80,7 @@ function getOption(data: DataItem[], engines: string[], maxCount: number) {
   const seriesData: Record<string, (number | undefined)[]> = {};
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
-    for (const [key, score] of Object.entries(item.data["Score"])) {
+    for (const [key, score] of Object.entries(item.data[kind])) {
       if (!legend.includes(key)) {
         continue;
       }
@@ -80,6 +110,8 @@ function getOption(data: DataItem[], engines: string[], maxCount: number) {
     },
     tooltip: {
       trigger: "axis",
+      valueFormatter: (value: number) =>
+        kind.endsWith(" size") ? `${humanSize(+value)}` : +value,
     },
     legend: {
       data: legend,
@@ -110,9 +142,27 @@ function getOption(data: DataItem[], engines: string[], maxCount: number) {
 }
 
 const OS = [
-  "ubuntu", "windows", "macos-arm64"
-]
+  "ubuntu",
+  "windows",
+  "macos-arm64",
+];
 
+const Kind = [
+  "Total size",
+  "Exe size",
+  "Dll size",
+  "Richards",
+  "DeltaBlue",
+  "Crypto",
+  "RayTrace",
+  "EarleyBoyer",
+  "RegExp",
+  "Splay",
+  "NavierStokes",
+  "Score",
+  "Score/MB",
+  "Time(s)",
+];
 function App() {
   const [data, setData] = useState<DataItem[]>([]);
   const chartRef = useRef<ECharts>(null);
@@ -120,6 +170,7 @@ function App() {
   const [selectEngines, setSelectEngines] = useState<string[]>([]);
   const [maxCount, setMaxCount] = useState(60);
   const [os, setOs] = useState("ubuntu");
+  const [kind, setKind] = useState("Score");
 
   useEffect(() => {
     fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
@@ -132,7 +183,7 @@ function App() {
 
   useEffect(() => {
     update();
-  }, [data, engines, selectEngines, maxCount, os]);
+  }, [data, engines, selectEngines, maxCount, os, kind]);
 
   function update() {
     if (!chartRef.current) {
@@ -148,7 +199,7 @@ function App() {
     if (!data.length) {
       return;
     }
-    const option = getOption(data, selectEngines, maxCount);
+    const option = getOption(data, selectEngines, maxCount, kind);
     chartRef.current.setOption(option, true);
     chartRef.current.resize();
   }
@@ -181,9 +232,19 @@ function App() {
               }))}
             />
             <Select
+              style={{ width: "120px" }}
               value={os}
               onChange={(e) => setOs(e)}
-              options={OS.map(i => ({
+              options={OS.map((i) => ({
+                label: i,
+                value: i,
+              }))}
+            />
+            <Select
+              style={{ width: "120px" }}
+              value={kind}
+              onChange={(e) => setKind(e)}
+              options={Kind.map((i) => ({
                 label: i,
                 value: i,
               }))}
