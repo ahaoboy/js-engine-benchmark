@@ -49,7 +49,6 @@ function getSupport(name) {
   const v = {
     unix: ubuntuJSON,
     macArm: macosArm64JSON,
-    macAmd: macosAmd64JSON,
     windows: windowsJSON,
   };
 
