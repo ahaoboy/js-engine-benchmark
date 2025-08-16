@@ -74,14 +74,14 @@ function getInfo() {
 
   for (const i of INFO) {
     const name = i.name;
-    const score = ubuntuJSON["Score"][name] || "";
-    const size = ubuntuJSON["Total size"][name] || "";
-    const scoreMB = ubuntuJSON["Score/MB"][name] || "";
+    const score = ubuntuJSON["Score"][name] ||0;
+    const size = ubuntuJSON["Total size"][name] || 0;
+    const scoreMB = ubuntuJSON["Score/MB"][name] || 0;
     let url = getMdLink(i.url);
     if (i.install && (i.install != i.url)) {
       url += "<br><br>" + getMdLink(i.install);
     }
-    let scoreMd = `${score}<br>${size}`;
+    let scoreMd = `${score}<br>${humanSize(size)}`;
     if (scoreMB) {
       scoreMd += `<br>${scoreMB}/M`;
     }
