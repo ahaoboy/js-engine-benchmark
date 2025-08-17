@@ -87,6 +87,7 @@ jobs:
             https://github.com/ahaoboy/lo-build
             https://github.com/ahaoboy/nova-build
             https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm?preview
+            https://github.com/ahaoboy/bare-build
 
       - name: install rhino
         run: |
@@ -102,7 +103,7 @@ jobs:
           mv ~/.ei/js ~/.ei/ladybird
       - name: install by npm
         run: |
-          npm i -g bare
+          # npm i -g bare
           npm i -g @engine262/engine262
       - name: install unix
         if: "!startsWith(matrix.os, 'windows')"
