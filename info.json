@@ -225,8 +225,7 @@
   {
     "name": "bare",
     "description": "Small and modular JavaScript runtime for desktop and mobile",
-    "url": "https://github.com/holepunchto/bare",
-    "install": "https://github.com/ahaoboy/bare-build"
+    "url": "https://github.com/holepunchto/bare"
   },
   {
     "name": "hako",

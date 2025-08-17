@@ -85,8 +85,8 @@ jobs:
             https://github.com/ahaoboy/njs-build
             https://github.com/ahaoboy/spiderfire-build
             https://github.com/ahaoboy/lo-build
-            https://github.com/ahaoboy/bare-build
             https://github.com/ahaoboy/nova-build
+            https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm?preview
 
       - name: install rhino
         run: |
@@ -100,10 +100,10 @@ jobs:
         run: |
           ei https://github.com/ahaoboy/ladybird-js-build
           mv ~/.ei/js ~/.ei/ladybird
-
-      - name: install engine262
+      - name: install by npm
         run: |
-          npm i @engine262/engine262 -g
+          npm i -g bare
+          npm i -g @engine262/engine262
       - name: install unix
         if: "!startsWith(matrix.os, 'windows')"
         run: |
@@ -111,15 +111,17 @@ jobs:
           mv ~/.ei/qjs ~/.ei/primjs
 
           ei https://github.com/ringo/ringojs/releases/download/v4.0.0/ringojs-4.0.0.tar.gz
-      - name: install windows
-        if: "startsWith(matrix.os, 'windows')"
-        run: |
-          ei https://github.com/ringo/ringojs/releases/download/v4.0.0/ringojs-4.0.0.zip
 
-      - name: install ubuntu x64
-        if: "startsWith(matrix.os, 'ubuntu')"
-        run: |
-          ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-linux-x86_64.zip
+      # - name: install windows
+      #   if: "startsWith(matrix.os, 'windows')"
+      #   run: |
+      #     ei https://github.com/ringo/ringojs/releases/download/v4.0.0/ringojs-4.0.0.zip
+
+      # - name: install ubuntu x64
+      #   if: "startsWith(matrix.os, 'ubuntu')"
+      #   run: |
+      #     ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-linux-x86_64.zip
+
 
       - name: install macos arm64
         if: "startsWith(matrix.os, 'macos-15')"
