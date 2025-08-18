@@ -21,7 +21,7 @@ export default defineConfig({
           "react-dom": "ReactDOM",
           antd: "antd",
           echarts: "echarts",
-          "react-dom/client": "react-dom/client",
+          "react-dom/client": "ReactDOM",
         },
       },
     },
