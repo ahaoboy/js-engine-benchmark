@@ -7,6 +7,7 @@
     "pre-check": "deno fmt && deno lint --fix",
     "dev": "vite",
     "build": "vite build",
+    "analyzer": "cross-env analyzer=true vite build",
     "update:data": "node update-data.js",
     "preview": "vite preview"
   },
@@ -18,6 +19,8 @@
     "react-dom": "19.1.1"
   },
   "devDependencies": {
+    "vite-bundle-analyzer": "^1.2.1",
+    "cross-env": "^10.0.0",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "@vitejs/plugin-react": "5.0.0",
