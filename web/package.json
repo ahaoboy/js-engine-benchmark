@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "pre-check": "deno fmt && deno lint --fix",
     "dev": "vite",
     "build": "vite build",
     "update:data": "node update-data.js",

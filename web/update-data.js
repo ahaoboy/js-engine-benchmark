@@ -32,7 +32,7 @@ function setData(name, data) {
 }
 
 function getNewData(name) {
-  let filePath = path.join(DATA_DIR, name + ".json");
+  const filePath = path.join(DATA_DIR, name + ".json");
   const s = fs.readFileSync(filePath, "utf8");
   return JSON.parse(s);
 }
