@@ -311,6 +311,11 @@ function getExePath(i) {
   return fromMsysPath(execPath);
 }
 
+const JS_BINS = [
+  "engine262",
+  "quickjs-emscripten-cli",
+]
+
 async function main() {
   for (const i of execList) {
     try {
@@ -321,8 +326,9 @@ async function main() {
         execDir,
       )).trim();
 
-      const fileSize = getFileSize(execPath);
-      const dllSize = getDllSize(execPath);
+      const isJS = JS_BINS.includes(i)
+      const fileSize = isJS ? 0 : getFileSize(execPath);
+      const dllSize = isJS ? 0 : getDllSize(execPath);
 
       console.error("execPath", { execPath, execDir, test, fileSize, dllSize });
 

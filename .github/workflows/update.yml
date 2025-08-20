@@ -101,11 +101,16 @@ jobs:
         run: |
           ei https://github.com/ahaoboy/ladybird-js-build
           mv ~/.ei/js ~/.ei/ladybird
-      - name: install by npm
+      # - name: install by npm
+      #   run: |
+      #     # npm i -g bare
+      #     npm i -g @engine262/engine262
+      #     npm i -g quickjs-emscripten-cli
+      - name: install by bun
         run: |
-          # npm i -g bare
-          npm i -g @engine262/engine262
-          npm i -g quickjs-emscripten-cli
+          bun i -g @engine262/engine262
+          bun i -g quickjs-emscripten-cli
+
       - name: install unix
         if: "!startsWith(matrix.os, 'windows')"
         run: |
