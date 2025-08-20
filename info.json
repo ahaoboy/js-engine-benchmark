@@ -231,5 +231,12 @@
     "description": "An embeddable, lightweight, secure, high-performance JavaScript engine",
     "url": "https://github.com/andrewmd5/hako",
     "install": "https://github.com/andrewmd5/hako-cli"
+  },
+  {
+    "name": "quickjs-emscripten",
+    "bin": "quickjs-emscripten-cli",
+    "description": "Safely execute untrusted Javascript in your Javascript, and execute synchronous code that uses async functions",
+    "url": "https://github.com/justjake/quickjs-emscripten",
+    "install": "https://github.com/ahaoboy/quickjs-emscripten-cli"
   }
 ]

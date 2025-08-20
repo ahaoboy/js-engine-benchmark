@@ -105,6 +105,7 @@ jobs:
         run: |
           # npm i -g bare
           npm i -g @engine262/engine262
+          npm i -g quickjs-emscripten-cli
       - name: install unix
         if: "!startsWith(matrix.os, 'windows')"
         run: |
