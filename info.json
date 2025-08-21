@@ -122,6 +122,12 @@
     "url": "https://github.com/DelSkayn/rquickjs"
   },
   {
+    "name": "rquickjs-pgo",
+    "install": "https://github.com/ahaoboy/rqjs-pgo-build",
+    "description": "High level bindings to the quickjs javascript engine",
+    "url": "https://github.com/DelSkayn/rquickjs"
+  },
+  {
     "name": "ChakraCore",
     "bin": "ch",
     "install": "https://github.com/ahaoboy/ChakraCore-build",
