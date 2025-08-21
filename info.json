@@ -123,6 +123,7 @@
   },
   {
     "name": "rquickjs-pgo",
+    "bin": "rqjs-pgo",
     "install": "https://github.com/ahaoboy/rqjs-pgo-build",
     "description": "High level bindings to the quickjs javascript engine",
     "url": "https://github.com/DelSkayn/rquickjs"
