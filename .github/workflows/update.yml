@@ -88,6 +88,7 @@ jobs:
             https://github.com/trynova/nova
             https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm?preview
             https://github.com/ahaoboy/bare-build
+            https://github.com/ahaoboy/rqjs-pgo-build
 
       - name: install rhino
         run: |
