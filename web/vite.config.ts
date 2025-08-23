@@ -15,7 +15,8 @@ export default defineConfig({
     alias: {
       react: "https://esm.sh/react",
       "react-dom": "https://esm.sh/react-dom",
-      echarts: "https://esm.sh/echarts",
+      echarts: "https://esm.sh/echarts?standalone",
+      antd: "https://esm.sh/antd?standalone",
     },
   },
 });
