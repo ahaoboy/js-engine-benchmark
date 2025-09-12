@@ -8,7 +8,9 @@ import { humanSize } from "../web/src/tool";
 
 const mdPath = resolve("./README.md");
 
-function json2md(data) {
+type Name = keyof typeof ubuntuJSON.Score
+
+function json2md(data: Record<string, Record<string, string | number>>) {
   const keys = Object.keys(data);
 
   const engines = Object.keys(data[keys[0]]).sort((a, b) => {
@@ -22,11 +24,11 @@ function json2md(data) {
 
   const rows: string[] = [];
   for (const k of keys) {
-    const row = [k];
+    const row: (number | string)[] = [k];
     for (const i of engines) {
       const v = data[k][i] || 0;
-      const s = k.endsWith(" size") ? humanSize(v) : v;
-      row.push(s || "");
+      const s = k.endsWith(" size") ? humanSize(+v) : v;
+      row.push((s || ""));
     }
     rows.push(`| ${row.join(" | ")} |`);
   }
@@ -38,7 +40,7 @@ const ubuntuMd = json2md(ubuntuJSON);
 const windowsMd = json2md(windowsJSON);
 const macosArm64Md = json2md(macosArm64JSON);
 
-function getMdLink(url) {
+function getMdLink(url: string) {
   if (!url) {
     return "❌";
   }
@@ -47,7 +49,7 @@ function getMdLink(url) {
   return `[${repo}](${url})`;
 }
 
-function getSupport(name) {
+function getSupport(name: string) {
   const v = {
     unix: ubuntuJSON,
     macArm: macosArm64JSON,
@@ -56,7 +58,7 @@ function getSupport(name) {
 
   const s: string[] = [];
   for (const [k, json] of Object.entries(v)) {
-    const icon = json["Score"][name] > 0 ? "✅" : "❌";
+    const icon = +json["Score"][name as keyof typeof json.Score] > 0 ? "✅" : "❌";
     s.push(`${icon}${k}`);
   }
   return s.join("<br>");
@@ -64,7 +66,7 @@ function getSupport(name) {
 
 function getInfo() {
   INFO.sort((a, b) =>
-    (ubuntuJSON["Score"][b.name] || 0) - (ubuntuJSON["Score"][a.name] || 0)
+    (+ubuntuJSON["Score"][b.name as Name] || 0) - (+ubuntuJSON["Score"][a.name as Name] || 0)
   );
 
   const header = ["name", "repo", "score", "platform", "description"];
@@ -74,9 +76,9 @@ function getInfo() {
 
   for (const i of INFO) {
     const name = i.name;
-    const score = ubuntuJSON["Score"][name] ||0;
-    const size = ubuntuJSON["Total size"][name] || 0;
-    const scoreMB = ubuntuJSON["Score/MB"][name] || 0;
+    const score = ubuntuJSON["Score"][name as Name] || 0;
+    const size = ubuntuJSON["Total size"][name as Name] || 0;
+    const scoreMB = ubuntuJSON["Score/MB"][name as Name] || 0;
     let url = getMdLink(i.url);
     if (i.install && (i.install != i.url)) {
       url += "<br><br>" + getMdLink(i.install);

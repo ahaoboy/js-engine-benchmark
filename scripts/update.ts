@@ -1,24 +1,15 @@
-import fs from "fs";
+import fs, { unlink } from "fs";
 import path from "path";
 import { exec, execSync } from "child_process";
 import os from "os";
 import info from "../info.json";
-import process from "node:process";
 
 const TEST_JS_PATH = path.join(__dirname, "test.js");
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js");
 
-const execList = info.map((i) => i.bin || i.name);
 
-const subCmd = {
-  "tjs": "run",
-  "dune": "run",
-  "spiderfire": "run",
-  "nova": "eval",
-};
-
-function toJSON(data) {
-  const json = {};
+function toJSON(data: string): Record<string, string | number> {
+  const json: Record<string, string | number> = {};
   const offset =
     data.split("\n").find((i) => i.includes("----"))?.indexOf("----") || 0;
   for (const line of data.split("\n").filter((i) => i.trim().length)) {
@@ -74,7 +65,7 @@ function execCmd(cmd: string, cwd?: string) {
   });
 }
 
-async function getVersion(cmd) {
+async function getVersion(cmd: string) {
   if (
     ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli"].includes(
       cmd,
@@ -173,18 +164,18 @@ async function getVersion(cmd) {
   return "";
 }
 
-const data = {};
+const data: Record<string, Record<string, string | number>> = {};
 const platform = os.platform();
 
 function isMsys() {
   return !!process.env["MSYSTEM"];
 }
-function toMsysPath(s) {
+function toMsysPath(s: string) {
   s = s.replaceAll("\\", "/");
   s = s.replace(/^([A-Za-z]):\//, (_, drive) => `/${drive.toLowerCase()}/`);
   return s;
 }
-function fromMsysPath(s) {
+function fromMsysPath(s: string) {
   if (!isMsys() || !s.startsWith("/")) {
     return s;
   }
@@ -218,7 +209,7 @@ function getJavaSize() {
   return 0;
 }
 
-function getFileSize(filePath) {
+function getFileSize(filePath: string) {
   try {
     if (filePath.includes("rhino.sh") || filePath.includes("jjs")) {
       return getJavaSize();
@@ -235,7 +226,7 @@ function getFileSize(filePath) {
   }
 }
 
-function getDllSize(programPath) {
+function getDllSize(programPath: string) {
   if (isMsys()) {
     programPath = fromMsysPath(programPath);
   }
@@ -298,7 +289,7 @@ function getDllSize(programPath) {
         dependencies.push(path);
       }
     }
-  } catch (err) {
+  } catch (err: any) {
     console.error(`Error getting dependencies: ${err.message}`);
     return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
   }
@@ -306,7 +297,7 @@ function getDllSize(programPath) {
   return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
 }
 
-function getExePath(i) {
+function getExePath(i: string) {
   const execPath = execSync(`which ${i}`).toString().trim();
   return fromMsysPath(execPath);
 }
@@ -317,12 +308,14 @@ const JS_BINS = [
 ]
 
 async function main() {
-  for (const i of execList) {
+  for (const item of info) {
     try {
+      const i = item.bin || item.name
+      const { subcmd = "" } = item
       const execPath = getExePath(i);
       const execDir = path.dirname(execPath);
       const test = (await execCmd(
-        `${execPath} ${subCmd[i] || ""} ${TEST_JS_PATH}`,
+        `${execPath} ${subcmd} ${TEST_JS_PATH}`,
         execDir,
       )).trim();
 
@@ -353,7 +346,7 @@ async function main() {
       data["Dll size"][i] = dllSize;
       const startTime = +new Date();
       const out = await execCmd(
-        `${i} ${subCmd[i] || ""} ${RUN_JS_PATH}`,
+        `${i} ${subcmd} ${RUN_JS_PATH}`,
         execDir,
       );
       const endTime = +new Date();
@@ -376,7 +369,7 @@ async function main() {
         data["Score/MB"] = {};
       }
       const score = data["Score"][i];
-      data["Score/MB"][i] = (score / (fileSize + dllSize) * 1024 * 1024) | 0;
+      data["Score/MB"][i] = (+score / (fileSize + dllSize) * 1024 * 1024) | 0;
 
       if (!("Time(s)" in data)) {
         data["Time(s)"] = {};
@@ -398,7 +391,7 @@ async function main() {
   });
 
   for (const i in data) {
-    const obj = {};
+    const obj: Record<string, string | number> = {};
     for (const e of engines) {
       const item = info.find((i) => i.bin == e || i.name == e);
       if (!item) {

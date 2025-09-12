@@ -39,6 +39,7 @@
   {
     "name": "txiki.js",
     "bin": "tjs",
+    "subcmd": "run",
     "description": "A tiny JavaScript runtime",
     "url": "https://github.com/saghul/txiki.js",
     "install": "https://github.com/ahaoboy/txiki.js-build"
@@ -144,6 +145,7 @@
   },
   {
     "name": "nova",
+    "subcmd": "eval",
     "description": "Nova is a JavaScript and WebAssembly engine written in Rust",
     "url": "https://github.com/trynova/nova"
   },
@@ -191,6 +193,7 @@
   },
   {
     "name": "dune",
+    "subcmd": "run",
     "description": "JavascriptA hobby runtime for JavaScript and TypeScript",
     "url": "https://github.com/aalykiot/dune"
   },
@@ -224,6 +227,7 @@
   },
   {
     "name": "spiderfire",
+    "subcmd": "run",
     "description": "JavaScript Runtime built with Mozilla's SpiderMonkey Engine",
     "url": "https://github.com/Redfire75369/spiderfire",
     "install": "https://github.com/ahaoboy/spiderfire-build"
