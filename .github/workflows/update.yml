@@ -92,10 +92,10 @@ jobs:
 
       - name: install rhino
         run: |
-          curl -L -o ~/.ei/rhino.jar https://github.com/ahaoboy/rhino-cli/releases/latest/download/rhino-all-1.8.1-20250614.122300-24.jar
+          curl -L -o ~/.ei/rhino.jar https://github.com/ahaoboy/rhino-cli/releases/latest/download/rhino-all-1.8.0.jar
           echo '#!/bin/bash' > ~/.ei/rhino.sh
           echo 'java -jar ~/.ei/rhino.jar "$@"' >> ~/.ei/rhino.sh
-          chmod 777 ~/.ei/rhino.sh
+          chmod +x ~/.ei/rhino.sh
 
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
