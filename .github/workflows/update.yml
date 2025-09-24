@@ -50,8 +50,8 @@ jobs:
       # jjs
       - uses: actions/setup-java@v4
         with:
-          distribution: "temurin" # See 'Supported distributions' for available options
-          java-version: "21"
+          distribution: "oracle" # See 'Supported distributions' for available options
+          java-version: "25"
       - name: install dep
         if: matrix.os == 'ubuntu-24.04'
         run: |
