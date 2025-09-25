@@ -138,7 +138,7 @@ jobs:
 
       - name: install
         run: |
-          ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/quickjs-ng.json
+          ei https://github.com/quickjs-ng/quickjs
           mv ~/.ei/qjs ~/.ei/qjs-ng
           mv ~/.ei/qjsc ~/.ei/qjsc-ng
 
