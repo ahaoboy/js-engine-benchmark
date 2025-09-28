@@ -154,7 +154,9 @@ function App() {
       const names = getNames(i);
       setData(i);
       setEngines(names);
-      setSelectEngines(names.slice(0, 3));
+      if (!selectEngines.length) {
+        setSelectEngines(names.slice(0, 3));
+      }
     });
   }, [os]);
 
