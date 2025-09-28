@@ -52,11 +52,11 @@ jobs:
           distribution: "oracle"
           java-version: "25"
 
-      - uses: msys2/setup-msys2@v2
-        if: matrix.os == 'windows-latest'
-        with:
-          msystem: MINGW64
-          path-type: inherit
+      # - uses: msys2/setup-msys2@v2
+      #   if: matrix.os == 'windows-latest'
+      #   with:
+      #     msystem: MINGW64
+      #     path-type: inherit
 
       - name: install dep
         if: matrix.os == 'ubuntu-24.04'
@@ -97,7 +97,7 @@ jobs:
             https://github.com/ahaoboy/rqjs-pgo-build
 
       - name: install rhino
-        # if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
+        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
         run: |
           curl -L -o ~/.ei/rhino.jar https://github.com/ahaoboy/rhino-cli/releases/latest/download/rhino-all-1.8.0.jar
           echo '#!/bin/bash' > ~/.ei/rhino.sh
@@ -160,20 +160,21 @@ jobs:
           echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
 
-      - name: run unix
-        if: matrix.os != 'windows-latest'
+      - name: run
+        # if: matrix.os != 'windows-latest'
         run: |
           bun run --silent build
           rm -rf ${{ matrix.name }}.json
           bun run --silent update > ${{ matrix.name }}.json
 
-      - name: run windows
-        shell: msys2 {0}
-        if: matrix.os == 'windows-latest'
-        run: |
-          bun run --silent build
-          rm -rf ${{ matrix.name }}.json
-          bun run --silent update > ${{ matrix.name }}.json
+      # - name: run windows
+      #   shell: msys2 {0}
+      #   if: matrix.os == 'windows-latest'
+      #   run: |
+      #     bun run --silent build
+      #     rm -rf ${{ matrix.name }}.json
+      #     bun run --silent update > ${{ matrix.name }}.json
+
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
