@@ -53,6 +53,7 @@ jobs:
           java-version: "25"
 
       - uses: msys2/setup-msys2@v2
+        if: matrix.os == 'windows-latest'
         with:
           msystem: MINGW64
           path-type: inherit
