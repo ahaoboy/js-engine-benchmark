@@ -95,14 +95,7 @@ jobs:
             https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm?preview
             https://github.com/ahaoboy/bare-build
             https://github.com/ahaoboy/rqjs-pgo-build
-
-      - name: install rhino
-        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
-        run: |
-          curl -L -o ~/.ei/rhino.jar https://github.com/ahaoboy/rhino-cli/releases/latest/download/rhino-all-1.8.0.jar
-          echo '#!/bin/bash' > ~/.ei/rhino.sh
-          echo 'java -jar ~/.ei/rhino.jar "$@"' >> ~/.ei/rhino.sh
-          chmod +x ~/.ei/rhino.sh
+            https://github.com/ahaoboy/rhino-cli
 
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
