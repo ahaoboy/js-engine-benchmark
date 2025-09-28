@@ -5,6 +5,7 @@ import type { ECharts } from "echarts";
 import { Button, Checkbox, Flex, Select } from "antd";
 import { ConfigProvider, theme } from "antd";
 import { humanSize } from "./tool";
+import { parseAsInteger, useQueryState, parseAsArrayOf, parseAsString } from 'nuqs'
 
 const CheckboxGroup = Checkbox.Group;
 const { defaultAlgorithm, darkAlgorithm } = theme;
@@ -143,10 +144,10 @@ function App() {
   const [data, setData] = useState<DataItem[]>([]);
   const chartRef = useRef<ECharts>(null);
   const [engines, setEngines] = useState<string[]>([]);
-  const [selectEngines, setSelectEngines] = useState<string[]>([]);
-  const [maxCount, setMaxCount] = useState(60);
-  const [os, setOs] = useState("ubuntu");
-  const [kind, setKind] = useState("Score");
+  const [selectEngines, setSelectEngines] = useQueryState<string[]>('selectEngines', parseAsArrayOf(parseAsString).withDefault([]));
+  const [maxCount, setMaxCount] = useQueryState("maxCount", parseAsInteger.withDefault(60));
+  const [os, setOs] = useQueryState("os", parseAsString.withDefault('ubuntu'));
+  const [kind, setKind] = useQueryState("kind", parseAsString.withDefault('Score'));
 
   useEffect(() => {
     fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {

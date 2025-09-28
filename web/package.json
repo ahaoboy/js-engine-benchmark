@@ -15,17 +15,18 @@
     "@ant-design/v5-patch-for-react-19": "1.0.3",
     "antd": "5.27.0",
     "echarts": "6.0.0",
+    "nuqs": "^2.6.0",
     "react": "19.1.1",
     "react-dom": "19.1.1"
   },
   "devDependencies": {
-    "vite-bundle-analyzer": "^1.2.1",
-    "cross-env": "^10.0.0",
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "@vitejs/plugin-react": "5.0.0",
+    "cross-env": "^10.0.0",
     "globals": "16.3.0",
     "typescript": "5.9.2",
-    "vite": "7.1.2"
+    "vite": "7.1.2",
+    "vite-bundle-analyzer": "^1.2.1"
   }
 }
