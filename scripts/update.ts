@@ -208,10 +208,10 @@ function getJavaSize() {
   }
   return 0;
 }
-
+const UNKNOWN_LIST = ['ringo', "rhino", "jjs", "engine262", 'quickjs-emscripten']
 function getFileSize(filePath: string) {
   try {
-    if (['ringo', "rhino", "jjs"].some(i => filePath.includes(i))) {
+    if (UNKNOWN_LIST.some(i => filePath.includes(i))) {
       return 0;
     }
     let p = isMsys() ? fromMsysPath(filePath) : filePath;
@@ -227,6 +227,9 @@ function getFileSize(filePath: string) {
 }
 
 function getDllSize(programPath: string) {
+  if (UNKNOWN_LIST.some(i => programPath.includes(i))) {
+    return 0;
+  }
   if (isMsys()) {
     programPath = fromMsysPath(programPath);
   }
