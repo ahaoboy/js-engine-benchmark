@@ -211,8 +211,8 @@ function getJavaSize() {
 
 function getFileSize(filePath: string) {
   try {
-    if (filePath.includes("rhino.sh") || filePath.includes("jjs")) {
-      return getJavaSize();
+    if (['ringo', "rhino", "jjs"].some(i => filePath.includes(i))) {
+      return 0;
     }
     let p = isMsys() ? fromMsysPath(filePath) : filePath;
     if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + ".exe")) {

@@ -19,7 +19,7 @@ export default defineConfig({
       "react-dom": "https://esm.sh/react-dom",
       echarts: "https://esm.sh/echarts?standalone",
       antd: "https://esm.sh/antd?standalone",
-      // nuqs: "https://esm.sh/nuqs"
+      'nuqs/': 'https://esm.sh/*nuqs',
     },
   },
 });
