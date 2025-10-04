@@ -180,9 +180,6 @@ function fromMsysPath(s: string) {
     return s;
   }
   s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:/`);
-  if (existsSync(s + '.exe')) {
-    return s + '.exe'
-  }
   return s;
 }
 
@@ -305,7 +302,8 @@ function getDllSize(programPath: string) {
 
 function getExePath(i: string) {
   const execPath = execSync(`which ${i}`).toString().trim();
-  return fromMsysPath(execPath);
+  const fullPath = existsSync(execPath + '.exe') ? execPath + '.exe' : execPath;
+  return fromMsysPath(fullPath);
 }
 
 const JS_BINS = [
