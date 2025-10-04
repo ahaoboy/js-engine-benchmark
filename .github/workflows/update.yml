@@ -136,14 +136,16 @@ jobs:
         run: |
           ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-macos-arm64.zip
 
-      - name: install
+      - name: install qjs-ng
         run: |
           ei https://github.com/quickjs-ng/quickjs
           mv ~/.ei/qjs ~/.ei/qjs-ng
           mv ~/.ei/qjsc ~/.ei/qjsc-ng
-
+      - name: install qjs
+        run: |
           ei https://github.com/ahaoboy/quickjs-build
-
+      - name: install graaljs
+        run: |
           ei https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/graaljs.json
           mv ~/.ei/graaljs/bin/js ~/.ei/graaljs/bin/graaljs
 
