@@ -1,4 +1,4 @@
-import fs, { unlink } from "fs";
+import fs, { existsSync, unlink } from "fs";
 import path from "path";
 import { exec, execSync } from "child_process";
 import os from "os";
@@ -180,6 +180,9 @@ function fromMsysPath(s: string) {
     return s;
   }
   s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:/`);
+  if (existsSync(s + '.exe')) {
+    return s + '.exe'
+  }
   return s;
 }
 
@@ -310,12 +313,20 @@ const JS_BINS = [
   "quickjs-emscripten-cli",
 ]
 
+async function strip(p: string) {
+  const s = await execCmd(`strip "${p}"`)
+  console.error(`strip: ${p} ${s}`)
+}
+
 async function main() {
   for (const item of info) {
     try {
       const i = item.bin || item.name
       const { subcmd = "" } = item
       const execPath = getExePath(i);
+
+      await strip(execPath)
+
       const execDir = path.dirname(execPath);
       const test = (await execCmd(
         `${execPath} ${subcmd} ${TEST_JS_PATH}`,
