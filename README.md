@@ -6,7 +6,7 @@ npm run build
 npm run update
 ```
 
-https://ahaoboy.github.io/js-engine-benchmark/
+webui: https://ahaoboy.github.io/js-engine-benchmark/
 
 ## Note
 
