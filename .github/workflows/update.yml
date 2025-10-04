@@ -216,6 +216,7 @@ jobs:
           rm -rf ./ubuntu
           rm -rf ./windows
           rm -rf ./macos-arm64
+          bun run --silent build
           bun run --silent update:doc
 
       - name: build web
@@ -257,3 +258,15 @@ jobs:
           publish_branch: doc
           force_orphan: true
           cname: github.com
+
+      - name: release
+        uses: ncipollo/release-action@v1
+        if: github.ref == 'refs/heads/main'
+        with:
+          artifacts: "./*.json,dist/run.js"
+          allowUpdates: true
+          tag: "nightly"
+          name: "nightly"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: main
+          replacesArtifacts: true
