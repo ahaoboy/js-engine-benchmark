@@ -154,7 +154,9 @@ jobs:
         run: |
           echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
           echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/JavaScriptCore/bin" >> $GITHUB_ENV
-
+      - name: strip
+        run: |
+          bash ./strip.sh info.json
       - name: run
         # if: matrix.os != 'windows-latest'
         run: |

@@ -311,10 +311,10 @@ const JS_BINS = [
   "quickjs-emscripten-cli",
 ]
 
-async function strip(p: string) {
-  const s = await execCmd(`strip "${p}"`)
-  console.error(`strip: ${p} ${s}`)
-}
+// async function strip(p: string) {
+//   const s = await execCmd(`strip "${p}"`)
+//   console.error(`strip: ${p} ${s}`)
+// }
 
 async function main() {
   for (const item of info) {
@@ -323,7 +323,7 @@ async function main() {
       const { subcmd = "" } = item
       const execPath = getExePath(i);
 
-      await strip(execPath)
+      // await strip(execPath)
 
       const execDir = path.dirname(execPath);
       const test = (await execCmd(
