@@ -5,7 +5,12 @@ import type { ECharts } from "echarts";
 import { Button, Checkbox, Flex, Select } from "antd";
 import { ConfigProvider, theme } from "antd";
 import { humanSize } from "./tool";
-import { parseAsInteger, useQueryState, parseAsArrayOf, parseAsString } from 'nuqs'
+import {
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString,
+  useQueryState,
+} from "nuqs";
 
 const CheckboxGroup = Checkbox.Group;
 const { defaultAlgorithm, darkAlgorithm } = theme;
@@ -35,7 +40,9 @@ function getNames(data: DataItem[]): string[] {
 
   const v = [...s];
   const last = data[data.length - 1];
-  v.sort((a, b) => +last.data["Score"][b] - +last.data["Score"][a]);
+  v.sort((a, b) =>
+    +(last.data["Score"][b] || 0) - +(last.data["Score"][a]) || 0
+  );
   return v;
 }
 
@@ -81,6 +88,12 @@ function getOption(
     });
   }
 
+  series.sort((a, b) => {
+    const lastA = a.data[a.data.length - 1];
+    const lastB = b.data[b.data.length - 1];
+    return (lastB || 0) - (lastA || 0);
+  });
+
   const option = {
     title: {
       text: "js-engine-benchmark",
@@ -88,7 +101,7 @@ function getOption(
     tooltip: {
       trigger: "axis",
       valueFormatter: (value: number) =>
-        kind.endsWith(" size") ? `${humanSize(+value)}` : +value,
+        kind.endsWith(" size") ? `${value ? humanSize(+value) : 0}` : +value,
     },
     legend: {
       data: legend,
@@ -144,18 +157,38 @@ function App() {
   const [data, setData] = useState<DataItem[]>([]);
   const chartRef = useRef<ECharts>(null);
   const [engines, setEngines] = useState<string[]>([]);
-  const [selectEngines, setSelectEngines] = useQueryState<string[]>('selectEngines', parseAsArrayOf(parseAsString).withDefault([]));
-  const [maxCount, setMaxCount] = useQueryState("maxCount", parseAsInteger.withDefault(60));
-  const [os, setOs] = useQueryState("os", parseAsString.withDefault('ubuntu'));
-  const [kind, setKind] = useQueryState("kind", parseAsString.withDefault('Score'));
+  const [selectEngines, setSelectEngines] = useQueryState<string[]>(
+    "selectEngines",
+    parseAsArrayOf(parseAsString).withDefault([]),
+  );
+  const [maxCount, setMaxCount] = useQueryState(
+    "maxCount",
+    parseAsInteger.withDefault(60),
+  );
+  const [os, setOs] = useQueryState("os", parseAsString.withDefault("ubuntu"));
+  const [kind, setKind] = useQueryState(
+    "kind",
+    parseAsString.withDefault("Score"),
+  );
+  const [sort, setSort] = useQueryState(
+    "sort",
+    parseAsString.withDefault("Score"),
+  );
 
   useEffect(() => {
     fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
       const names = getNames(i);
       setData(i);
-      setEngines(names);
+      const last = i[i.length - 1]?.data[sort];
+      if (!last) {
+        return;
+      }
+      const v = names.sort((a, b) => {
+        return +(last[b] || 0) - +(last[a] || 0);
+      });
+      setEngines(v);
       if (!selectEngines.length) {
-        setSelectEngines(names.slice(0, 3));
+        setSelectEngines(v.slice(0, 3));
       }
     });
   }, [os]);
@@ -182,6 +215,17 @@ function App() {
     chartRef.current.setOption(option, true);
     chartRef.current.resize();
   }
+  useEffect(() => {
+    const last = data[data.length - 1]?.data[sort];
+    if (!last) {
+      return;
+    }
+    const v = engines.sort((a, b) => {
+      return +(last[b] || 0) - +(last[a] || 0);
+    });
+    setEngines([...v]);
+  }, [sort]);
+
   return (
     <ConfigProvider
       theme={{ algorithm: isDark ? darkAlgorithm : defaultAlgorithm }}
@@ -223,6 +267,18 @@ function App() {
               style={{ width: "120px" }}
               value={kind}
               onChange={(e) => setKind(e)}
+              options={Kind.map((i) => ({
+                label: i,
+                value: i,
+              }))}
+            />
+            Sort by:
+            <Select
+              style={{ width: "120px" }}
+              value={sort}
+              onChange={(e) => {
+                setSort(e);
+              }}
               options={Kind.map((i) => ({
                 label: i,
                 value: i,
