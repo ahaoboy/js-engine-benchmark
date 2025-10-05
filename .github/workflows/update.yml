@@ -64,10 +64,12 @@ jobs:
           sudo apt install -y libcurl4-openssl-dev libssl-dev zlib1g-dev
 
       - name: install easy-install
-        uses: ahaoboy/easy-setup@v1
-        with:
-          url: |-
-            https://github.com/ahaoboy/easy-install
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/easy-install/easy-install/main/install.sh | bash
+      - name: install from urls
+        run: |
+          which ei
+          urls=(
             https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/boa.json
             https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/llrt.json
             https://github.com/ahaoboy/easy-install/raw/refs/heads/main/dist-manifest/hermes.json
@@ -92,10 +94,16 @@ jobs:
             https://github.com/ahaoboy/spiderfire-build
             https://github.com/ahaoboy/lo-build
             https://github.com/trynova/nova
-            https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm?preview
+            https://nightly.link/andrewmd5/hako-cli/workflows/build/llvm
             https://github.com/ahaoboy/bare-build
             https://github.com/ahaoboy/rqjs-pgo-build
             https://github.com/ahaoboy/rhino-cli
+          )
+
+          for url in "${urls[@]}"; do
+            echo "install: $url"
+            ei "$url"
+          done
 
       - name: install ladybird
         if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
@@ -131,10 +139,10 @@ jobs:
       #     ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-linux-x86_64.zip
 
 
-      - name: install macos arm64
-        if: "startsWith(matrix.os, 'macos-15')"
-        run: |
-          ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-macos-arm64.zip
+      # - name: install macos arm64
+      #   if: "startsWith(matrix.os, 'macos')"
+      #   run: |
+      #     ei https://nightly.link/andrewmd5/hako-cli/workflows/build/main/hako-macos-arm64.zip
 
       - name: install qjs-ng
         run: |
