@@ -152,8 +152,12 @@ jobs:
       - name: Set JavaScriptCore environment variable only on macOS
         if: startsWith(matrix.os, 'macos')
         run: |
-          echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
-          echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
+          JSC_DIR="$(dirname "$(command -v jsc)")/bin"
+          echo "DYLD_FRAMEWORK_PATH=$JSC_DIR" >> "$GITHUB_ENV"
+          echo "DYLD_LIBRARY_PATH=$JSC_DIR" >> "$GITHUB_ENV"
+
+          # echo "DYLD_FRAMEWORK_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
+          # echo "DYLD_LIBRARY_PATH=/Users/runner/.ei/jsc/bin" >> $GITHUB_ENV
       - name: strip
         run: |
           bash ./strip.sh info.json
