@@ -17,8 +17,14 @@ case "$(uname -s)" in
   *MINGW*|*MSYS*|*CYGWIN*) is_windows=true ;;
 esac
 
+skip_list=("goja")
+
 jq -c '.[]' "$json_file" | while IFS= read -r item; do
   name=$(echo "$item" | jq -r '.bin // .name')
+
+  if [[ " ${skip_list[*]} " =~ " ${name} " ]]; then
+    continue
+  fi
 
   exe_name="$name"
   if [ "$is_windows" = true ]; then
