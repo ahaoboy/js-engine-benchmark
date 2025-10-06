@@ -58,9 +58,16 @@ function execCmd(cmd: string, cwd?: string) {
     // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error("exec output", { err, stdout, stderr });
-
+      let s = stdout?.trim() || ''
+      // boa output last value
+      if (['boa', 'boa.exe'].some(e => cmd.endsWith(e))) {
+        s = s.split('\n').slice(0. - 1).join('\n')
+      }
       // goja output to stderr
-      r(stdout?.trim() || stderr?.trim());
+      if (['goja', 'goja.exe'].some(e => cmd.endsWith(e))) {
+        s = stderr?.trim() || ''
+      }
+      r(s);
     });
   });
 }
