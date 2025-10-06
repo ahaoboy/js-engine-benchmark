@@ -59,7 +59,7 @@ jobs:
       #     path-type: inherit
 
       - name: install dep
-        if: matrix.os == 'ubuntu-24.04'
+        if: "startsWith(matrix.os, 'ubuntu')"
         run: |
           sudo apt install -y libcurl4-openssl-dev libssl-dev zlib1g-dev
 
@@ -106,15 +106,11 @@ jobs:
           done
 
       - name: install ladybird
-        if: matrix.os == 'ubuntu-24.04' || matrix.os == 'macos-15'
+        if: "!startsWith(matrix.os, 'windows')"
         run: |
           ei https://github.com/ahaoboy/ladybird-js-build
           mv ~/.ei/js ~/.ei/ladybird
-      # - name: install by npm
-      #   run: |
-      #     # npm i -g bare
-      #     npm i -g @engine262/engine262
-      #     npm i -g quickjs-emscripten-cli
+
       - name: install by bun
         run: |
           bun i -g @engine262/engine262
@@ -241,7 +237,7 @@ jobs:
         run: |
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy-ci"
-          git add .
+          git add README.md
           git commit -m"update"
           cat README.md
 
