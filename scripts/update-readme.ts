@@ -83,10 +83,8 @@ function getInfo() {
     if (i.install && (i.install != i.url)) {
       url += "<br><br>" + getMdLink(i.install);
     }
-    let scoreMd = `${score}<br>${humanSize(size)}`;
-    if (scoreMB) {
-      scoreMd += `<br>${scoreMB}/M`;
-    }
+    let scoreMd = `${score}<br>${size ? humanSize(size) : '0'}`;
+    scoreMd += `<br>${scoreMB}/M`;
     const v = [
       i.name,
       url,

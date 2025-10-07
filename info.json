@@ -233,6 +233,7 @@
   },
   {
     "name": "bare",
+    "install": "https://github.com/ahaoboy/bare-build",
     "description": "Small and modular JavaScript runtime for desktop and mobile",
     "url": "https://github.com/holepunchto/bare"
   },
