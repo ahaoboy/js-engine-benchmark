@@ -327,9 +327,10 @@ const JS_BINS = [
 async function main() {
   for (const item of info) {
     try {
-      const i = item.bin || item.name
+      const bin = item.bin || item.name
+      const name =   item.name
       const { subcmd = "" } = item
-      const execPath = getExePath(i);
+      const execPath = getExePath(bin);
 
       // await strip(execPath)
 
@@ -339,7 +340,7 @@ async function main() {
         execDir,
       )).trim();
 
-      const isJS = JS_BINS.includes(i)
+      const isJS = JS_BINS.includes(bin)
       const fileSize = isJS ? 0 : getFileSize(execPath);
       const dllSize = isJS ? 0 : getDllSize(execPath);
 
@@ -358,15 +359,15 @@ async function main() {
         data["Dll size"] = {};
       }
 
-      const version = ((await getVersion(i)) || "").replaceAll("-", ".");
-      data["Version"][i] = version;
+      const version = ((await getVersion(bin)) || "").replaceAll("-", ".");
+      data["Version"][name] = version;
       console.error("version: ", version);
-      data["Total size"][i] = fileSize + dllSize;
-      data["Exe size"][i] = fileSize;
-      data["Dll size"][i] = dllSize;
+      data["Total size"][name] = fileSize + dllSize;
+      data["Exe size"][name] = fileSize;
+      data["Dll size"][name] = dllSize;
       const startTime = +new Date();
       const out = await execCmd(
-        `${i} ${subcmd} ${RUN_JS_PATH}`,
+        `${bin} ${subcmd} ${RUN_JS_PATH}`,
         execDir,
       );
       const endTime = +new Date();
@@ -379,7 +380,7 @@ async function main() {
       // }
       for (const [k, v] of Object.entries(json)) {
         const obj = data[k] || {};
-        obj[i] = v;
+        obj[name] = v;
         data[k] = obj;
       }
       if (!("Score" in data)) {
@@ -388,13 +389,13 @@ async function main() {
       if (!("Score/MB" in data)) {
         data["Score/MB"] = {};
       }
-      const score = data["Score"][i];
-      data["Score/MB"][i] = (+score / (fileSize + dllSize) * 1024 * 1024) | 0;
+      const score = data["Score"][name];
+      data["Score/MB"][name] = (+score / (fileSize + dllSize) * 1024 * 1024) | 0;
 
       if (!("Time(s)" in data)) {
         data["Time(s)"] = {};
       }
-      data["Time(s)"][i] = ((endTime - startTime) / 1000) | 0;
+      data["Time(s)"][name] = ((endTime - startTime) / 1000) | 0;
     } catch (e) {
       console.error("error:", e);
     }
@@ -405,22 +406,6 @@ async function main() {
   if (!keys.length) {
     console.error("no keys", JSON.stringify(data));
     return;
-  }
-  const engines = Object.keys(data[keys[0]]).sort((a, b) => {
-    return (+(data["Score"][b] || 0)) - (+(data["Score"][a] || 0));
-  });
-
-  for (const i in data) {
-    const obj: Record<string, string | number> = {};
-    for (const e of engines) {
-      const item = info.find((i) => i.bin == e || i.name == e);
-      if (!item) {
-        continue;
-      }
-      const name = item.name;
-      obj[name] = data[i][e] ?? "";
-    }
-    data[i] = obj;
   }
 
   console.error(JSON.stringify(data));
