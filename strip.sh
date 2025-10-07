@@ -17,7 +17,7 @@ case "$(uname -s)" in
   *MINGW*|*MSYS*|*CYGWIN*) is_windows=true ;;
 esac
 
-skip_list=("goja")
+skip_list=("goja" jint-cli)
 
 jq -c '.[]' "$json_file" | while IFS= read -r item; do
   name=$(echo "$item" | jq -r '.bin // .name')

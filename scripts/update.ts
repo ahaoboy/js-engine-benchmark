@@ -58,16 +58,18 @@ function execCmd(cmd: string, cwd?: string) {
     // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error("exec output", { err, stdout, stderr });
-      const name = cmd.split(" ")[0].replaceAll("\\",'/').split('/').at(-1) || ""
+      const name = cmd.split(" ")[0].replaceAll("\\", '/').split('/').at(-1) || ""
       let s = stdout?.trim() || ''
       // boa output last value
       if (['boa', 'boa.exe'].some(e => name.endsWith(e))) {
-        s = s.split('\n').slice(0. - 1).join('\n')
+        s = s.split('\n').slice(0, - 1).join('\n')
       }
       // goja output to stderr
       if (['goja', 'goja.exe'].some(e => name.endsWith(e))) {
         s = stderr?.trim() || ''
       }
+
+      console.error("execCmd output", s);
       r(s);
     });
   });
@@ -328,7 +330,7 @@ async function main() {
   for (const item of info) {
     try {
       const bin = item.bin || item.name
-      const name =   item.name
+      const name = item.name
       const { subcmd = "" } = item
       const execPath = getExePath(bin);
 
