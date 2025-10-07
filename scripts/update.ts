@@ -58,13 +58,14 @@ function execCmd(cmd: string, cwd?: string) {
     // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
     exec(cmd, { cwd }, (err, stdout, stderr) => {
       console.error("exec output", { err, stdout, stderr });
+      const name = cmd.split(" ")[0].replaceAll("\\",'/').split('/').at(-1) || ""
       let s = stdout?.trim() || ''
       // boa output last value
-      if (['boa', 'boa.exe'].some(e => cmd.endsWith(e))) {
+      if (['boa', 'boa.exe'].some(e => name.endsWith(e))) {
         s = s.split('\n').slice(0. - 1).join('\n')
       }
       // goja output to stderr
-      if (['goja', 'goja.exe'].some(e => cmd.endsWith(e))) {
+      if (['goja', 'goja.exe'].some(e => name.endsWith(e))) {
         s = stderr?.trim() || ''
       }
       r(s);
