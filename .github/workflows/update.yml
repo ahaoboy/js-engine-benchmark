@@ -237,7 +237,7 @@ jobs:
         run: |
           git config --global user.email "504595380@qq.com"
           git config --global user.name "ahaoboy-ci"
-          git add README.md
+          git add .
           git commit -m"update"
           cat README.md
 
