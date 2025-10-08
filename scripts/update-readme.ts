@@ -75,7 +75,7 @@ function getInfo() {
   const infoMd = [headerMd];
 
   for (const i of INFO) {
-    const name = i.name;
+    const { name, lang } = i;
     const score = ubuntuJSON["Score"][name as Name] || 0;
     const size = ubuntuJSON["Total size"][name as Name] || 0;
     const scoreMB = ubuntuJSON["Score/MB"][name as Name] || 0;
@@ -85,8 +85,9 @@ function getInfo() {
     }
     let scoreMd = `${score}<br>${size ? humanSize(size) : '0'}`;
     scoreMd += `<br>${scoreMB}/M`;
+    const langIcon = `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${lang}/${lang}-original.svg" width="20" style="vertical-align: middle;"/>`
     const v = [
-      i.name,
+      langIcon + ' ' + name,
       url,
       scoreMd,
       getSupport(name),

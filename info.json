@@ -3,38 +3,44 @@
     "name": "bun",
     "install": "https://github.com/oven-sh/setup-bun",
     "description": "Incredibly fast JavaScript runtime, bundler, test runner, and package manager – all in one",
-    "url": "https://github.com/oven-sh/bun"
+    "url": "https://github.com/oven-sh/bun",
+    "lang": "zig"
   },
   {
     "name": "node",
     "install": "https://github.com/actions/setup-node",
     "description": "Node.js JavaScript runtime",
-    "url": "https://github.com/nodejs/node"
+    "url": "https://github.com/nodejs/node",
+    "lang": "cplusplus"
   },
   {
     "name": "deno",
     "install": "https://github.com/denoland/setup-deno",
     "description": "A modern runtime for JavaScript and TypeScript",
-    "url": "https://github.com/denoland/deno"
+    "url": "https://github.com/denoland/deno",
+    "lang": "rust"
   },
   {
     "name": "graaljs",
     "install": "https://github.com/oracle/graaljs",
     "description": "A ECMAScript 2023 compliant JavaScript implementation built on GraalVM. With polyglot language interoperability support. Running Node.js applications!",
-    "url": "https://github.com/oracle/graaljs"
+    "url": "https://github.com/oracle/graaljs",
+    "lang": "cplusplus"
   },
   {
     "name": "hermes",
     "install": "https://github.com/facebook/hermes",
     "description": "A JavaScript engine optimized for running React Native",
     "url": "https://github.com/facebook/hermes",
-    "notes": "Two entries exist, one with version 0.1.0, 64 bit Linux binary with -O option"
+    "notes": "Two entries exist, one with version 0.1.0, 64 bit Linux binary with -O option",
+    "lang": "cplusplus"
   },
   {
     "name": "llrt",
     "install": "https://github.com/awslabs/llrt",
     "description": "LLRT (Low Latency Runtime) is a lightweight JavaScript runtime",
-    "url": "https://github.com/awslabs/llrt"
+    "url": "https://github.com/awslabs/llrt",
+    "lang": "rust"
   },
   {
     "name": "txiki.js",
@@ -42,212 +48,246 @@
     "subcmd": "run",
     "description": "A tiny JavaScript runtime",
     "url": "https://github.com/saghul/txiki.js",
-    "install": "https://github.com/ahaoboy/txiki.js-build"
+    "install": "https://github.com/ahaoboy/txiki.js-build",
+    "lang": "c"
   },
   {
     "name": "quickjs",
     "bin": "qjs",
     "description": "QuickJS is a small and embeddable Javascript engine. It supports the ES2023 specification including modules, asynchronous generators, proxies and BigInt.",
     "install": "https://github.com/ahaoboy/quickjs-build",
-    "url": "https://github.com/bellard/quickjs"
+    "url": "https://github.com/bellard/quickjs",
+    "lang": "c"
   },
   {
     "name": "quickjs-ng",
     "bin": "qjs-ng",
     "description": "QuickJS, the Next Generation: a mighty JavaScript engine",
     "install": "https://github.com/quickjs-ng/quickjs",
-    "url": "https://github.com/quickjs-ng/quickjs"
+    "url": "https://github.com/quickjs-ng/quickjs",
+    "lang": "c"
   },
   {
     "name": "mujs",
     "description": "An embeddable Javascript interpreter in C",
     "install": "https://github.com/ahaoboy/mujs-build",
-    "url": "https://github.com/ccxvii/mujs"
+    "url": "https://github.com/ccxvii/mujs",
+    "lang": "c"
   },
   {
     "name": "mujs-pgo",
     "description": "An embeddable Javascript interpreter in C",
     "install": "https://github.com/ahaoboy/mujs-pgo-build",
-    "url": "https://github.com/ccxvii/mujs"
+    "url": "https://github.com/ccxvii/mujs",
+    "lang": "c"
   },
   {
     "name": "mujs-one",
     "description": "mujs by c2rust",
     "install": "https://github.com/ahaoboy/mujs-one",
-    "url": "https://github.com/ahaoboy/mujs-one"
+    "url": "https://github.com/ahaoboy/mujs-one",
+    "lang": "rust"
   },
   {
     "name": "xst",
     "install": "https://github.com/Moddable-OpenSource/moddable",
     "description": "Tools for developers to create truly open IoT products using standard JavaScript on low cost microcontrollers",
-    "url": "https://github.com/Moddable-OpenSource/moddable"
+    "url": "https://github.com/Moddable-OpenSource/moddable",
+    "lang": "c"
   },
   {
     "name": "JavaScriptCore",
     "bin": "jsc",
     "description": "JavaScriptCore is the built-in JavaScript engine for WebKit, which implements ECMAScript as in ECMA-262 specification",
     "install": "https://github.com/ahaoboy/jsc-build",
-    "url": "https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore"
+    "url": "https://github.com/WebKit/webkit/tree/main/Source/JavaScriptCore",
+    "lang": "cplusplus"
   },
   {
     "name": "v8",
     "bin": "d8",
     "description": "V8 is Google’s open source high-performance JavaScript and WebAssembly engine",
     "install": "https://github.com/ahaoboy/v8-build",
-    "url": "https://v8.dev"
+    "url": "https://v8.dev",
+    "lang": "cplusplus"
   },
   {
     "name": "spidermonkey",
     "bin": "js",
     "description": "SpiderMonkey is Mozilla’s JavaScript and WebAssembly Engine, used in Firefox",
     "install": "https://github.com/ahaoboy/spidermonkey-build",
-    "url": "https://spidermonkey.dev"
+    "url": "https://spidermonkey.dev",
+    "lang": "cplusplus"
   },
   {
     "name": "JerryScript",
     "bin": "jerry",
     "description": "Ultra-lightweight JavaScript engine for the Internet of Things",
     "install": "https://github.com/ahaoboy/jerryscript-build",
-    "url": "https://github.com/jerryscript-project/jerryscript"
+    "url": "https://github.com/jerryscript-project/jerryscript",
+    "lang": "c"
   },
   {
     "name": "primjs",
     "install": "https://github.com/ahaoboy/primjs-build",
     "description": "JavaScript Engine Optimized for Lynx",
-    "url": "https://github.com/lynx-family/primjs"
+    "url": "https://github.com/lynx-family/primjs",
+    "lang": "cplusplus"
   },
   {
     "name": "rquickjs",
     "install": "https://github.com/ahaoboy/rquickjs-cli",
     "description": "High level bindings to the quickjs javascript engine",
-    "url": "https://github.com/DelSkayn/rquickjs"
+    "url": "https://github.com/DelSkayn/rquickjs",
+    "lang": "rust"
   },
   {
     "name": "rquickjs-pgo",
     "bin": "rqjs-pgo",
     "install": "https://github.com/ahaoboy/rqjs-pgo-build",
     "description": "High level bindings to the quickjs javascript engine",
-    "url": "https://github.com/DelSkayn/rquickjs"
+    "url": "https://github.com/DelSkayn/rquickjs",
+    "lang": "rust"
   },
   {
     "name": "ChakraCore",
     "bin": "ch",
     "install": "https://github.com/ahaoboy/ChakraCore-build",
     "description": "ChakraCore is an open source Javascript engine with a C API",
-    "url": "https://github.com/chakra-core/ChakraCore"
+    "url": "https://github.com/chakra-core/ChakraCore",
+    "lang": "cplusplus"
   },
   {
     "name": "duktape",
     "bin": "duk",
     "description": "embeddable Javascript engine with a focus on portability and compact footprint",
     "url": "https://github.com/svaarala/duktape",
-    "install": "https://github.com/ahaoboy/duktape-build"
+    "install": "https://github.com/ahaoboy/duktape-build",
+    "lang": "c"
   },
   {
     "name": "nova",
     "subcmd": "eval",
     "description": "Nova is a JavaScript and WebAssembly engine written in Rust",
-    "url": "https://github.com/trynova/nova"
+    "url": "https://github.com/trynova/nova",
+    "lang": "rust"
   },
   {
     "name": "boa",
     "description": "Boa is an embeddable and experimental Javascript engine written in Rust. Currently, it has support for some of the language.",
     "install": "https://github.com/boa-dev/boa",
-    "url": "https://github.com/boa-dev/boa"
+    "url": "https://github.com/boa-dev/boa",
+    "lang": "rust"
   },
   {
     "name": "engine262",
     "description": "An implementation of ECMA-262 in JavaScript",
-    "url": "https://github.com/engine262/engine262"
+    "url": "https://github.com/engine262/engine262",
+    "lang": "javascript"
   },
   {
     "name": "ladybird",
     "install": "https://github.com/ahaoboy/ladybird-js-build",
     "description": "Truly independent web browser",
-    "url": "https://github.com/LadybirdBrowser/ladybird"
+    "url": "https://github.com/LadybirdBrowser/ladybird",
+    "lang": "cplusplus"
   },
   {
     "name": "goja",
     "install": "https://github.com/ahaoboy/goja-build",
     "description": "ECMAScript/JavaScript engine in pure Go",
-    "url": "https://github.com/dop251/goja"
+    "url": "https://github.com/dop251/goja",
+    "lang": "go"
   },
   {
     "name": "kiesel",
     "install": "https://github.com/ahaoboy/kiesel-build",
     "description": "A JavaScript engine written in Zig https://kiesel.dev",
-    "url": "https://codeberg.org/kiesel-js/kiesel"
+    "url": "https://codeberg.org/kiesel-js/kiesel",
+    "lang": "zig"
   },
   {
     "name": "mozjs",
     "install": "https://github.com/ahaoboy/mozjs-cli",
     "description": "Rust bindings to SpiderMonkey",
-    "url": "https://github.com/servo/mozjs"
+    "url": "https://github.com/servo/mozjs",
+    "lang": "rust"
   },
   {
     "name": "jint",
     "bin": "jint-cli",
     "install": "https://github.com/ahaoboy/jint-cli",
     "description": "Javascript Interpreter for .NET",
-    "url": "https://github.com/sebastienros/jint"
+    "url": "https://github.com/sebastienros/jint",
+    "lang": "csharp"
   },
   {
     "name": "dune",
     "subcmd": "run",
     "description": "JavascriptA hobby runtime for JavaScript and TypeScript",
-    "url": "https://github.com/aalykiot/dune"
+    "url": "https://github.com/aalykiot/dune",
+    "lang": "rust"
   },
   {
     "name": "jjs",
     "description": "Nashorn engine is an open source implementation of the ECMAScript Edition 5.1 Language Specification",
-    "url": "https://github.com/openjdk/nashorn"
+    "url": "https://github.com/openjdk/nashorn",
+    "lang": "java"
   },
   {
     "name": "rhino",
     "description": "Rhino is an open-source implementation of JavaScript written entirely in Java",
-    "url": "https://github.com/mozilla/rhino"
+    "url": "https://github.com/mozilla/rhino",
+    "lang": "java"
   },
   {
     "name": "njs",
     "description": "A subset of JavaScript language to use in nginx",
     "url": "https://github.com/nginx/njs",
-    "install": "https://github.com/ahaoboy/njs-build"
+    "install": "https://github.com/ahaoboy/njs-build",
+    "lang": "c"
   },
   {
     "name": "ringo",
     "description": "RingoJS is a JavaScript platform built on the JVM and optimized for server-side applications",
-    "url": "https://github.com/ringo/ringojs"
+    "url": "https://github.com/ringo/ringojs",
+    "lang": "java"
   },
   {
     "name": "lo",
     "description": "it's JavaScript Jim, but not as we know it",
     "url": "https://github.com/just-js/lo",
-    "install": "https://github.com/ahaoboy/lo-build"
+    "install": "https://github.com/ahaoboy/lo-build",
+    "lang": "cplusplus"
   },
   {
     "name": "spiderfire",
     "subcmd": "run",
     "description": "JavaScript Runtime built with Mozilla's SpiderMonkey Engine",
     "url": "https://github.com/Redfire75369/spiderfire",
-    "install": "https://github.com/ahaoboy/spiderfire-build"
+    "install": "https://github.com/ahaoboy/spiderfire-build",
+    "lang": "rust"
   },
   {
     "name": "bare",
     "install": "https://github.com/ahaoboy/bare-build",
     "description": "Small and modular JavaScript runtime for desktop and mobile",
-    "url": "https://github.com/holepunchto/bare"
+    "url": "https://github.com/holepunchto/bare",
+    "lang": "c"
   },
   {
     "name": "hako",
     "description": "An embeddable, lightweight, secure, high-performance JavaScript engine",
     "url": "https://github.com/andrewmd5/hako",
-    "install": "https://github.com/andrewmd5/hako-cli"
+    "install": "https://github.com/andrewmd5/hako-cli",
+    "lang": "c"
   },
   {
     "name": "quickjs-emscripten",
     "bin": "quickjs-emscripten-cli",
     "description": "Safely execute untrusted Javascript in your Javascript, and execute synchronous code that uses async functions",
     "url": "https://github.com/justjake/quickjs-emscripten",
-    "install": "https://github.com/ahaoboy/quickjs-emscripten-cli"
+    "install": "https://github.com/ahaoboy/quickjs-emscripten-cli",
+    "lang": "typescript"
   }
 ]
