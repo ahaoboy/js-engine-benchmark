@@ -69,7 +69,7 @@ function getInfo() {
     (+ubuntuJSON["Score"][b.name as Name] || 0) - (+ubuntuJSON["Score"][a.name as Name] || 0)
   );
 
-  const header = ["name", "repo", "score", "platform", "description"];
+  const header = ["name", 'lang', "repo", "score", "platform", "description"];
   const headerMd = "| " + header.join(" | ") + " |" + "\n" + "|" +
     " --- |".repeat(header.length);
   const infoMd = [headerMd];
@@ -87,7 +87,8 @@ function getInfo() {
     scoreMd += `<br>${scoreMB}/M`;
     const langIcon = `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${lang}/${lang}-original.svg" width="20" style="vertical-align: middle;"/>`
     const v = [
-      langIcon + ' ' + name,
+      name,
+      langIcon,
       url,
       scoreMd,
       getSupport(name),
