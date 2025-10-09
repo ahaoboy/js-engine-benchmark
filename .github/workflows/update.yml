@@ -36,6 +36,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ahaoboy/js-engine-setup@v1
+        with:
+          strip: true
 
       - name: run
         run: |
