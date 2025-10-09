@@ -256,6 +256,9 @@ function getDllSize(programPath: string) {
   if (programPath.includes("graaljs")) {
     const dir = path.dirname(path.dirname(programPath));
     for (const d of ["lib", "modules"]) {
+      if (!existsSync(path.join(dir, d))) {
+        continue
+      }
       for (const i of fs.readdirSync(path.join(dir, d))) {
         dependencies.push(path.join(dir, d, i));
       }
