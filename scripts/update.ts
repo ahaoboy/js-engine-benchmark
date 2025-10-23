@@ -329,10 +329,16 @@ const JS_BINS = [
 //   console.error(`strip: ${p} ${s}`)
 // }
 
+// engine262 is so slow that we skip it for now
+const SKIP_LIST = ["engine262"]
+
 async function main() {
   for (const item of info) {
     try {
       const bin = item.bin || item.name
+      if (SKIP_LIST.includes(bin)) {
+        continue
+      }
       const name = item.name
       const { subcmd = "" } = item
       const execPath = getExePath(bin);
