@@ -238,6 +238,7 @@
     "name": "rhino",
     "description": "Rhino is an open-source implementation of JavaScript written entirely in Java",
     "url": "https://github.com/mozilla/rhino",
+    "install": "https://github.com/ahaoboy/rhino-cli",
     "lang": "java"
   },
   {
