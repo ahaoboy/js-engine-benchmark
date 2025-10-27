@@ -61,7 +61,7 @@ function execCmd(cmd: string, cwd?: string) {
       const name = cmd.split(" ")[0].replaceAll("\\", '/').split('/').at(-1) || ""
       let s = stdout?.trim() || ''
       // boa output last value
-      if (['boa', 'boa.exe'].some(e => name.endsWith(e))) {
+      if (['boa', 'boa.exe'].some(e => name.endsWith(e)) && s.endsWith('\nundefined')) {
         s = s.split('\n').slice(0, - 1).join('\n')
       }
       // goja output to stderr
