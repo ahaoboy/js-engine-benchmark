@@ -290,5 +290,13 @@
     "url": "https://github.com/justjake/quickjs-emscripten",
     "install": "https://github.com/ahaoboy/quickjs-emscripten-cli",
     "lang": "typescript"
+  },
+  {
+    "name": "paserati",
+    "subcmd": "--no-typecheck",
+    "description": "TypeScript runtime implementation written in Go. **cough**",
+    "url": "https://github.com/nooga/paserati",
+    "install": "https://github.com/ahaoboy/paserati-build",
+    "lang": "go"
   }
 ]
