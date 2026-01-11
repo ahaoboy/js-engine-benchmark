@@ -329,8 +329,8 @@ const JS_BINS = [
 //   console.error(`strip: ${p} ${s}`)
 // }
 
-// engine262 is so slow that we skip it for now
-const SKIP_LIST = ["engine262"]
+// these engines is so slow and failed to run that we skip it for now
+const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript"]
 
 async function main() {
   for (const item of info) {
