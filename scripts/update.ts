@@ -77,7 +77,7 @@ function execCmd(cmd: string, cwd?: string) {
 
 async function getVersion(cmd: string) {
   if (
-    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli"].includes(
+    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc"].includes(
       cmd,
     )
   ) {
@@ -137,10 +137,6 @@ async function getVersion(cmd: string) {
   if (cmd === "graaljs") {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "jsc") {
-    // FIXME: get jsc version by cli
-    return "";
   }
   if (cmd === "d8") {
     const cwd = path.dirname(getExePath("d8"));
