@@ -296,7 +296,6 @@
     "subcmd": "--no-typecheck",
     "description": "TypeScript runtime implementation written in Go. **cough**",
     "url": "https://github.com/nooga/paserati",
-    "install": "https://github.com/ahaoboy/paserati-build",
     "lang": "go"
   }
 ]
