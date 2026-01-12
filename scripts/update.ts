@@ -77,7 +77,7 @@ function execCmd(cmd: string, cwd?: string) {
 
 async function getVersion(cmd: string) {
   if (
-    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc", "d8"].includes(
+    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc"].includes(
       cmd,
     )
   ) {
