@@ -105,7 +105,7 @@ async function getVersion(cmd: string) {
     const text = await execCmd(`${cmd} -h`);
     return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim();
   }
-  if (cmd === "tjs" || cmd === "lo") {
+  if (cmd === "tjs" || cmd === "lo" || "paserati" || "node") {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
   }
@@ -129,10 +129,6 @@ async function getVersion(cmd: string) {
   if (cmd === "deno") {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "node") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
   }
   if (cmd === "bun") {
     const text = await execCmd(`${cmd} --version`);
