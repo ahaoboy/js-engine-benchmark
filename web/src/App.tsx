@@ -1,9 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import * as echarts from "echarts";
 import type { ECharts } from "echarts";
-import { Button, Checkbox, Flex, Select } from "antd";
-import { ConfigProvider, theme } from "antd";
+import {
+  Box,
+  Button,
+  Checkbox,
+  createTheme,
+  CssBaseline,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  ThemeProvider,
+  useMediaQuery,
+} from "@mui/material";
 import { humanSize } from "./tool";
 import {
   parseAsArrayOf,
@@ -11,10 +25,6 @@ import {
   parseAsString,
   useQueryState,
 } from "nuqs";
-
-const CheckboxGroup = Checkbox.Group;
-const { defaultAlgorithm, darkAlgorithm } = theme;
-const isDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
 
 type DataItem = {
   time: number;
@@ -97,6 +107,7 @@ function getOption(
   const option = {
     title: {
       text: "js-engine-benchmark",
+      padding: 10,
     },
     tooltip: {
       trigger: "axis",
@@ -105,17 +116,21 @@ function getOption(
     },
     legend: {
       data: legend,
+      top: 40,
     },
     grid: {
       left: "3%",
       right: "4%",
       bottom: "3%",
+      top: 100,
       containLabel: true,
     },
     toolbox: {
       feature: {
         saveAsImage: {},
       },
+      top: 10,
+      right: 10,
     },
     xAxis: {
       type: "category",
@@ -175,6 +190,14 @@ function App() {
     parseAsString.withDefault("Score"),
   );
 
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
+  const theme = useMemo(() => createTheme({
+    palette: {
+      mode: prefersDarkMode ? "dark" : "light",
+    },
+  }), [prefersDarkMode]);
+
   useEffect(() => {
     fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
       const names = getNames(i);
@@ -200,7 +223,6 @@ function App() {
   function update() {
     if (!chartRef.current) {
       const chartDom = document.getElementById("chart");
-      // TODO: dark mode
       const chart = echarts.init(chartDom);
       chartRef.current = chart;
       globalThis.addEventListener("resize", function () {
@@ -227,70 +249,101 @@ function App() {
   }, [sort]);
 
   return (
-    <ConfigProvider
-      theme={{ algorithm: isDark ? darkAlgorithm : defaultAlgorithm }}
-    >
-      <Flex gap="middle" vertical className="auto-size">
-        <Flex gap="middle" vertical>
-          <Flex gap="middle" align="center" justify="center">
-            <CheckboxGroup
-              options={engines}
-              value={selectEngines}
-              onChange={(e) => {
-                setSelectEngines(e);
-              }}
-            />
-          </Flex>
-          <Flex gap="middle" align="center" justify="center">
-            <Button onClick={() => setSelectEngines([...engines])}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Stack gap={2} className="auto-size" sx={{ p: 2, height: "100vh" }}>
+        <Stack gap={2}>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <FormGroup row>
+              {engines.map((engine) => (
+                <FormControlLabel
+                  key={engine}
+                  control={
+                    <Checkbox
+                      checked={selectEngines.includes(engine)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectEngines([...selectEngines, engine]);
+                        } else {
+                          setSelectEngines(
+                            selectEngines.filter((s) => s !== engine),
+                          );
+                        }
+                      }}
+                    />
+                  }
+                  label={engine}
+                />
+              ))}
+            </FormGroup>
+          </Box>
+          <Stack
+            direction="row"
+            gap={2}
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            <Button
+              variant="outlined"
+              onClick={() => setSelectEngines([...engines])}
+            >
               Select All
             </Button>
-            <Button onClick={() => setSelectEngines([])}>Clear tAll</Button>
-            <Select
-              onChange={(e) => setMaxCount(e)}
-              value={maxCount}
-              options={Array(5).fill(0).map((_, i) => ({
-                label: 20 + i * 20,
-                value: 20 + i * 20,
-              }))}
-            />
-            <Select
-              style={{ width: "120px" }}
-              value={os}
-              onChange={(e) => setOs(e)}
-              options={OS.map((i) => ({
-                label: i,
-                value: i,
-              }))}
-            />
-            <Select
-              style={{ width: "120px" }}
-              value={kind}
-              onChange={(e) => setKind(e)}
-              options={Kind.map((i) => ({
-                label: i,
-                value: i,
-              }))}
-            />
-            Sort by:
-            <Select
-              style={{ width: "120px" }}
-              value={sort}
-              onChange={(e) => {
-                setSort(e);
-              }}
-              options={Kind.map((i) => ({
-                label: i,
-                value: i,
-              }))}
-            />
-          </Flex>
-        </Flex>
-        <Flex gap="middle" className="auto-size">
+            <Button variant="outlined" onClick={() => setSelectEngines([])}>
+              Clear All
+            </Button>
+            <FormControl size="small" sx={{ minWidth: 100 }}>
+              <InputLabel>Max Count</InputLabel>
+              <Select
+                label="Max Count"
+                value={maxCount}
+                onChange={(e) => setMaxCount(Number(e.target.value))}
+              >
+                {Array(5).fill(0).map((_, i) => {
+                  const val = 20 + i * 20;
+                  return <MenuItem key={val} value={val}>{val}</MenuItem>;
+                })}
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ width: 120 }}>
+              <InputLabel>OS</InputLabel>
+              <Select
+                label="OS"
+                value={os}
+                onChange={(e) => setOs(e.target.value as string)}
+              >
+                {OS.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
+              </Select>
+            </FormControl>
+            <FormControl size="small" sx={{ width: 120 }}>
+              <InputLabel>Kind</InputLabel>
+              <Select
+                label="Kind"
+                value={kind}
+                onChange={(e) => setKind(e.target.value as string)}
+              >
+                {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
+              </Select>
+            </FormControl>
+            <Box display="flex" alignItems="center" gap={1}>
+              <span>Sort by:</span>
+              <FormControl size="small" sx={{ width: 120 }}>
+                <Select
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as string)}
+                >
+                  {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
+                </Select>
+              </FormControl>
+            </Box>
+          </Stack>
+        </Stack>
+        <Box flex={1} className="auto-size">
           <div id="chart"></div>
-        </Flex>
-      </Flex>
-    </ConfigProvider>
+        </Box>
+      </Stack>
+    </ThemeProvider>
   );
 }
 
