@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import "./App.css";
 import * as echarts from "echarts";
 import type { ECharts } from "echarts";
 import {
@@ -192,11 +191,12 @@ function App() {
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
-  const theme = useMemo(() => createTheme({
-    palette: {
-      mode: prefersDarkMode ? "dark" : "light",
-    },
-  }), [prefersDarkMode]);
+  const theme = useMemo(() =>
+    createTheme({
+      palette: {
+        mode: prefersDarkMode ? "dark" : "light",
+      },
+    }), [prefersDarkMode]);
 
   useEffect(() => {
     fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
@@ -251,7 +251,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Stack gap={2} className="auto-size" sx={{ p: 2, height: "100vh" }}>
+      <Stack gap={2} sx={{ p: 2, width: "100%", height: "100vh" }}>
         <Stack gap={2}>
           <Box display="flex" justifyContent="center" alignItems="center">
             <FormGroup row>
@@ -281,24 +281,33 @@ function App() {
             direction="row"
             gap={2}
             justifyContent="center"
-            alignItems="center"
+            alignItems="flex-end"
             flexWrap="wrap"
           >
             <Button
               variant="outlined"
+              size="small"
+              sx={{ height: 40 }}
               onClick={() => setSelectEngines([...engines])}
             >
               Select All
             </Button>
-            <Button variant="outlined" onClick={() => setSelectEngines([])}>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{ height: 40 }}
+              onClick={() => setSelectEngines([])}
+            >
               Clear All
             </Button>
             <FormControl size="small" sx={{ minWidth: 100 }}>
-              <InputLabel>Max Count</InputLabel>
+              <InputLabel id="max-count-label">Max Count</InputLabel>
               <Select
+                labelId="max-count-label"
                 label="Max Count"
                 value={maxCount}
                 onChange={(e) => setMaxCount(Number(e.target.value))}
+                sx={{ height: 40 }}
               >
                 {Array(5).fill(0).map((_, i) => {
                   const val = 20 + i * 20;
@@ -307,40 +316,45 @@ function App() {
               </Select>
             </FormControl>
             <FormControl size="small" sx={{ width: 120 }}>
-              <InputLabel>OS</InputLabel>
+              <InputLabel id="os-label">OS</InputLabel>
               <Select
+                labelId="os-label"
                 label="OS"
                 value={os}
                 onChange={(e) => setOs(e.target.value as string)}
+                sx={{ height: 40 }}
               >
                 {OS.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
               </Select>
             </FormControl>
             <FormControl size="small" sx={{ width: 120 }}>
-              <InputLabel>Kind</InputLabel>
+              <InputLabel id="kind-label">Kind</InputLabel>
               <Select
+                labelId="kind-label"
                 label="Kind"
                 value={kind}
                 onChange={(e) => setKind(e.target.value as string)}
+                sx={{ height: 40 }}
               >
                 {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
               </Select>
             </FormControl>
-            <Box display="flex" alignItems="center" gap={1}>
-              <span>Sort by:</span>
-              <FormControl size="small" sx={{ width: 120 }}>
-                <Select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as string)}
-                >
-                  {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
-                </Select>
-              </FormControl>
-            </Box>
+            <FormControl size="small" sx={{ width: 120 }}>
+              <InputLabel id="sort-label">Sort by</InputLabel>
+              <Select
+                labelId="sort-label"
+                label="Sort by"
+                value={sort}
+                onChange={(e) => setSort(e.target.value as string)}
+                sx={{ height: 40 }}
+              >
+                {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
+              </Select>
+            </FormControl>
           </Stack>
         </Stack>
-        <Box flex={1} className="auto-size">
-          <div id="chart"></div>
+        <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
+          <Box id="chart" sx={{ width: "100%", height: "100%" }} />
         </Box>
       </Stack>
     </ThemeProvider>

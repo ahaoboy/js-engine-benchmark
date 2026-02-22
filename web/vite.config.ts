@@ -19,7 +19,7 @@ export default defineConfig({
       "react-dom": "https://esm.sh/react-dom",
       echarts: "https://esm.sh/echarts?standalone",
       "nuqs/": "https://esm.sh/*nuqs",
-      "@mui/material": "https://esm.sh/@mui/material?standalone"
+      "@mui/material": "https://esm.sh/@mui/material?standalone",
     },
   },
 });
