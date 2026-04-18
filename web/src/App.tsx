@@ -278,11 +278,13 @@ function App() {
             </FormGroup>
           </Box>
           <Stack
-            direction="row"
-            gap={2}
-            justifyContent="center"
-            alignItems="flex-end"
-            flexWrap="wrap"
+            sx={{
+              flexDirection: "row",
+              gap: 2,
+              justifyContent: "center",
+              alignItems: "flex-end",
+              flexWrap: "wrap",
+            }}
           >
             <Button
               variant="outlined"
