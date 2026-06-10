@@ -253,7 +253,7 @@ function App() {
       <CssBaseline />
       <Stack gap={2} sx={{ p: 2, width: "100%", height: "100vh" }}>
         <Stack gap={2}>
-          <Box display="flex" justifyContent="center" alignItems="center">
+          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <FormGroup row>
               {engines.map((engine) => (
                 <FormControlLabel
