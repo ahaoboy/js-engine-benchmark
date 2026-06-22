@@ -1,175 +1,26 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import * as echarts from "echarts";
-import type { ECharts } from "echarts";
+import { useEffect, useMemo, useState } from "react";
 import {
   Box,
-  Button,
-  Checkbox,
   createTheme,
   CssBaseline,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  InputLabel,
-  MenuItem,
-  Select,
   Stack,
   ThemeProvider,
   useMediaQuery,
 } from "@mui/material";
-import { humanSize } from "./tool";
 import {
   parseAsArrayOf,
   parseAsInteger,
   parseAsString,
   useQueryState,
 } from "nuqs";
+import type { DataItem } from "./types";
+import { getNames } from "./data";
+import { useChart } from "./useChart";
+import { EngineCheckboxes } from "./EngineCheckboxes";
+import { Controls } from "./Controls";
 
-type DataItem = {
-  time: number;
-  data: Record<string, Record<string, string>>;
-};
-
-type Serie = {
-  name: string;
-  type: string;
-  smooth: boolean;
-  data: (number | undefined)[];
-};
-
-function getNames(data: DataItem[]): string[] {
-  const s = new Set<string>();
-  for (const i of data) {
-    for (const [k, v] of Object.entries(i.data["Score"])) {
-      if (+v) {
-        s.add(k);
-      }
-    }
-  }
-
-  const v = [...s];
-  const last = data[data.length - 1];
-  v.sort((a, b) =>
-    +(last.data["Score"][b] || 0) - +(last.data["Score"][a]) || 0
-  );
-  return v;
-}
-
-function getOption(
-  data: DataItem[],
-  engines: string[],
-  maxCount: number,
-  kind: string,
-) {
-  const names = getNames(data);
-  const legend: string[] = names.filter((i) => engines.includes(i));
-  const start = Math.max(0, data.length - maxCount);
-  const xAxis = data.map((i) => new Date(i.time).toLocaleDateString()).slice(
-    start,
-  );
-
-  const series: Serie[] = [];
-
-  const seriesData: Record<string, (number | undefined)[]> = {};
-  for (let i = 0; i < data.length; i++) {
-    const item = data[i];
-    for (const [key, score] of Object.entries(item.data[kind])) {
-      if (!legend.includes(key)) {
-        continue;
-      }
-      const v = seriesData[key] || [];
-      if (+score) {
-        v[i] = +score;
-      } else {
-        v[i] = undefined;
-      }
-      seriesData[key] = v;
-    }
-  }
-
-  for (const i of legend) {
-    const start = Math.max(0, seriesData[i].length - maxCount);
-    series.push({
-      name: i,
-      type: "line",
-      smooth: true,
-      data: seriesData[i].slice(start),
-    });
-  }
-
-  series.sort((a, b) => {
-    const lastA = a.data[a.data.length - 1];
-    const lastB = b.data[b.data.length - 1];
-    return (lastB || 0) - (lastA || 0);
-  });
-
-  const option = {
-    title: {
-      text: "js-engine-benchmark",
-      padding: 10,
-    },
-    tooltip: {
-      trigger: "axis",
-      valueFormatter: (value: number) =>
-        kind.endsWith(" size") ? `${value ? humanSize(+value) : 0}` : +value,
-    },
-    legend: {
-      data: legend,
-      top: 40,
-    },
-    grid: {
-      left: "3%",
-      right: "4%",
-      bottom: "3%",
-      top: 100,
-      containLabel: true,
-    },
-    toolbox: {
-      feature: {
-        saveAsImage: {},
-      },
-      top: 10,
-      right: 10,
-    },
-    xAxis: {
-      type: "category",
-      boundaryGap: false,
-      data: xAxis,
-    },
-    yAxis: {
-      type: "value",
-    },
-    series,
-  };
-
-  return option;
-}
-
-const OS = [
-  "ubuntu",
-  "windows",
-  "macos-arm64",
-];
-
-const Kind = [
-  "Total size",
-  "Exe size",
-  "Dll size",
-  "Richards",
-  "DeltaBlue",
-  "Crypto",
-  "RayTrace",
-  "EarleyBoyer",
-  "RegExp",
-  "Splay",
-  "NavierStokes",
-  "Score",
-  "Score/MB",
-  "Time(s)",
-];
 function App() {
   const [data, setData] = useState<DataItem[]>([]);
-  const chartRef = useRef<ECharts>(null);
   const [engines, setEngines] = useState<string[]>([]);
   const [selectEngines, setSelectEngines] = useQueryState<string[]>(
     "selectEngines",
@@ -190,170 +41,68 @@ function App() {
   );
 
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: { mode: prefersDarkMode ? "dark" : "light" },
+      }),
+    [prefersDarkMode],
+  );
 
-  const theme = useMemo(() =>
-    createTheme({
-      palette: {
-        mode: prefersDarkMode ? "dark" : "light",
-      },
-    }), [prefersDarkMode]);
-
+  // Fetch data when OS changes
   useEffect(() => {
-    fetch(`${os}.json`).then((resp) => resp.json()).then((i: DataItem[]) => {
-      const names = getNames(i);
-      setData(i);
-      const last = i[i.length - 1]?.data[sort];
-      if (!last) {
-        return;
-      }
-      const v = names.sort((a, b) => {
-        return +(last[b] || 0) - +(last[a] || 0);
+    fetch(`${os}.json`)
+      .then((resp) => resp.json())
+      .then((items: DataItem[]) => {
+        const names = getNames(items);
+        setData(items);
+        const last = items[items.length - 1]?.data[sort];
+        if (!last) return;
+        const sorted = names.sort(
+          (a, b) => +(last[b] || 0) - +(last[a] || 0),
+        );
+        setEngines(sorted);
+        if (!selectEngines.length) {
+          setSelectEngines(sorted.slice(0, 3));
+        }
       });
-      setEngines(v);
-      if (!selectEngines.length) {
-        setSelectEngines(v.slice(0, 3));
-      }
-    });
   }, [os]);
 
-  useEffect(() => {
-    update();
-  }, [data, engines, selectEngines, maxCount, os, kind]);
-
-  function update() {
-    if (!chartRef.current) {
-      const chartDom = document.getElementById("chart");
-      const chart = echarts.init(chartDom);
-      chartRef.current = chart;
-      globalThis.addEventListener("resize", function () {
-        chart.resize();
-      });
-      return;
-    }
-    if (!data.length) {
-      return;
-    }
-    const option = getOption(data, selectEngines, maxCount, kind);
-    chartRef.current.setOption(option, true);
-    chartRef.current.resize();
-  }
+  // Sort engines when sort criteria changes
   useEffect(() => {
     const last = data[data.length - 1]?.data[sort];
-    if (!last) {
-      return;
-    }
-    const v = engines.sort((a, b) => {
-      return +(last[b] || 0) - +(last[a] || 0);
-    });
-    setEngines([...v]);
+    if (!last) return;
+    const sorted = engines.sort(
+      (a, b) => +(last[b] || 0) - +(last[a] || 0),
+    );
+    setEngines([...sorted]);
   }, [sort]);
+
+  useChart(data, selectEngines, maxCount, kind);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Stack gap={2} sx={{ p: 2, width: "100%", height: "100vh" }}>
-        <Stack gap={2}>
-          <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <FormGroup row>
-              {engines.map((engine) => (
-                <FormControlLabel
-                  key={engine}
-                  control={
-                    <Checkbox
-                      checked={selectEngines.includes(engine)}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectEngines([...selectEngines, engine]);
-                        } else {
-                          setSelectEngines(
-                            selectEngines.filter((s) => s !== engine),
-                          );
-                        }
-                      }}
-                    />
-                  }
-                  label={engine}
-                />
-              ))}
-            </FormGroup>
-          </Box>
-          <Stack
-            sx={{
-              flexDirection: "row",
-              gap: 2,
-              justifyContent: "center",
-              alignItems: "flex-end",
-              flexWrap: "wrap",
-            }}
-          >
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{ height: 40 }}
-              onClick={() => setSelectEngines([...engines])}
-            >
-              Select All
-            </Button>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{ height: 40 }}
-              onClick={() => setSelectEngines([])}
-            >
-              Clear All
-            </Button>
-            <FormControl size="small" sx={{ minWidth: 100 }}>
-              <InputLabel id="max-count-label">Max Count</InputLabel>
-              <Select
-                labelId="max-count-label"
-                label="Max Count"
-                value={maxCount}
-                onChange={(e) => setMaxCount(Number(e.target.value))}
-                sx={{ height: 40 }}
-              >
-                {Array(5).fill(0).map((_, i) => {
-                  const val = 20 + i * 20;
-                  return <MenuItem key={val} value={val}>{val}</MenuItem>;
-                })}
-              </Select>
-            </FormControl>
-            <FormControl size="small" sx={{ width: 120 }}>
-              <InputLabel id="os-label">OS</InputLabel>
-              <Select
-                labelId="os-label"
-                label="OS"
-                value={os}
-                onChange={(e) => setOs(e.target.value as string)}
-                sx={{ height: 40 }}
-              >
-                {OS.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
-              </Select>
-            </FormControl>
-            <FormControl size="small" sx={{ width: 120 }}>
-              <InputLabel id="kind-label">Kind</InputLabel>
-              <Select
-                labelId="kind-label"
-                label="Kind"
-                value={kind}
-                onChange={(e) => setKind(e.target.value as string)}
-                sx={{ height: 40 }}
-              >
-                {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
-              </Select>
-            </FormControl>
-            <FormControl size="small" sx={{ width: 120 }}>
-              <InputLabel id="sort-label">Sort by</InputLabel>
-              <Select
-                labelId="sort-label"
-                label="Sort by"
-                value={sort}
-                onChange={(e) => setSort(e.target.value as string)}
-                sx={{ height: 40 }}
-              >
-                {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
-              </Select>
-            </FormControl>
-          </Stack>
+      <Stack sx={{ gap: 2, p: 2, width: "100%", height: "100vh" }}>
+        <Stack sx={{ gap: 2 }}>
+          <EngineCheckboxes
+            engines={engines}
+            selected={selectEngines}
+            onChange={setSelectEngines}
+          />
+          <Controls
+            engines={engines}
+            maxCount={maxCount}
+            os={os}
+            kind={kind}
+            sort={sort}
+            onSelectAll={() => setSelectEngines([...engines])}
+            onClearAll={() => setSelectEngines([])}
+            onMaxCountChange={setMaxCount}
+            onOsChange={setOs}
+            onKindChange={setKind}
+            onSortChange={setSort}
+          />
         </Stack>
         <Box sx={{ flex: 1, width: "100%", height: "100%" }}>
           <Box id="chart" sx={{ width: "100%", height: "100%" }} />
