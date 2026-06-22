@@ -40,7 +40,7 @@ jobs:
           strip: true
       - uses: actions/setup-node@v6
         with:
-          node-version: nightly
+          node-version: latest
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: canary
