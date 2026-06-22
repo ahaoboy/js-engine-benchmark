@@ -38,7 +38,15 @@ jobs:
       - uses: ahaoboy/js-engine-setup@v1
         with:
           strip: true
-
+      - uses: actions/setup-node@v6
+        with:
+          node-version: nightly
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: canary
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: canary
       - name: run
         run: |
           bun run --silent build
@@ -57,13 +65,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v6
         with:
-          node-version: nightly
+          node-version: latest
       - uses: oven-sh/setup-bun@v2
         with:
-          bun-version: canary
-      - uses: denoland/setup-deno@v2
-        with:
-          deno-version: canary
+          bun-version: latest
       - uses: pnpm/action-setup@v4
         with:
           version: 11
