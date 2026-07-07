@@ -297,5 +297,11 @@
     "description": "TypeScript runtime implementation written in Go. **cough**",
     "url": "https://github.com/nooga/paserati",
     "lang": "go"
+  },
+  {
+    "name": "lumen",
+    "description": "A from-scratch JavaScript engine in Rust — std only, zero deps, 100% test262 (53,376/53,376)",
+    "url": "https://github.com/lucid-softworks/lumen",
+    "lang": "rust"
   }
 ]
