@@ -303,5 +303,12 @@
     "description": "A from-scratch JavaScript engine in Rust — std only, zero deps, 100% test262 (53,376/53,376)",
     "url": "https://github.com/lucid-softworks/lumen",
     "lang": "rust"
+  },
+  {
+    "name": "ant",
+    "install": "https://manifest.antjs.org",
+    "description": "Lightweight, high-performance JavaScript runtime built from scratch.",
+    "url": "https://github.com/theMackabu/ant",
+    "lang": "c"
   }
 ]

@@ -134,6 +134,9 @@ async function getVersion(cmd: string) {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
   }
+  if (cmd === "ant") {
+    return (await execCmd(`${cmd} --version-raw`)).trim();
+  }
   if (cmd === "graaljs") {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();

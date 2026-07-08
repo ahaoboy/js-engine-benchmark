@@ -47,6 +47,27 @@ jobs:
       - uses: denoland/setup-deno@v2
         with:
           deno-version: canary
+      - name: Install Ant
+        run: |
+          case "${RUNNER_OS}-$(uname -m)" in
+            Linux-x86_64) target="linux-x64" ;;
+            Linux-aarch64|Linux-arm64) target="linux-aarch64" ;;
+            macOS-x86_64) target="darwin-x64" ;;
+            macOS-arm64) target="darwin-aarch64" ;;
+            Windows-*) target="windows-x64" ;;
+            *) echo "unsupported Ant target: ${RUNNER_OS}-$(uname -m)" >&2; exit 1 ;;
+          esac
+
+          install_dir="$RUNNER_TEMP/ant/bin"
+          mkdir -p "$install_dir"
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            curl -fsSL "https://manifest.antjs.org/v1/download/ant/$target" -o "$install_dir/ant.exe"
+            echo "$(cygpath -w "$install_dir")" >> "$GITHUB_PATH"
+          else
+            curl -fsSL "https://manifest.antjs.org/v1/download/ant/$target" -o "$install_dir/ant"
+            chmod +x "$install_dir/ant"
+            echo "$install_dir" >> "$GITHUB_PATH"
+          fi
       - name: run
         run: |
           bun run --silent build
