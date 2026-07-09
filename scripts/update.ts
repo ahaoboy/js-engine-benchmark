@@ -83,6 +83,9 @@ async function getVersion(cmd: string) {
   ) {
     return "";
   }
+  if (cmd === "ant") {
+    return (await execCmd(`${cmd} --version-raw`)).trim();
+  }
   if (cmd === "engine262") {
     // engine262 v0.0.1-5dece49950e94360d45198df59f3adf4ceb94cb4
     const text = (await execCmd(`${cmd} -h`)).trim();
