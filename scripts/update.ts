@@ -86,6 +86,16 @@ async function getVersion(cmd: string) {
   if (cmd === "ant") {
     return (await execCmd(`${cmd} --version-raw`)).trim();
   }
+  if (cmd === "lumen") {
+    // lumen 0.1.2-nightly (c9a0729) -> 0.1.2-c9a0729
+    const text = await execCmd(`${cmd} --version`);
+    const versionMatch = text.match(/([\d.]+)/);
+    const hashMatch = text.match(/\(([a-f0-9]+)\)/);
+    if (versionMatch && hashMatch) {
+      return `${versionMatch[1]}-${hashMatch[1]}`;
+    }
+    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1]?.trim() || "";
+  }
   if (cmd === "engine262") {
     // engine262 v0.0.1-5dece49950e94360d45198df59f3adf4ceb94cb4
     const text = (await execCmd(`${cmd} -h`)).trim();
