@@ -75,13 +75,6 @@
     "lang": "c"
   },
   {
-    "name": "mujs-pgo",
-    "description": "An embeddable Javascript interpreter in C",
-    "install": "https://github.com/ahaoboy/mujs-pgo-build",
-    "url": "https://github.com/ccxvii/mujs",
-    "lang": "c"
-  },
-  {
     "name": "mujs-one",
     "description": "mujs by c2rust",
     "install": "https://github.com/ahaoboy/mujs-one",
@@ -137,14 +130,6 @@
   {
     "name": "rquickjs",
     "install": "https://github.com/ahaoboy/rquickjs-cli",
-    "description": "High level bindings to the quickjs javascript engine",
-    "url": "https://github.com/DelSkayn/rquickjs",
-    "lang": "rust"
-  },
-  {
-    "name": "rquickjs-pgo",
-    "bin": "rqjs-pgo",
-    "install": "https://github.com/ahaoboy/rqjs-pgo-build",
     "description": "High level bindings to the quickjs javascript engine",
     "url": "https://github.com/DelSkayn/rquickjs",
     "lang": "rust"
@@ -309,5 +294,12 @@
     "description": "javascript for 🐜's, a tiny runtime with big ambitions",
     "url": "https://github.com/theMackabu/ant",
     "lang": "c"
+  }
+  ,
+  {
+    "name": "es5",
+    "description": "A ES5 JavaScript interpreter written in Rust",
+    "url": "https://github.com/ahaoboy/es5",
+    "lang": "rust"
   }
 ]
