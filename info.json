@@ -298,7 +298,7 @@
   ,
   {
     "name": "es5",
-    "description": "A ES5 JavaScript interpreter written in Rust",
+    "description": "A ES5 JavaScript engine written in Rust",
     "url": "https://github.com/ahaoboy/es5",
     "lang": "rust"
   }
