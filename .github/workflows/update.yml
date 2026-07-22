@@ -144,7 +144,7 @@ jobs:
         uses: ncipollo/release-action@v1
         if: github.ref == 'refs/heads/main'
         with:
-          artifacts: "./*.json,dist/run.js"
+          artifacts: "./*.json,dist/run.js,dist/v7v8.zip"
           allowUpdates: true
           tag: "nightly"
           name: "nightly"
