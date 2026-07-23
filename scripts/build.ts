@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "fs";
-import { execSync } from "child_process";
 import { join, resolve, basename } from "path";
+import { Fmt, encode, File } from '@easy-install/easy-archive'
 
 const distPath = resolve("./dist");
 const codeRoot = resolve("./v8-v7");
@@ -58,11 +58,14 @@ for (const testName of testNames) {
 const zipName = "v7v8.zip";
 const zipFiles = [
   "run.js",
-  ...testNames.map((n) => basename(n, ".js") + ".js"),
-];
+  ...testNames,
+].map(i => new File(
+  i, readFileSync(join(distPath, i)), null, false, null
+));
 
-execSync(
-  `zip -j "${zipName}" ${zipFiles.join(" ")}`,
-  { cwd: distPath, stdio: "pipe" },
-);
+const buf = encode(Fmt.Zip, zipFiles)
+
+if (buf) {
+  writeFileSync(join(distPath, zipName), buf);
+}
 console.log(`✓ Generated dist/${zipName}`);

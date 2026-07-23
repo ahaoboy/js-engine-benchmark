@@ -15,5 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "26.0.0"
+  },
+  "dependencies": {
+    "@easy-install/easy-archive": "0.2.7"
   }
 }
