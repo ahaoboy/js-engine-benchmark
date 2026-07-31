@@ -64,6 +64,10 @@ function getSupport(name: string) {
   return s.join("<br>");
 }
 
+function link(name: string){
+  return `<a target="__blank" href="https://ahaoboy.github.io/js-engine-benchmark/?selectEngines=${name}">${name}</a>`
+}
+
 function getInfo() {
   INFO.sort((a, b) =>
     (+ubuntuJSON["Score"][b.name as Name] || 0) - (+ubuntuJSON["Score"][a.name as Name] || 0)
@@ -87,7 +91,7 @@ function getInfo() {
     scoreMd += `<br>${scoreMB}/M`;
     const langIcon = `<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${lang}/${lang}-original.svg" width="20" style="vertical-align: middle;"/>`
     const v = [
-      name,
+      link(name),
       langIcon,
       url,
       scoreMd,
