@@ -301,5 +301,11 @@
     "description": "A ES5 JavaScript engine written in Rust",
     "url": "https://github.com/ahaoboy/es5",
     "lang": "rust"
+  },
+  {
+    "name": "goant",
+    "description": "A JavaScript engine in pure Go: no cgo, one static binary, a baseline JIT for amd64/arm64, 99.4% test262 (53,247/53,573)",
+    "url": "https://github.com/robomotionio/goant",
+    "lang": "go"
   }
 ]

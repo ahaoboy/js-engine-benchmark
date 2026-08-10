@@ -121,7 +121,10 @@ async function getVersion(cmd: string) {
     const text = await execCmd(`${cmd} -h`);
     return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim();
   }
-  if (cmd === "tjs" || cmd === "lo" || cmd === "paserati" || cmd === "node") {
+  if (
+    cmd === "tjs" || cmd === "lo" || cmd === "paserati" || cmd === "node" ||
+    cmd === "goant"
+  ) {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
   }
