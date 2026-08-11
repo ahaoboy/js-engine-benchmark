@@ -89,6 +89,11 @@ async function getVersion(cmd: string) {
   if (cmd === "ant") {
     return (await execCmd(`${cmd} --version-raw`)).trim().replace(" ", ".");
   }
+  if (cmd === "goant") {
+    // goant v0.1.0-7ed32b3.dirty -> v0.1.0-7ed32b3
+    const text = await execCmd(`${cmd} --version`);
+    return text.match(/v[\d.]+(?:-[a-zA-Z0-9]+)?/)?.[0].trim() || "";
+  }
   if (cmd === "lumen") {
     // lumen 0.1.2-nightly (c9a0729) -> 0.1.2-c9a0729
     const text = await execCmd(`${cmd} --version`);
