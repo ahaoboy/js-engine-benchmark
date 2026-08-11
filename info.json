@@ -294,12 +294,17 @@
     "description": "javascript for 🐜's, a tiny runtime with big ambitions",
     "url": "https://github.com/theMackabu/ant",
     "lang": "c"
-  }
-  ,
+  },
   {
     "name": "es5",
     "description": "A ES5 JavaScript engine written in Rust",
     "url": "https://github.com/ahaoboy/es5",
     "lang": "rust"
+  },
+  {
+    "name": "goant",
+    "description": "A JavaScript engine in pure Go",
+    "url": "https://github.com/robomotionio/goant",
+    "lang": "go"
   }
 ]

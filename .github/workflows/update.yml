@@ -97,6 +97,9 @@ jobs:
           rm -rf ./ubuntu
           rm -rf ./windows
           rm -rf ./macos-arm64
+
+          curl -O https://raw.githubusercontent.com/ahaoboy/js-engine-setup/main/info.json
+
           bun run --silent build
           bun run --silent update:doc
 
