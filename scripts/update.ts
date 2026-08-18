@@ -122,6 +122,9 @@ async function getVersion(cmd: string) {
     const text = await execCmd(`${cmd} -h`);
     return text.match(/version (\d{4}-\d{2}-\d{2})/)?.[1].trim();
   }
+  if (cmd === "zjs") {
+    return (await execCmd(`${cmd} --print-config-signature`)).trim();
+  }
   if (cmd === "qjs-ng") {
     const text = await execCmd(`${cmd} -h`);
     return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim();
