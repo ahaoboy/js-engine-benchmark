@@ -1,8 +1,9 @@
 import fs, { existsSync, unlink } from "fs";
 import path from "path";
-import { exec, execSync } from "child_process";
+import { execSync } from "child_process";
 import os from "os";
 import info from "../info.json";
+import { execCmd } from "./exec-cmd";
 
 const TEST_JS_PATH = path.join(__dirname, "test.js");
 const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js");
@@ -50,29 +51,6 @@ function toJSON(data: string): Record<string, string | number> {
   }
 
   return json;
-}
-
-function execCmd(cmd: string, cwd?: string) {
-  console.error(`cmd:`, { cmd, cwd });
-  return new Promise<string>((r) => {
-    // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
-    exec(cmd, { cwd }, (err, stdout, stderr) => {
-      console.error("exec output", { err, stdout, stderr });
-      const name = cmd.split(" ")[0].replaceAll("\\", '/').split('/').at(-1) || ""
-      let s = stdout?.trim() || ''
-      // boa output last value
-      if (['boa', 'boa.exe'].some(e => name.endsWith(e)) && s.endsWith('\nundefined')) {
-        s = s.split('\n').slice(0, - 1).join('\n')
-      }
-      // goja output to stderr
-      if (['goja', 'goja.exe'].some(e => name.endsWith(e))) {
-        s = stderr?.trim() || ''
-      }
-
-      console.error("execCmd output", s);
-      r(s);
-    });
-  });
 }
 
 async function getVersion(cmd: string) {
@@ -346,7 +324,7 @@ const JS_BINS = [
 // }
 
 // these engines is so slow and failed to run that we skip it for now
-const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript", "zjs"]
+const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript"]
 
 async function main() {
   for (const item of info) {
@@ -365,6 +343,7 @@ async function main() {
       const test = (await execCmd(
         `${execPath} ${subcmd} ${TEST_JS_PATH}`,
         execDir,
+        `${name} smoke test`,
       )).trim();
 
       const isJS = JS_BINS.includes(bin)
@@ -396,6 +375,7 @@ async function main() {
       const out = await execCmd(
         `${bin} ${subcmd} ${RUN_JS_PATH}`,
         execDir,
+        `${name} benchmark`,
       );
       const endTime = +new Date();
       console.error("out: ", out);

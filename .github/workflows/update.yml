@@ -21,6 +21,7 @@ defaults:
 
 jobs:
   bench:
+    timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
@@ -49,6 +50,7 @@ jobs:
           deno-version: canary
       - name: run
         run: |
+          bun test
           bun run --silent build
           rm -rf ${{ matrix.name }}.json
           bun run --silent update > ${{ matrix.name }}.json
