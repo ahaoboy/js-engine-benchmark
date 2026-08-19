@@ -346,7 +346,7 @@ const JS_BINS = [
 // }
 
 // these engines is so slow and failed to run that we skip it for now
-const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript", "zjs"]
+const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript"]
 
 async function main() {
   for (const item of info) {
