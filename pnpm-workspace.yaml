@@ -2,3 +2,6 @@ packages:
   - "web"
 allowBuilds:
   esbuild: true
+trustPolicy: no-downgrade
+blockExoticSubdeps: true
+minimumReleaseAge: 10080
