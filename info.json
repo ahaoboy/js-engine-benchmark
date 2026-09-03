@@ -316,6 +316,8 @@
   },
   {
     "name": "cyjs",
+    "bin": "python",
+    "subcmd": "-m cyjs -C",
     "description": "License friendly QuickJS-NG interpreter for Cython & Python",
     "url": "https://github.com/Vizonex/CYJS",
     "lang": "python"
