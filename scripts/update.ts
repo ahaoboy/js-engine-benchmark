@@ -77,7 +77,7 @@ function execCmd(cmd: string, cwd?: string) {
 
 async function getVersion(cmd: string) {
   if (
-    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc"].includes(
+    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc", "cyjs"].includes(
       cmd,
     )
   ) {
@@ -234,7 +234,7 @@ function getJavaSize() {
   }
   return 0;
 }
-const UNKNOWN_LIST = ['ringo', "rhino", "jjs", "engine262", 'quickjs-emscripten']
+const UNKNOWN_LIST = ['ringo', "rhino", "jjs", "engine262", 'quickjs-emscripten', "cyjs"]
 function getFileSize(filePath: string) {
   try {
     if (UNKNOWN_LIST.some(i => filePath.includes(i))) {
@@ -338,6 +338,7 @@ function getExePath(i: string) {
 const JS_BINS = [
   "engine262",
   "quickjs-emscripten-cli",
+  "cyjs",
 ]
 
 // async function strip(p: string) {
