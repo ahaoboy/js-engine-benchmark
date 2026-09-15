@@ -243,7 +243,6 @@
     "name": "lo",
     "description": "it's JavaScript Jim, but not as we know it",
     "url": "https://github.com/just-js/lo",
-    "install": "https://github.com/ahaoboy/lo-build",
     "lang": "cplusplus"
   },
   {
