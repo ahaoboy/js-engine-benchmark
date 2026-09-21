@@ -69,9 +69,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 11
       - uses: actions/download-artifact@v4
         with:
           path: windows
@@ -107,7 +104,7 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           cd web
-          pnpm i
+          bun i
           bun run update:data
           bun run build
       - name: commit

@@ -12,23 +12,23 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "11.14.0",
-    "@emotion/styled": "11.14.1",
-    "@mui/material": "9.1.0",
-    "@mui/styled-engine": "9.1.0",
-    "echarts": "6.1.0",
-    "nuqs": "2.8.9",
-    "react": "19.2.7",
-    "react-dom": "19.2.7"
+    "@emotion/react": "catalog:",
+    "@emotion/styled": "catalog:",
+    "@mui/material": "catalog:",
+    "@mui/styled-engine": "catalog:",
+    "echarts": "catalog:",
+    "nuqs": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
   },
   "devDependencies": {
-    "@types/react": "19.2.17",
-    "@types/react-dom": "19.2.3",
-    "@vitejs/plugin-react": "6.0.2",
-    "cross-env": "10.1.0",
-    "globals": "17.6.0",
-    "typescript": "6.0.3",
-    "vite": "8.0.16",
-    "vite-bundle-analyzer": "1.3.8"
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "cross-env": "catalog:",
+    "globals": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-bundle-analyzer": "catalog:"
   }
 }
