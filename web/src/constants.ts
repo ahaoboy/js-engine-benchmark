@@ -1,3 +1,9 @@
+export const REPO_URL = "https://github.com/ahaoboy/js-engine-benchmark";
+
+/** Raw source of truth for engine metadata (name -> repository url). */
+export const INFO_URL =
+  "https://raw.githubusercontent.com/ahaoboy/js-engine-benchmark/main/info.json";
+
 export const OS = [
   "ubuntu",
   "windows",

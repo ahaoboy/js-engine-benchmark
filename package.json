@@ -2,6 +2,7 @@
   "name": "js-engine-benchmark",
   "version": "1.0.0",
   "description": "js-bench",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "update:doc": "bun ./scripts/update-readme.ts",
