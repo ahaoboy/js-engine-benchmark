@@ -320,5 +320,11 @@
     "description": "License friendly QuickJS-NG interpreter for Cython & Python",
     "url": "https://github.com/Vizonex/CYJS",
     "lang": "python"
+  },
+  {
+    "name": "quanta",
+    "description": "Experimental ECMAScript (js) engine written in C++",
+    "url": "https://github.com/solarbrowser/quanta",
+    "lang": "cplusplus"
   }
 ]

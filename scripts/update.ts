@@ -83,8 +83,8 @@ async function getVersion(cmd: string) {
   ) {
     return "";
   }
-  if (cmd === "es5") {
-    return (await execCmd(`${cmd} -V`)).trim();
+  if (cmd === "es5" || cmd === "quanta") {
+    return (await execCmd(`${cmd} --version`)).trim();
   }
   if (cmd === "ant") {
     return (await execCmd(`${cmd} --version-raw`)).trim().replace(" ", ".");
