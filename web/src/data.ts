@@ -4,6 +4,8 @@ import { humanSize } from "./tool";
 /** Font size used for axis and bar labels. */
 const LABEL_FONT_SIZE = 11;
 
+const GRID_LEFT_SLACK = 48;
+
 /** Benchmark kinds ending in " size" hold a byte count, not a score. */
 const isSizeKind = (kind: string) => kind.endsWith(" size");
 
@@ -126,7 +128,7 @@ export function getBarOption(
       },
     },
     grid: {
-      left: 8,
+      left: GRID_LEFT_SLACK,
       // Room for the widest "value percentage" label on the longest bar.
       right: 110,
       top: 50,

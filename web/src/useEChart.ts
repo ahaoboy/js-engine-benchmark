@@ -39,27 +39,34 @@ export function useEChart(
     }
     chart.resize();
 
-    // A window `resize` listener is not enough: when a scrollbar appears it
-    // steals width from the container without the window changing size, so
-    // ECharts would keep painting at the old width.
-    //
-    // The resize is deferred to the next frame because resizing the chart
-    // synchronously inside the callback re-triggers the observer in the same
-    // tick, and the browser then reports "ResizeObserver loop completed with
-    // undelivered notifications".
+    // Two triggers, because they catch different cases:
+    //  - ResizeObserver on the container also catches layout-driven changes
+    //    that leave the window size untouched, e.g. a scrollbar appearing and
+    //    stealing width, or the header wrapping into more rows.
+    //  - window `resize` is the conventional fallback for browsers/situations
+    //    where ResizeObserver notifications are delayed or not delivered.
+    // Both are coalesced into one animation frame: resizing synchronously
+    // inside the callback re-triggers the observer in the same tick, and the
+    // browser then reports "ResizeObserver loop completed with undelivered
+    // notifications".
     let frame = 0;
-    const observer = new ResizeObserver(() => {
+    const scheduleResize = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         if (!chart.isDisposed()) {
           chart.resize();
         }
       });
-    });
+    };
+
+    const observer = new ResizeObserver(scheduleResize);
     observer.observe(el);
+    globalThis.addEventListener("resize", scheduleResize);
+
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      globalThis.removeEventListener("resize", scheduleResize);
     };
   }, [containerId, option, active]);
 

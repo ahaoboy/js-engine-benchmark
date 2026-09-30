@@ -146,9 +146,9 @@ function App() {
   const barOption = useMemo(
     () =>
       !showTrend && data.length
-        ? getBarOption(data, engines, kind, chartTheme)
+        ? getBarOption(data, selectEngines, kind, chartTheme)
         : null,
-    [showTrend, data, engines, kind, chartTheme],
+    [showTrend, data, selectEngines, kind, chartTheme],
   );
 
   useEChart("chart", trendOption, showTrend);
@@ -157,7 +157,7 @@ function App() {
   // Height needed so every engine bar fits without squeezing them together.
   const barHeight = Math.max(
     MIN_BAR_CHART_HEIGHT,
-    engines.length * BAR_ROW_HEIGHT + BAR_CHART_PADDING,
+    selectEngines.length * BAR_ROW_HEIGHT + BAR_CHART_PADDING,
   );
 
   return (
