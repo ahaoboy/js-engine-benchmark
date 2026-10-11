@@ -30,7 +30,7 @@ jobs:
           - name: windows
             os: windows-latest
           - name: ubuntu
-            os: ubuntu-26.04
+            os: ubuntu-latest
     runs-on: ${{ matrix.os }}
     name: bench-${{ matrix.os }}
     steps:
