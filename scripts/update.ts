@@ -77,7 +77,7 @@ function execCmd(cmd: string, cwd?: string) {
 
 async function getVersion(cmd: string) {
   if (
-    ["primjs", "rquickjs", "ladybird", "goja", "mozjs", "jint-cli", "jsc", "cyjs"].includes(
+    ["primjs", "rquickjs", "goja", "mozjs", "jint-cli", "jsc", "cyjs"].includes(
       cmd,
     )
   ) {
@@ -109,7 +109,7 @@ async function getVersion(cmd: string) {
     const text = (await execCmd(`${cmd} -h`)).trim();
     return text.match(/v(\d+\.\d+\.\d+)/)?.[1].trim();
   }
-  if (cmd === "ch" || cmd === "dune" || cmd === "ringo" || cmd === "lo") {
+  if (cmd === "ch" || cmd === "dune" || cmd === "ringo" || cmd === "lo" || cmd === "ladybird") {
     // ch version 1.13.0.0-beta
     const text = await execCmd(`${cmd} --version`);
     return text.split(" ").at(-1)?.trim() || "";
@@ -129,7 +129,7 @@ async function getVersion(cmd: string) {
     const text = await execCmd(`${cmd} -h`);
     return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim();
   }
-  if (cmd === "tjs" || cmd === "lo" || cmd === "paserati" || cmd === "node") {
+  if (cmd === "tjs" || cmd === "lo" || cmd === "paserati" || cmd === "node" || cmd === "qjs-oxide") {
     const text = await execCmd(`${cmd} --version`);
     return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
   }

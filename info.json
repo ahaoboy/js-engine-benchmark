@@ -326,5 +326,11 @@
     "description": "Experimental ECMAScript (js) engine written in C++",
     "url": "https://github.com/solarbrowser/quanta",
     "lang": "cplusplus"
+  },
+  {
+    "name": "quickjs-oxide",
+    "description": "An independent Rust rewrite of QuickJS targeting semantic feature parity",
+    "url": "https://github.com/pocket-nexus/quickjs-oxide",
+    "lang": "rust"
   }
 ]
