@@ -1,437 +1,356 @@
-import fs, { existsSync, unlink } from "fs";
-import path from "path";
 import { exec, execSync } from "child_process";
-import os from "os";
+import { existsSync, readdirSync, statSync } from "fs";
+import { platform } from "os";
+import { dirname, join } from "path";
 import info from "../info.json";
 
-const TEST_JS_PATH = path.join(__dirname, "test.js");
-const RUN_JS_PATH = path.join(__dirname, "..", "dist", "run.js");
+const TEST_JS_PATH = join(__dirname, "test.js");
+const RUN_JS_PATH = join(__dirname, "..", "dist", "run.js");
 
+const PLATFORM = platform();
 
-function toJSON(data: string): Record<string, string | number> {
-  const json: Record<string, string | number> = {};
-  const offset =
-    data.split("\n").find((i) => i.includes("----"))?.indexOf("----") || 0;
-  for (const line of data.split("\n").filter((i) => i.trim().length)) {
-    if (line.includes(":") && !line.includes("----")) {
-      // ladybird: "Richards: 292"
-      // goja: 2025/03/29 16:43:06 DeltaBlue: 525
-      const [k, v] = line.slice(offset)
-        .replaceAll('"', "")
-        // rhino: INFO Richards: 56.3
-        .replaceAll("INFO ", "")
-        .split(":")
-        .map((i) => i.trim());
+/** Engines whose binary size cannot be measured. */
+const UNKNOWN_SIZE_BINS = ["ringo", "rhino", "jjs", "engine262", "quickjs-emscripten", "cyjs"];
 
-      if (
-        ![
-          "Version",
-          "Total size",
-          "Exe size",
-          "Dll size",
-          "Richards",
-          "DeltaBlue",
-          "Crypto",
-          "RayTrace",
-          "EarleyBoyer",
-          "RegExp",
-          "Splay",
-          "NavierStokes",
-          "Score",
-          "Score/MB",
-          "Time(s)",
-        ].includes(k)
-      ) {
-        continue;
-      }
-      const n = +v;
-      json[k] = isNaN(n) ? 0 : n | 0;
+/** Engines implemented in JavaScript, for which a binary size is meaningless. */
+const JS_BINS = new Set(["engine262", "quickjs-emscripten-cli", "cyjs"]);
+
+/** Engines that are too slow or fail to run, so are skipped entirely. */
+const SKIP_BINS = new Set(["engine262", "rhino", "hako", "nova", "JerryScript"]);
+
+/** Engines that do not report a version. */
+const NO_VERSION_BINS = new Set(["primjs", "rquickjs", "goja", "mozjs", "jint-cli", "jsc", "cyjs"]);
+
+/** Benchmark fields kept in the final result. */
+const RESULT_FIELDS = new Set([
+  "Version",
+  "Total size",
+  "Exe size",
+  "Dll size",
+  "Richards",
+  "DeltaBlue",
+  "Crypto",
+  "RayTrace",
+  "EarleyBoyer",
+  "RegExp",
+  "Splay",
+  "NavierStokes",
+  "Score",
+  "Score/MB",
+  "Time(s)",
+]);
+
+const VERSION_RE = /([\d.]+(?:-[a-zA-Z0-9]+)?)/;
+const V_VERSION_RE = /v([\d.]+(?:-[a-zA-Z0-9]+)?)/;
+
+/** Extract the first capture group of `re`, trimmed, or an empty string. */
+function capture(text: string, re: RegExp): string {
+  return text.match(re)?.[1]?.trim() ?? "";
+}
+
+function isBin(name: string, base: string): boolean {
+  return name === base || name === `${base}.exe`;
+}
+
+function toJSON(output: string): Record<string, number> {
+  const json: Record<string, number> = {};
+  const lines = output.split("\n");
+  // Some engines prefix every line with a timestamp; skip past it.
+  const offset = lines.find((line) => line.includes("----"))?.indexOf("----") ?? 0;
+
+  for (const line of lines) {
+    if (!line.trim() || !line.includes(":") || line.includes("----")) {
+      continue;
     }
+    // ladybird: "Richards: 292"
+    // goja: 2025/03/29 16:43:06 DeltaBlue: 525
+    // rhino: INFO Richards: 56.3
+    const [key, value] = line
+      .slice(offset)
+      .replaceAll('"', "")
+      .replaceAll("INFO ", "")
+      .split(":")
+      .map((part) => part.trim());
+
+    if (!RESULT_FIELDS.has(key)) {
+      continue;
+    }
+    const n = Number(value);
+    json[key] = Number.isNaN(n) ? 0 : n | 0;
   }
 
   return json;
 }
 
-function execCmd(cmd: string, cwd?: string) {
-  console.error(`cmd:`, { cmd, cwd });
-  return new Promise<string>((r) => {
-    // exec(`bash -c "${cmd}"`, { cwd }, (err, stdout, stderr) => {
-    exec(cmd, { cwd }, (err, stdout, stderr) => {
-      console.error("exec output", { err, stdout, stderr });
-      const name = cmd.split(" ")[0].replaceAll("\\", '/').split('/').at(-1) || ""
-      let s = stdout?.trim() || ''
-      // boa output last value
-      if (['boa', 'boa.exe'].some(e => name.endsWith(e)) && s.endsWith('\nundefined')) {
-        s = s.split('\n').slice(0, - 1).join('\n')
+function execCmd(cmd: string, cwd?: string): Promise<string> {
+  console.error("cmd:", { cmd, cwd });
+  return new Promise((resolve) => {
+    exec(cmd, { cwd }, (_err, stdout, stderr) => {
+      const name = cmd.split(" ")[0].replaceAll("\\", "/").split("/").at(-1) ?? "";
+      let output = stdout.trim();
+
+      // boa prints a trailing `undefined`
+      if (isBin(name, "boa") && output.endsWith("\nundefined")) {
+        output = output.split("\n").slice(0, -1).join("\n");
       }
-      // goja output to stderr
-      if (['goja', 'goja.exe'].some(e => name.endsWith(e))) {
-        s = stderr?.trim() || ''
+      // goja prints the benchmark output to stderr
+      if (isBin(name, "goja")) {
+        output = stderr.trim();
       }
 
-      console.error("execCmd output", s);
-      r(s);
+      console.error("execCmd output:", output);
+      resolve(output);
     });
   });
 }
 
-async function getVersion(cmd: string) {
-  if (
-    ["primjs", "rquickjs", "goja", "mozjs", "jint-cli", "jsc", "cyjs"].includes(
-      cmd,
-    )
-  ) {
+async function getVersion(cmd: string): Promise<string> {
+  if (NO_VERSION_BINS.has(cmd)) {
     return "";
   }
-  if (cmd === "es5" || cmd === "quanta") {
-    return (await execCmd(`${cmd} --version`)).trim();
-  }
-  if (cmd === "ant") {
-    return (await execCmd(`${cmd} --version-raw`)).trim().replace(" ", ".");
-  }
-  if (cmd === "goant") {
-    // goant v0.1.0-7ed32b3.dirty -> v0.1.0-7ed32b3
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/v[\d.]+(?:-[a-zA-Z0-9]+)?/)?.[0].trim() || "";
-  }
-  if (cmd === "lumen") {
-    // lumen 0.1.2-nightly (c9a0729) -> 0.1.2-c9a0729
-    const text = await execCmd(`${cmd} --version`);
-    const versionMatch = text.match(/([\d.]+)/);
-    const hashMatch = text.match(/\(([a-f0-9]+)\)/);
-    if (versionMatch && hashMatch) {
-      return `${versionMatch[1]}-${hashMatch[1]}`;
-    }
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1]?.trim() || "";
-  }
-  if (cmd === "engine262") {
-    // engine262 v0.0.1-5dece49950e94360d45198df59f3adf4ceb94cb4
-    const text = (await execCmd(`${cmd} -h`)).trim();
-    return text.match(/v(\d+\.\d+\.\d+)/)?.[1].trim();
-  }
-  if (cmd === "ch" || cmd === "dune" || cmd === "ringo" || cmd === "lo" || cmd === "ladybird") {
-    // ch version 1.13.0.0-beta
-    const text = await execCmd(`${cmd} --version`);
-    return text.split(" ").at(-1)?.trim() || "";
-  }
-  if (cmd === "llrt") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "qjs") {
-    const text = await execCmd(`${cmd} -h`);
-    return text.match(/version (\d{4}-\d{2}-\d{2})/)?.[1].trim();
-  }
-  if (cmd === "zjs") {
-    return (await execCmd(`${cmd} --print-config-signature`)).trim();
-  }
-  if (cmd === "qjs-ng") {
-    const text = await execCmd(`${cmd} -h`);
-    return text.match(/version (\d+\.\d+\.\d+)/)?.[1].trim();
-  }
-  if (cmd === "tjs" || cmd === "lo" || cmd === "paserati" || cmd === "node" || cmd === "qjs-oxide") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/v([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "mujs") {
-    const text = await execCmd(`echo "exit" | ${cmd}`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim().slice(0, -1);
-  }
-  if (cmd === "boa") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "hermes") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/Hermes release version: (\d+\.\d+\.\d+)/)?.[1].trim();
-  }
-  if (cmd === "xst") {
-    const text = await execCmd(`${cmd} -v`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
 
-  if (cmd === "deno") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
+  const run = (args: string, cwd?: string) => execCmd(`${cmd} ${args}`, cwd);
+
+  switch (cmd) {
+    // `<cmd> --version`, full output
+    case "es5":
+    case "quanta":
+      return (await run("--version")).trim();
+
+    // `<cmd> --version`, last whitespace separated token
+    case "ch": // ch version 1.13.0.0-beta
+    case "dune":
+    case "ringo":
+    case "lo":
+    case "ladybird":
+      return (await run("--version")).split(" ").at(-1)?.trim() ?? "";
+
+    // `<cmd> --version`, `v` prefixed version
+    case "llrt":
+    case "tjs":
+    case "paserati":
+    case "node":
+    case "qjs-oxide":
+      return capture(await run("--version"), V_VERSION_RE);
+
+    // `<cmd> --version`, bare version
+    case "boa":
+    case "deno":
+    case "bun":
+    case "graaljs":
+    case "jerry":
+      return capture(await run("--version"), VERSION_RE);
+
+    case "ant":
+      return (await run("--version-raw")).trim().replace(" ", ".");
+    case "goant":
+      // goant v0.1.0-7ed32b3.dirty -> v0.1.0-7ed32b3
+      return (await run("--version")).match(V_VERSION_RE)?.[0].trim() ?? "";
+    case "lumen": {
+      // lumen 0.1.2-nightly (c9a0729) -> 0.1.2-c9a0729
+      const text = await run("--version");
+      const version = text.match(/([\d.]+)/);
+      const hash = text.match(/\(([a-f0-9]+)\)/);
+      return version && hash ? `${version[1]}-${hash[1]}` : capture(text, VERSION_RE);
+    }
+    case "engine262":
+      // engine262 v0.0.1-5dece49950e94360d45198df59f3adf4ceb94cb4 -> 0.0.1
+      return capture(await run("-h"), /v(\d+\.\d+\.\d+)/);
+    case "qjs":
+      return capture(await run("-h"), /version (\d{4}-\d{2}-\d{2})/);
+    case "qjs-ng":
+      return capture(await run("-h"), /version (\d+\.\d+\.\d+)/);
+    case "hermes":
+      return capture(await run("--version"), /Hermes release version: (\d+\.\d+\.\d+)/);
+    case "js":
+      return capture(await run("--version"), /JavaScript-C([\d.]+(?:-[a-zA-Z0-9]+)?)/);
+    case "xst":
+      return capture(await run("-v"), VERSION_RE);
+    case "zjs":
+      return (await run("--print-config-signature")).trim();
+    case "njs":
+      return (await run("-v")).trim();
+    case "d8":
+      return capture(
+        await execCmd(`echo "exit" | ${cmd}`, dirname(getExePath("d8"))),
+        /version ([\d.]+(?:-[a-zA-Z0-9]+)?)/,
+      );
+
+    // Engines that only print their version on startup
+    case "mujs":
+      return capture(await execCmd(`echo "exit" | ${cmd}`), VERSION_RE).slice(0, -1);
+    case "duk":
+    case "kiesel":
+      return capture(await execCmd(`echo "exit" | ${cmd}`), VERSION_RE);
+    case "jjs":
+      return capture(await execCmd(`echo 'exit()' | ${cmd} -v`), VERSION_RE);
+
+    default:
+      return "";
   }
-  if (cmd === "bun") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "graaljs") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "d8") {
-    const cwd = path.dirname(getExePath("d8"));
-    const text = await execCmd(`echo "exit" | ${cmd}`, cwd);
-    return text.match(/version ([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "js") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/JavaScript-C([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "jerry") {
-    const text = await execCmd(`${cmd} --version`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "duk" || cmd == "kiesel") {
-    const text = await execCmd(`echo "exit" | ${cmd}`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "jjs") {
-    const text = await execCmd(`echo 'exit()' | ${cmd} -v`);
-    return text.match(/([\d.]+(?:-[a-zA-Z0-9]+)?)/)?.[1].trim();
-  }
-  if (cmd === "njs") {
-    const text = await execCmd(`${cmd} -v`);
-    return text.trim();
-  }
-  return "";
 }
 
-const data: Record<string, Record<string, string | number>> = {};
-const platform = os.platform();
-
-function isMsys() {
+function isMsys(): boolean {
   return !!process.env["MSYSTEM"];
 }
-function toMsysPath(s: string) {
-  s = s.replaceAll("\\", "/");
-  s = s.replace(/^([A-Za-z]):\//, (_, drive) => `/${drive.toLowerCase()}/`);
-  return s;
-}
-function fromMsysPath(s: string) {
+
+/** Convert an MSYS/Cygwin path (e.g. `/c/foo`) to a Windows path. */
+function fromMsysPath(s: string): string {
   if (!isMsys() || !s.startsWith("/")) {
     return s;
   }
-  s = s.replace(/^\/([A-Za-z])\//, (_, drive) => `${drive.toUpperCase()}:/`);
-  return s;
+  return s.replace(/^\/([A-Za-z])\//, (_, drive: string) => `${drive.toUpperCase()}:/`);
 }
 
-function getJavaSize() {
-  const v = [
-    "/usr/lib/jvm",
-    "C:/Program Files/Java",
-    "/Library/Java/JavaVirtualMachines",
-    "C:/hostedtoolcache/windows/Java_Temurin-Hotspot_jdk/21.0.7-6.0/x64",
-    "/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6/x64",
-    "/Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6.0/x64/Contents/Home",
-    "/Users/runner/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.7-6.0/arm64/Contents/Home",
-  ];
-
-  for (const i of v) {
-    try {
-      const n = +execSync(`du -s "${i}"`).toString().split("\t")[0].split(
-        " ",
-      )[0];
-      if (n > 0) {
-        return n * 1000;
-      }
-    } catch (e) {
-      // console.error('error: ', e.me)
-    }
+function getFileSize(filePath: string): number {
+  if (UNKNOWN_SIZE_BINS.some((bin) => filePath.includes(bin))) {
+    return 0;
   }
-  return 0;
-}
-const UNKNOWN_LIST = ['ringo', "rhino", "jjs", "engine262", 'quickjs-emscripten', "cyjs"]
-function getFileSize(filePath: string) {
   try {
-    if (UNKNOWN_LIST.some(i => filePath.includes(i))) {
-      return 0;
+    let p = fromMsysPath(filePath);
+    if (isMsys() && !existsSync(p) && existsSync(`${p}.exe`)) {
+      p = `${p}.exe`;
     }
-    let p = isMsys() ? fromMsysPath(filePath) : filePath;
-    if (!fs.existsSync(p) && isMsys() && fs.existsSync(p + ".exe")) {
-      p = p + ".exe";
-    }
-    const stats = fs.statSync(p);
-    return stats.size;
-  } catch (err) {
-    // console.error(err)
+    return statSync(p).size;
+  } catch {
     return 0;
   }
 }
 
-function getDllSize(programPath: string) {
-  if (UNKNOWN_LIST.some(i => programPath.includes(i))) {
+function getDllSize(programPath: string): number {
+  if (UNKNOWN_SIZE_BINS.some((bin) => programPath.includes(bin))) {
     return 0;
   }
-  if (isMsys()) {
-    programPath = fromMsysPath(programPath);
-  }
+  programPath = fromMsysPath(programPath);
 
-  let dependencies: string[] = [];
+  const dependencies: string[] = [];
 
   // JavaScriptCore
   if (programPath.endsWith("jsc")) {
-    const dir = path.dirname(programPath);
-    const dllPath = dir + "/JavaScriptCore.framework/Versions/A/JavaScriptCore";
-    dependencies.push(dllPath);
+    dependencies.push(
+      join(dirname(programPath), "JavaScriptCore.framework/Versions/A/JavaScriptCore"),
+    );
   }
 
+  // GraalJS
   if (programPath.includes("graaljs")) {
-    const dir = path.dirname(path.dirname(programPath));
-    for (const d of ["lib", "modules"]) {
-      if (!existsSync(path.join(dir, d))) {
-        continue
+    const dir = dirname(dirname(programPath));
+    for (const sub of ["lib", "modules"]) {
+      const subDir = join(dir, sub);
+      if (!existsSync(subDir)) {
+        continue;
       }
-      for (const i of fs.readdirSync(path.join(dir, d))) {
-        dependencies.push(path.join(dir, d, i));
+      for (const entry of readdirSync(subDir)) {
+        dependencies.push(join(subDir, entry));
       }
     }
   }
 
   // libChakraCore.so or libChakraCore.dylib
   if (programPath.endsWith("ch")) {
-    const dir = path.dirname(programPath);
-    for (const i of fs.readdirSync(dir)) {
-      if (i.includes("libChakraCore")) {
-        dependencies.push(path.join(dir, i));
+    const dir = dirname(programPath);
+    for (const entry of readdirSync(dir)) {
+      if (entry.includes("libChakraCore")) {
+        dependencies.push(join(dir, entry));
       }
     }
   }
 
   try {
-    if (platform === "darwin") {
-      const output = execSync(`otool -L "${programPath}"`, {
-        encoding: "utf-8",
-      });
-      dependencies = dependencies.concat(
-        output
+    if (PLATFORM === "darwin") {
+      const output = execSync(`otool -L "${programPath}"`, { encoding: "utf-8" });
+      dependencies.push(
+        ...output
           .split("\n")
           .slice(1)
           .map((line) => line.trim().split(" ")[0])
           .filter((dep) => dep && !dep.startsWith("(")),
       );
-    } else if (platform === "linux" || platform === "win32") {
+    } else if (PLATFORM === "linux" || PLATFORM === "win32") {
       const output = execSync(`ldd "${programPath}"`, { encoding: "utf-8" });
       for (const line of output.split("\n")) {
-        const path = line.split("=>")?.[1]?.trim().split(" (")?.[0];
-        if (!path) {
+        const dep = line.split("=>")?.[1]?.trim().split(" (")?.[0];
+        if (!dep) {
           continue;
         }
         if (
-          path.startsWith("/lib/") ||
-          path.startsWith("/lib64/") ||
-          path.startsWith("/c/WINDOWS/") ||
-          path.startsWith("linux-")
+          dep.startsWith("/lib/") ||
+          dep.startsWith("/lib64/") ||
+          dep.startsWith("/c/WINDOWS/") ||
+          dep.startsWith("linux-")
         ) {
           continue;
         }
-        dependencies.push(path);
+        dependencies.push(dep);
       }
     }
   } catch (err: any) {
     console.error(`Error getting dependencies: ${err.message}`);
-    return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
   }
 
-  return dependencies.reduce((pre, cur) => pre + getFileSize(cur), 0);
+  return dependencies.reduce((total, dep) => total + getFileSize(dep), 0);
 }
 
-function getExePath(i: string) {
-  const execPath = execSync(`which ${i}`).toString().trim();
-  const fullPath = existsSync(execPath + '.exe') ? execPath + '.exe' : execPath;
-  return fromMsysPath(fullPath);
+function getExePath(bin: string): string {
+  const execPath = execSync(`which ${bin}`).toString().trim();
+  return fromMsysPath(existsSync(`${execPath}.exe`) ? `${execPath}.exe` : execPath);
 }
 
-const JS_BINS = [
-  "engine262",
-  "quickjs-emscripten-cli",
-  "cyjs",
-]
+const data: Record<string, Record<string, string | number>> = {};
 
-// async function strip(p: string) {
-//   const s = await execCmd(`strip "${p}"`)
-//   console.error(`strip: ${p} ${s}`)
-// }
-
-// these engines is so slow and failed to run that we skip it for now
-const SKIP_LIST = ["engine262", "rhino", "hako", "nova", "JerryScript"]
+function ensureRows(...keys: string[]) {
+  for (const key of keys) {
+    data[key] ??= {};
+  }
+}
 
 async function main() {
   for (const item of info) {
     try {
-      const bin = item.bin || item.name
-      if (SKIP_LIST.includes(bin)) {
-        continue
+      const bin = item.bin || item.name;
+      if (SKIP_BINS.has(bin)) {
+        continue;
       }
-      const name = item.name
-      const { subcmd = "" } = item
+      const name = item.name;
+      const subcmd = item.subcmd ? ` ${item.subcmd}` : "";
       const execPath = getExePath(bin);
+      const execDir = dirname(execPath);
 
-      // await strip(execPath)
+      // Warm up the engine with a trivial script before benchmarking.
+      await execCmd(`${execPath}${subcmd} ${TEST_JS_PATH}`, execDir);
 
-      const execDir = path.dirname(execPath);
-      const test = (await execCmd(
-        `${execPath} ${subcmd} ${TEST_JS_PATH}`,
-        execDir,
-      )).trim();
-
-      const isJS = JS_BINS.includes(bin)
+      const isJS = JS_BINS.has(bin);
       const fileSize = isJS ? 0 : getFileSize(execPath);
       const dllSize = isJS ? 0 : getDllSize(execPath);
-
-      console.error("execPath", { execPath, execDir, test, fileSize, dllSize });
-
-      if (!("Version" in data)) {
-        data["Version"] = {};
-      }
-      if (!("Total size" in data)) {
-        data["Total size"] = {};
-      }
-      if (!("Exe size" in data)) {
-        data["Exe size"] = {};
-      }
-      if (!("Dll size" in data)) {
-        data["Dll size"] = {};
-      }
+      const totalSize = fileSize + dllSize;
 
       const version = ((await getVersion(bin)) || "").replaceAll("-", ".");
+
+      ensureRows("Version", "Total size", "Exe size", "Dll size");
       data["Version"][name] = version;
-      console.error("version: ", version);
-      data["Total size"][name] = fileSize + dllSize;
+      data["Total size"][name] = totalSize;
       data["Exe size"][name] = fileSize;
       data["Dll size"][name] = dllSize;
-      const startTime = +new Date();
-      const out = await execCmd(
-        `${bin} ${subcmd} ${RUN_JS_PATH}`,
-        execDir,
-      );
-      const endTime = +new Date();
-      console.error("out: ", out);
+
+      const startTime = Date.now();
+      const out = await execCmd(`${bin}${subcmd} ${RUN_JS_PATH}`, execDir);
+      const elapsed = ((Date.now() - startTime) / 1000) | 0;
 
       const json = toJSON(out);
       console.error("json:", JSON.stringify(json));
-      // if (!json['Score']) {
-      //   continue
-      // }
-      for (const [k, v] of Object.entries(json)) {
-        const obj = data[k] || {};
-        obj[name] = v;
-        data[k] = obj;
+      for (const [key, value] of Object.entries(json)) {
+        (data[key] ??= {})[name] = value;
       }
-      if (!("Score" in data)) {
-        data["Score"] = {};
-      }
-      if (!("Score/MB" in data)) {
-        data["Score/MB"] = {};
-      }
-      const score = data["Score"][name];
-      data["Score/MB"][name] = (+score / (fileSize + dllSize) * 1024 * 1024) | 0;
 
-      if (!("Time(s)" in data)) {
-        data["Time(s)"] = {};
-      }
-      data["Time(s)"][name] = ((endTime - startTime) / 1000) | 0;
+      ensureRows("Score", "Score/MB", "Time(s)");
+      data["Score/MB"][name] = ((+data["Score"][name] / totalSize) * 1024 * 1024) | 0;
+      data["Time(s)"][name] = elapsed;
     } catch (e) {
       console.error("error:", e);
     }
   }
 
-  // sort by score
-  const keys = Object.keys(data);
-  if (!keys.length) {
+  if (!Object.keys(data).length) {
     console.error("no keys", JSON.stringify(data));
     return;
   }
