@@ -49,6 +49,7 @@ jobs:
           deno-version: canary
       - name: run
         run: |
+          bun i
           bun run --silent build
           rm -rf ${{ matrix.name }}.json
           bun run --silent update > ${{ matrix.name }}.json
