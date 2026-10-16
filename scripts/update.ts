@@ -130,7 +130,6 @@ async function getVersion(cmd: string): Promise<string> {
     case "tjs":
     case "paserati":
     case "node":
-    case "qjs-oxide":
       return capture(await run("--version"), V_VERSION_RE);
 
     // `<cmd> --version`, bare version
@@ -139,6 +138,7 @@ async function getVersion(cmd: string): Promise<string> {
     case "bun":
     case "graaljs":
     case "jerry":
+    case "qjs-oxide":
       return capture(await run("--version"), VERSION_RE);
 
     case "ant":
