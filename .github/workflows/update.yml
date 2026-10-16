@@ -98,6 +98,7 @@ jobs:
 
           curl -O https://raw.githubusercontent.com/ahaoboy/js-engine-setup/main/info.json
 
+          bun i
           bun run --silent build
           bun run --silent update:doc
 
