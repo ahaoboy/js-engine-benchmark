@@ -146,11 +146,12 @@ async function getVersion(cmd: string): Promise<string> {
     case "goant":
       // goant v0.1.0-7ed32b3.dirty -> v0.1.0-7ed32b3
       return (await run("--version")).match(V_VERSION_RE)?.[0].trim() ?? "";
+    case "es6":
     case "lumen": {
       // lumen 0.1.2-nightly (c9a0729) -> 0.1.2-c9a0729
       const text = await run("--version");
-      const version = text.match(/([\d.]+)/);
-      const hash = text.match(/\(([a-f0-9]+)\)/);
+      const version = text.match(/(\d+\.\d+\.\d+)/);
+      const hash = text.match(/[+( ]([a-f0-9]{7,})/);
       return version && hash ? `${version[1]}-${hash[1]}` : capture(text, VERSION_RE);
     }
     case "engine262":
