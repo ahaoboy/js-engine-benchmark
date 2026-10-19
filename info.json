@@ -301,6 +301,12 @@
     "lang": "rust"
   },
   {
+    "name": "es6",
+    "description": "A small ECMAScript engine written in safe Rust, modeled on QuickJS (quickjs-ng) and the rquickjs API style",
+    "url": "https://github.com/ahaoboy/es6",
+    "lang": "rust"
+  },
+  {
     "name": "goant",
     "description": "A JavaScript engine in pure Go",
     "url": "https://github.com/robomotionio/goant",
