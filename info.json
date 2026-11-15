@@ -338,5 +338,11 @@
     "description": "An independent Rust rewrite of QuickJS targeting semantic feature parity",
     "url": "https://github.com/pocket-nexus/quickjs-oxide",
     "lang": "rust"
+  },
+  {
+    "name": "slowjs",
+    "description": "The fastest pure Go JavaScript engine for rendering React",
+    "url": "https://github.com/liustack/slowjs",
+    "lang": "go"
   }
 ]
