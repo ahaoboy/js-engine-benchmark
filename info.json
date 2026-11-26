@@ -340,9 +340,9 @@
     "lang": "rust"
   },
   {
-    "name": "slowjs",
+    "name": "beastjs",
     "description": "The fastest pure Go JavaScript engine for rendering React",
-    "url": "https://github.com/liustack/slowjs",
+    "url": "https://github.com/liustack/beastjs",
     "lang": "go"
   }
 ]

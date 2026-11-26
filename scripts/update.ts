@@ -134,7 +134,7 @@ async function getVersion(cmd: string): Promise<string> {
 
     // `<cmd> --version`, bare version
     case "boa":
-    case "slowjs":
+    case "beastjs":
     case "deno":
     case "bun":
     case "graaljs":
