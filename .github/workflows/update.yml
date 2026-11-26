@@ -45,8 +45,8 @@ jobs:
         with:
           bun-version: canary
       - uses: denoland/setup-deno@v2
-        with:
-          deno-version: canary
+        # with:
+        #   deno-version: canary
       - name: run
         run: |
           bun i
