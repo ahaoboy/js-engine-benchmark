@@ -14,6 +14,12 @@ export type EngineInfo = {
   lang?: string;
 };
 
+/** Implementation language of an engine, with how many engines use it. */
+export type LanguageOption = {
+  name: string;
+  count: number;
+};
+
 export type Serie = {
   name: string;
   type: string;

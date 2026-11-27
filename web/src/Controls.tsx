@@ -1,25 +1,31 @@
 import {
   Button,
+  Checkbox,
   FormControl,
   IconButton,
   InputLabel,
+  ListItemText,
   MenuItem,
   Select,
   Stack,
 } from "@mui/material";
 import { Kind, OS, REPO_URL } from "./constants";
+import type { LanguageOption } from "./types";
 
 interface ControlsProps {
   maxCount: number;
   os: string;
   kind: string;
   sort: string;
+  languages: LanguageOption[];
+  selectedLangs: string[];
   onSelectAll: () => void;
   onClearAll: () => void;
   onMaxCountChange: (value: number) => void;
   onOsChange: (value: string) => void;
   onKindChange: (value: string) => void;
   onSortChange: (value: string) => void;
+  onLanguagesChange: (value: string[]) => void;
 }
 
 const MAX_COUNT_OPTIONS = Array(5)
@@ -45,14 +51,23 @@ export function Controls({
   os,
   kind,
   sort,
+  languages,
+  selectedLangs,
   onSelectAll,
   onClearAll,
   onMaxCountChange,
   onOsChange,
   onKindChange,
   onSortChange,
+  onLanguagesChange,
 }: ControlsProps) {
   const selectSx = { height: 40 };
+
+  const renderLangs = (selected: string[]) => {
+    if (!selected.length) return "None";
+    if (selected.length === languages.length) return "All";
+    return selected.join(", ");
+  };
 
   return (
     <Stack
@@ -134,6 +149,33 @@ export function Controls({
           {Kind.map((i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
         </Select>
       </FormControl>
+
+      {languages.length > 0 && (
+        <FormControl size="small" sx={{ width: 180 }}>
+          <InputLabel id="lang-label" shrink>Language</InputLabel>
+          <Select
+            labelId="lang-label"
+            label="Language"
+            multiple
+            displayEmpty
+            value={selectedLangs}
+            onChange={(e) => onLanguagesChange(e.target.value as string[])}
+            renderValue={renderLangs}
+            sx={selectSx}
+          >
+            {languages.map((lang) => (
+              <MenuItem key={lang.name} value={lang.name}>
+                <Checkbox
+                  size="small"
+                  checked={selectedLangs.includes(lang.name)}
+                  sx={{ p: 0.5, mr: 1 }}
+                />
+                <ListItemText primary={`${lang.name} (${lang.count})`} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      )}
 
       <IconButton
         component="a"

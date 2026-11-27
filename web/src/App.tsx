@@ -15,7 +15,7 @@ import {
   parseAsString,
   useQueryState,
 } from "nuqs";
-import type { ChartTheme, DataItem, EngineInfo } from "./types";
+import type { ChartTheme, DataItem, EngineInfo, LanguageOption } from "./types";
 import { getBarOption, getNames, getOption } from "./data";
 import { INFO_URL } from "./constants";
 import { useEChart } from "./useEChart";
@@ -33,6 +33,7 @@ function App() {
   const [data, setData] = useState<DataItem[]>([]);
   const [engines, setEngines] = useState<string[]>([]);
   const [urls, setUrls] = useState<Record<string, string>>({});
+  const [engineLangs, setEngineLangs] = useState<Record<string, string>>({});
   const [selectEngines, setSelectEngines] = useQueryState<string[]>(
     "selectEngines",
     parseAsArrayOf(parseAsString).withDefault([]),
@@ -90,20 +91,29 @@ function App() {
     [theme],
   );
 
-  // Fetch engine repository urls from the repo's info.json once.
+  // Fetch engine repository urls and languages from the repo's info.json once.
   useEffect(() => {
     fetch(INFO_URL)
       .then((resp) => (resp.ok ? resp.json() : []))
       .then((info: EngineInfo[]) => {
-        const map: Record<string, string> = {};
+        const urlMap: Record<string, string> = {};
+        const langMap: Record<string, string> = {};
         for (const item of info) {
-          if (item.name && item.url) {
-            map[item.name] = item.url;
+          if (!item.name) continue;
+          if (item.url) {
+            urlMap[item.name] = item.url;
+          }
+          if (item.lang) {
+            langMap[item.name] = item.lang;
           }
         }
-        setUrls(map);
+        setUrls(urlMap);
+        setEngineLangs(langMap);
       })
-      .catch(() => setUrls({}));
+      .catch(() => {
+        setUrls({});
+        setEngineLangs({});
+      });
   }, []);
 
   // Fetch data when OS changes
@@ -134,6 +144,58 @@ function App() {
   }, [sort]);
 
   const showTrend = chart === "trend";
+
+  // Engines of the current OS data grouped by implementation language.
+  const enginesByLang = useMemo(() => {
+    const map = new Map<string, string[]>();
+    for (const engine of engines) {
+      const lang = engineLangs[engine];
+      if (!lang) continue;
+      const list = map.get(lang);
+      if (list) {
+        list.push(engine);
+      } else {
+        map.set(lang, [engine]);
+      }
+    }
+    return map;
+  }, [engines, engineLangs]);
+
+  // Languages used by the current OS data, most used first.
+  const languages = useMemo<LanguageOption[]>(
+    () =>
+      [...enginesByLang]
+        .sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0]))
+        .map(([name, list]) => ({ name, count: list.length })),
+    [enginesByLang],
+  );
+
+  // A language counts as selected once all of its engines are selected, so an
+  // untouched selection means "no language picked yet".
+  const selectedLangs = useMemo(() => {
+    const isSelected = (engine: string) => selectEngines.includes(engine);
+    return languages
+      .filter((lang) => enginesByLang.get(lang.name)!.every(isSelected))
+      .map((lang) => lang.name);
+  }, [languages, enginesByLang, selectEngines]);
+
+  // Toggling a language selects or deselects every engine written in it.
+  const handleLanguagesChange = (next: string[]) => {
+    const added = next.filter((lang) => !selectedLangs.includes(lang));
+    const removed = selectedLangs.filter((lang) => !next.includes(lang));
+    if (!added.length && !removed.length) return;
+
+    const enginesOf = (langs: string[]) =>
+      langs.flatMap((lang) => enginesByLang.get(lang) ?? []);
+    const dropped = new Set(enginesOf(removed));
+    const nextEngines = selectEngines.filter((engine) => !dropped.has(engine));
+    for (const engine of enginesOf(added)) {
+      if (!nextEngines.includes(engine)) {
+        nextEngines.push(engine);
+      }
+    }
+    setSelectEngines(nextEngines);
+  };
 
   // Options are built only for the active tab; the hidden one renders nothing.
   const trendOption = useMemo(
@@ -191,12 +253,15 @@ function App() {
             os={os}
             kind={kind}
             sort={sort}
+            languages={languages}
+            selectedLangs={selectedLangs}
             onSelectAll={() => setSelectEngines([...engines])}
             onClearAll={() => setSelectEngines([])}
             onMaxCountChange={setMaxCount}
             onOsChange={setOs}
             onKindChange={setKind}
             onSortChange={setSort}
+            onLanguagesChange={handleLanguagesChange}
           />
         </Stack>
         <Tabs
