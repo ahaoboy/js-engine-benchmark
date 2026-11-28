@@ -4,8 +4,8 @@ import { platform } from "os";
 import { dirname, join } from "path";
 import info from "../info.json";
 
-const TEST_JS_PATH = join(__dirname, "test.js");
-const RUN_JS_PATH = join(__dirname, "..", "dist", "run.js");
+const TEST_JS_PATH = join(__dirname, "test.js").replaceAll("\\", "/");
+const RUN_JS_PATH = join(__dirname, "..", "dist", "run.js").replaceAll("\\", "/");
 
 const PLATFORM = platform();
 
@@ -295,7 +295,7 @@ function getDllSize(programPath: string): number {
 
 function getExePath(bin: string): string {
   const execPath = execSync(`which ${bin}`).toString().trim();
-  return fromMsysPath(existsSync(`${execPath}.exe`) ? `${execPath}.exe` : execPath);
+  return fromMsysPath(existsSync(`${execPath}.exe`) ? `${execPath}.exe` : execPath).replaceAll("\\", "/");
 }
 
 const data: Record<string, Record<string, string | number>> = {};
