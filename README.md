@@ -3,6 +3,8 @@ fork from: https://github.com/mozilla/arewefastyet/tree/master/benchmarks/v8-v7
 
 ## update
 
+Every engine command is killed after 15 minutes, and that engine is counted as failed.
+
 ```bash
 npm run build
 

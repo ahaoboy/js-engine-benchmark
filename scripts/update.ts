@@ -1,4 +1,5 @@
-import { exec, execSync } from "child_process";
+import { execSync, spawn } from "child_process";
+import type { ChildProcess } from "child_process";
 import { existsSync, readdirSync, statSync } from "fs";
 import { platform } from "os";
 import { dirname, join } from "path";
@@ -6,6 +7,9 @@ import info from "../info.json";
 
 const TEST_JS_PATH = join(__dirname, "test.js").replaceAll("\\", "/");
 const RUN_JS_PATH = join(__dirname, "..", "dist", "run.js").replaceAll("\\", "/");
+
+/** A command running longer than this is killed and reported as failed. */
+const EXEC_TIMEOUT_MS = 15 * 60 * 1000;
 
 const PLATFORM = platform();
 
@@ -82,10 +86,83 @@ function toJSON(output: string): Record<string, number> {
   return json;
 }
 
+/**
+ * Kills `child` and every process it spawned, then resolves. The shell alone is
+ * not enough: the engine binary would survive, keep holding the output pipes and
+ * waste CPU on the next benchmarks.
+ */
+function killTree(child: ChildProcess): Promise<void> {
+  const pid = child.pid;
+  if (!pid) {
+    return Promise.resolve();
+  }
+  if (PLATFORM === "win32") {
+    // Windows has no process groups; /T walks and kills the tree instead.
+    return new Promise((done) => {
+      const killer = spawn("taskkill", ["/pid", String(pid), "/T", "/F"], {
+        stdio: "ignore",
+        windowsHide: true,
+      });
+      killer.on("close", () => done());
+      killer.on("error", () => done());
+    });
+  }
+  // The command runs in its own process group (see `detached` below).
+  try {
+    process.kill(-pid, "SIGKILL");
+  } catch {
+    child.kill("SIGKILL");
+  }
+  return Promise.resolve();
+}
+
 function execCmd(cmd: string, cwd?: string): Promise<string> {
   console.error("cmd:", { cmd, cwd });
-  return new Promise((resolve) => {
-    exec(cmd, { cwd }, (_err, stdout, stderr) => {
+  return new Promise((resolve, reject) => {
+    let timedOut = false;
+    // `shell: true` keeps the shell features the commands rely on (pipes, echo).
+    const child = spawn(cmd, {
+      cwd,
+      shell: true,
+      // A separate process group is what makes the whole tree killable.
+      detached: PLATFORM !== "win32",
+    });
+    let stdout = "";
+    let stderr = "";
+    child.stdout.setEncoding("utf8").on("data", (chunk: string) => {
+      stdout += chunk;
+    });
+    child.stderr.setEncoding("utf8").on("data", (chunk: string) => {
+      stderr += chunk;
+    });
+
+    const timer = setTimeout(async () => {
+      timedOut = true;
+      console.error(`execCmd timeout (${EXEC_TIMEOUT_MS / 60_000} minutes): ${cmd}`);
+      // Wait for the tree to be gone so the next engine is not slowed by it.
+      await killTree(child);
+      reject(
+        new Error(
+          `command timed out after ${EXEC_TIMEOUT_MS / 60_000} minutes: ${cmd}`,
+        ),
+      );
+    }, EXEC_TIMEOUT_MS);
+
+    child.on("error", (err) => {
+      clearTimeout(timer);
+      if (timedOut) {
+        return;
+      }
+      // A command that cannot start is treated like the old `exec` behaviour.
+      console.error("execCmd error:", err.message);
+      resolve("");
+    });
+
+    child.on("close", () => {
+      clearTimeout(timer);
+      if (timedOut) {
+        return;
+      }
       const name = cmd.split(" ")[0].replaceAll("\\", "/").split("/").at(-1) ?? "";
       let output = stdout.trim();
 
